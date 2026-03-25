@@ -1,0 +1,18 @@
+{
+  "name": "ai-portfolio-static",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static AI portfolio served via Node/Express for Railway.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "PORT=3000 node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
+
