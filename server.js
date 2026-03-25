@@ -21,11 +21,14 @@ app.use(
 );
 
 // Nice routes
-app.get("/", (_req, res) => res.sendFile(path.join(publicDir, "ai-portfolio.html")));
+app.get("/", (_req, res) => res.sendFile(path.join(publicDir, "ai-champion.html")));
 app.get("/ai-champion", (_req, res) => res.sendFile(path.join(publicDir, "ai-champion.html")));
+app.get("/ai-champion/", (_req, res) => res.redirect(301, "/ai-champion"));
+app.get("/ai-portfolio", (_req, res) => res.sendFile(path.join(publicDir, "ai-portfolio.html")));
+app.get("/ai-portfolio/", (_req, res) => res.redirect(301, "/ai-portfolio"));
 
-// Fallback to portfolio page
-app.use((_req, res) => res.status(404).sendFile(path.join(publicDir, "ai-portfolio.html")));
+// Fallback to champion page
+app.use((_req, res) => res.status(200).sendFile(path.join(publicDir, "ai-champion.html")));
 
 app.listen(PORT, () => {
   console.log(`Serving on port ${PORT}`);
