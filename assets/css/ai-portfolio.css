@@ -291,7 +291,7 @@
   }
 
   /* Deep knowledge section */
-  #knowledge { background: var(--surface); }
+  #knowledge { background: var(--surface2); }
 
   .knowledge-grid {
     display: grid;
