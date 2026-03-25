@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appendix — Common Formulae in LLM & Transformer Research</title>
+    <meta name="description" content="A wiki-style reference of core maths used across Transformers, LLM training, evaluation, retrieval, and alignment.">
+    
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background-color: #ffffff;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+        
+        .toc {
+            min-width: 260px;
+            max-width: 320px;
+            position: sticky;
+            top: 16px;
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background-color: #f9fafb;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        
+        .toc strong {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #111827;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .toc a {
+            color: #2563eb;
+            text-decoration: none;
+            display: block;
+            padding: 2px 0;
+        }
+        
+        .toc a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+        
+        .toc ul ul {
+            margin-left: 16px;
+            margin-top: 4px;
+        }
+        
+        .toc ul ul a {
+            font-size: 12px;
+            color: #4b5563;
+        }
+        
+        .content {
+            flex: 1;
+            min-width: 0;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 16px;
+            color: #111827;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 1.75em;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #111827;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            font-size: 1.25em;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: #374151;
+            font-weight: 600;
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 24px 0;
+        }
+        
+        p {
+            margin-bottom: 12px;
+        }
+        
+        ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+        
+        li {
+            margin-bottom: 6px;
+        }
+        
+        .formula {
+            margin: 16px 0;
+            padding: 12px;
+            background-color: #f9fafb;
+            border-left: 3px solid #3b82f6;
+            border-radius: 4px;
+        }
+        
+        .formula-use {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #4b5563;
+            font-style: italic;
+        }
+        
+        .formula-use strong {
+            font-style: normal;
+            color: #111827;
+        }
+        
+        code {
+            background-color: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            color: #dc2626;
+        }
+        
+        .quick-index {
+            margin-top: 32px;
+            padding: 20px;
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .quick-index h2 {
+            border-bottom: none;
+            margin-top: 0;
+        }
+        
+        .quick-index ul {
+            list-style: disc;
+        }
+        
+        .quick-index li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .toc {
+                position: relative;
+                max-height: none;
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Print styles */
+        @media print {
+            .toc {
+                position: relative;
+                page-break-inside: avoid;
+            }
+            
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Table of Contents -->
+        <div class="toc">
+            <strong>Contents</strong>
+            <ul>
+                <li><a href="#a-notation">A. Notation</a></li>
+                <li><a href="#b-linear-algebra">B. Linear Algebra Essentials</a>
+                    <ul>
+                        <li><a href="#b1-dot-product">B.1 Dot Product</a></li>
+                        <li><a href="#b2-l2-norm">B.2 L2 Norm</a></li>
+                        <li><a href="#b3-cosine-similarity">B.3 Cosine Similarity</a></li>
+                        <li><a href="#b4-euclidean-distance">B.4 Euclidean Distance</a></li>
+                        <li><a href="#b5-matrix-multiplication">B.5 Matrix Multiplication</a></li>
+                    </ul>
+                </li>
+                <li><a href="#c-probability">C. Probability & Information Theory</a>
+                    <ul>
+                        <li><a href="#c1-softmax">C.1 Softmax</a></li>
+                        <li><a href="#c2-temperature-softmax">C.2 Temperature Softmax</a></li>
+                        <li><a href="#c3-log-likelihood">C.3 Log-Likelihood</a></li>
+                        <li><a href="#c4-cross-entropy">C.4 Cross-Entropy</a></li>
+                        <li><a href="#c5-nll">C.5 NLL</a></li>
+                        <li><a href="#c6-perplexity">C.6 Perplexity</a></li>
+                        <li><a href="#c7-kl-divergence">C.7 KL Divergence</a></li>
+                        <li><a href="#c8-jensen-shannon">C.8 Jensen–Shannon Divergence</a></li>
+                        <li><a href="#c9-entropy">C.9 Entropy</a></li>
+                        <li><a href="#c10-mutual-information">C.10 Mutual Information</a></li>
+                    </ul>
+                </li>
+                <li><a href="#d-transformer">D. Transformer & Attention Core</a>
+                    <ul>
+                        <li><a href="#d1-attention">D.1 Scaled Dot-Product Attention</a></li>
+                        <li><a href="#d2-qkv">D.2 QKV Projections</a></li>
+                        <li><a href="#d3-multi-head">D.3 Multi-Head Attention</a></li>
+                        <li><a href="#d4-positional-encoding">D.4 Sinusoidal Positional Encoding</a></li>
+                        <li><a href="#d5-layernorm">D.5 LayerNorm</a></li>
+                        <li><a href="#d6-residual">D.6 Residual Connection</a></li>
+                        <li><a href="#d7-ffn">D.7 FFN / MLP Block</a></li>
+                        <li><a href="#d8-gelu">D.8 GELU</a></li>
+                    </ul>
+                </li>
+                <li><a href="#e-optimization">E. Optimisation & Training</a>
+                    <ul>
+                        <li><a href="#e1-gradient-descent">E.1 Gradient Descent</a></li>
+                        <li><a href="#e2-adam">E.2 Adam</a></li>
+                        <li><a href="#e3-weight-decay">E.3 Weight Decay / L2</a></li>
+                        <li><a href="#e4-dropout">E.4 Dropout</a></li>
+                        <li><a href="#e5-gradient-clipping">E.5 Gradient Clipping</a></li>
+                        <li><a href="#e6-lr-schedules">E.6 LR Schedules</a></li>
+                    </ul>
+                </li>
+                <li><a href="#f-metrics">F. Classification & Retrieval Metrics</a>
+                    <ul>
+                        <li><a href="#f1-confusion">F.1 Confusion Matrix Terms</a></li>
+                        <li><a href="#f2-precision">F.2 Precision</a></li>
+                        <li><a href="#f3-recall">F.3 Recall</a></li>
+                        <li><a href="#f4-f1">F.4 F1</a></li>
+                        <li><a href="#f5-accuracy">F.5 Accuracy</a></li>
+                        <li><a href="#f6-roc-auc">F.6 ROC-AUC</a></li>
+                        <li><a href="#f7-ap-map">F.7 AP / mAP</a></li>
+                        <li><a href="#f8-precision-k">F.8 Precision@k</a></li>
+                        <li><a href="#f9-recall-k">F.9 Recall@k</a></li>
+                        <li><a href="#f10-mrr">F.10 MRR</a></li>
+                        <li><a href="#f11-ndcg">F.11 NDCG@k</a></li>
+                    </ul>
+                </li>
+                <li><a href="#g-generation">G. Language Generation Metrics</a>
+                    <ul>
+                        <li><a href="#g1-bleu">G.1 BLEU</a></li>
+                        <li><a href="#g2-rouge">G.2 ROUGE</a></li>
+                        <li><a href="#g3-exact-match">G.3 Exact Match</a></li>
+                        <li><a href="#g4-token-accuracy">G.4 Token Accuracy</a></li>
+                    </ul>
+                </li>
+                <li><a href="#h-decoding">H. Decoding & Search</a>
+                    <ul>
+                        <li><a href="#h1-greedy">H.1 Greedy</a></li>
+                        <li><a href="#h2-beam-search">H.2 Beam Search</a></li>
+                        <li><a href="#h3-top-k">H.3 Top-k</a></li>
+                        <li><a href="#h4-top-p">H.4 Top-p</a></li>
+                    </ul>
+                </li>
+                <li><a href="#i-contrastive">I. Contrastive Learning</a>
+                    <ul>
+                        <li><a href="#i1-triplet">I.1 Triplet Loss</a></li>
+                        <li><a href="#i2-infonce">I.2 InfoNCE</a></li>
+                    </ul>
+                </li>
+                <li><a href="#j-alignment">J. Distillation & Alignment</a>
+                    <ul>
+                        <li><a href="#j1-distillation">J.1 Distillation (KL)</a></li>
+                        <li><a href="#j2-pairwise">J.2 Pairwise Preference Loss</a></li>
+                        <li><a href="#j3-ppo">J.3 PPO Objective</a></li>
+                        <li><a href="#j4-kl-penalty">J.4 KL Penalty to Reference</a></li>
+                    </ul>
+                </li>
+                <li><a href="#k-calibration">K. Calibration & Uncertainty</a>
+                    <ul>
+                        <li><a href="#k1-ece">K.1 ECE</a></li>
+                        <li><a href="#k2-brier">K.2 Brier Score</a></li>
+                    </ul>
+                </li>
+                <li><a href="#l-complexity">L. Complexity & Scaling</a>
+                    <ul>
+                        <li><a href="#l1-attention-complexity">L.1 Attention Complexity</a></li>
+                        <li><a href="#l2-parameter-count">L.2 Parameter Count Intuition</a></li>
+                    </ul>
+                </li>
+                <li><a href="#m-quick-index">M. Quick Index</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Appendix — Common Formulae in LLM & Transformer Research</h1>
+            <p>A reference sheet of maths used across Transformers, LLM training, evaluation, retrieval, and alignment.</p>
+            
+            <hr>
+
+            <h2 id="a-notation">A. Notation</h2>
+            <ul>
+                <li>Scalars: \(a, b \in \mathbb{R}\)</li>
+                <li>Vectors: \(\mathbf{x}\in \mathbb{R}^d\)</li>
+                <li>Matrices: \(\mathbf{W}\in \mathbb{R}^{m\times n}\)</li>
+                <li>Tokens: \(x_{1:T}\) is a token sequence of length \(T\)</li>
+                <li>Parameters: \(\theta\)</li>
+                <li>Logits: \(\mathbf{z}\) (pre-softmax scores)</li>
+                <li>Distributions: \(p(\cdot)\), \(q(\cdot)\)</li>
+                <li>Dot product: \(\mathbf{x}\cdot \mathbf{y}\)</li>
+                <li>Norm: \(\lVert \mathbf{x}\rVert_2\)</li>
+                <li>Expectation: \(\mathbb{E}[\cdot]\)</li>
+            </ul>
+
+            <hr>
+
+            <h2 id="b-linear-algebra">B. Linear Algebra Essentials</h2>
+
+            <h3 id="b1-dot-product">B.1 Dot Product</h3>
+            <div class="formula">
+                \[\mathbf{x}\cdot\mathbf{y}=\sum_{i=1}^{d}x_i y_i\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> similarity, projections, attention scores.</p>
+
+            <h3 id="b2-l2-norm">B.2 L2 Norm (L2)</h3>
+            <div class="formula">
+                \[\lVert\mathbf{x}\rVert_2=\sqrt{\sum_{i=1}^{d}x_i^2}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> normalisation, regularisation, gradient clipping.</p>
+
+            <h3 id="b3-cosine-similarity">B.3 Cosine Similarity</h3>
+            <div class="formula">
+                \[\cos(\mathbf{x},\mathbf{y})=\frac{\mathbf{x}\cdot\mathbf{y}}{\lVert\mathbf{x}\rVert_2\,\lVert\mathbf{y}\rVert_2}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> embedding similarity, retrieval, clustering.</p>
+
+            <h3 id="b4-euclidean-distance">B.4 Euclidean Distance</h3>
+            <div class="formula">
+                \[d(\mathbf{x},\mathbf{y})=\lVert\mathbf{x}-\mathbf{y}\rVert_2\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> nearest-neighbour search, embedding geometry.</p>
+
+            <h3 id="b5-matrix-multiplication">B.5 Matrix Multiplication</h3>
+            <div class="formula">
+                \[\mathbf{C}=\mathbf{A}\mathbf{B},\quad c_{ij}=\sum_k a_{ik}b_{kj}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> dense layers, QKV projections, output heads.</p>
+
+            <hr>
+
+            <h2 id="c-probability">C. Probability & Information Theory</h2>
+
+            <h3 id="c1-softmax">C.1 Softmax</h3>
+            <div class="formula">
+                \[\text{softmax}(\mathbf{z})_i=\frac{e^{z_i}}{\sum_{j}e^{z_j}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> next-token distribution, attention weights.</p>
+
+            <h3 id="c2-temperature-softmax">C.2 Softmax with Temperature \( \tau \)</h3>
+            <div class="formula">
+                \[p_i=\frac{e^{z_i/\tau}}{\sum_j e^{z_j/\tau}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> decoding control (higher \(\tau\) = more random).</p>
+
+            <h3 id="c3-log-likelihood">C.3 Log-Likelihood (Sequence)</h3>
+            <div class="formula">
+                \[\log p_\theta(x_{1:T})=\sum_{t=1}^{T}\log p_\theta(x_t\mid x_{<t})\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> language modelling objective, scoring.</p>
+
+            <h3 id="c4-cross-entropy">C.4 Cross-Entropy (Discrete)</h3>
+            <div class="formula">
+                \[H(p,q)=-\sum_i p_i\log q_i\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> standard training loss (with \(p\) as one-hot targets).</p>
+
+            <h3 id="c5-nll">C.5 Negative Log-Likelihood (NLL)</h3>
+            <div class="formula">
+                \[\mathcal{L}_{\text{NLL}}=-\sum_{t=1}^{T}\log p_\theta(x_t\mid x_{<t})\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> LM training.</p>
+
+            <h3 id="c6-perplexity">C.6 Perplexity (PPL)</h3>
+            <div class="formula">
+                \[\text{PPL}=\exp\Big(\frac{1}{T}\mathcal{L}_{\text{NLL}}\Big)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> LM evaluation (lower is better).</p>
+            <p><strong>Note:</strong> use natural logs if using \(\exp\).</p>
+
+            <h3 id="c7-kl-divergence">C.7 KL Divergence</h3>
+            <div class="formula">
+                \[D_{\text{KL}}(p\Vert q)=\sum_i p_i\log\frac{p_i}{q_i}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> distillation, RLHF constraints, variational methods.</p>
+
+            <h3 id="c8-jensen-shannon">C.8 Jensen–Shannon Divergence</h3>
+            <div class="formula">
+                \[\text{JSD}(p,q)=\tfrac{1}{2}D_{\text{KL}}(p\Vert m)+\tfrac{1}{2}D_{\text{KL}}(q\Vert m),\quad m=\tfrac{1}{2}(p+q)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> distribution similarity, stability analyses.</p>
+
+            <h3 id="c9-entropy">C.9 Entropy</h3>
+            <div class="formula">
+                \[H(p)=-\sum_i p_i\log p_i\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> uncertainty, diversity penalties, exploration.</p>
+
+            <h3 id="c10-mutual-information">C.10 Mutual Information (General Form)</h3>
+            <div class="formula">
+                \[I(X;Y)=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> representation learning, probing, information bottleneck discussions.</p>
+
+            <hr>
+
+            <h2 id="d-transformer">D. Transformer & Attention Core Formulae</h2>
+
+            <h3 id="d1-attention">D.1 Self-Attention (Scaled Dot-Product)</h3>
+            <div class="formula">
+                \[\text{Attention}(\mathbf{Q},\mathbf{K},\mathbf{V})=\text{softmax}\Big(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}\Big)\mathbf{V}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> central Transformer operation.</p>
+
+            <h3 id="d2-qkv">D.2 QKV Projections</h3>
+            <div class="formula">
+                \[\mathbf{Q}=\mathbf{X}\mathbf{W}_Q,\quad \mathbf{K}=\mathbf{X}\mathbf{W}_K,\quad \mathbf{V}=\mathbf{X}\mathbf{W}_V\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> learned maps from hidden states to attention spaces.</p>
+
+            <h3 id="d3-multi-head">D.3 Multi-Head Attention</h3>
+            <div class="formula">
+                \[\text{head}_h=\text{Attention}(\mathbf{Q}\mathbf{W}^Q_h,\mathbf{K}\mathbf{W}^K_h,\mathbf{V}\mathbf{W}^V_h)\]
+                \[\text{MHA}=\text{Concat}(\text{head}_1,\dots,\text{head}_H)\mathbf{W}_O\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> attends in multiple subspaces.</p>
+
+            <h3 id="d4-positional-encoding">D.4 Position Encoding (Sinusoidal Example)</h3>
+            <div class="formula">
+                \[\text{PE}(pos,2i)=\sin\Big(\frac{pos}{10000^{2i/d}}\Big),\quad
+                \text{PE}(pos,2i+1)=\cos\Big(\frac{pos}{10000^{2i/d}}\Big)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> injects order into non-recurrent architectures.</p>
+
+            <h3 id="d5-layernorm">D.5 Layer Normalisation</h3>
+            <div class="formula">
+                \[\text{LN}(\mathbf{x})=\gamma\odot\frac{\mathbf{x}-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> stabilises training.</p>
+
+            <h3 id="d6-residual">D.6 Residual Connection</h3>
+            <div class="formula">
+                \[\mathbf{y}=\mathbf{x}+f(\mathbf{x})\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> improves optimisation and gradient flow.</p>
+
+            <h3 id="d7-ffn">D.7 Feed-Forward Network (FFN/MLP Block)</h3>
+            <div class="formula">
+                \[\text{FFN}(\mathbf{x})=\mathbf{W}_2\,\phi(\mathbf{W}_1\mathbf{x}+\mathbf{b}_1)+\mathbf{b}_2\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> token-wise nonlinearity and capacity.</p>
+
+            <h3 id="d8-gelu">D.8 GELU (Common Activation)</h3>
+            <div class="formula">
+                \[\text{GELU}(x)=x\,\Phi(x)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> common Transformer MLP activation.</p>
+
+            <hr>
+
+            <h2 id="e-optimization">E. Optimisation & Training Dynamics</h2>
+
+            <h3 id="e1-gradient-descent">E.1 Gradient Descent Update</h3>
+            <div class="formula">
+                \[\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}(\theta)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> baseline optimiser concept.</p>
+
+            <h3 id="e2-adam">E.2 Adam (Core Idea; Simplified)</h3>
+            <div class="formula">
+                \[m_t=\beta_1 m_{t-1}+(1-\beta_1)g_t,\quad v_t=\beta_2 v_{t-1}+(1-\beta_2)g_t^2\]
+                \[\theta \leftarrow \theta - \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t}+\epsilon}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> standard Transformer optimiser family.</p>
+
+            <h3 id="e3-weight-decay">E.3 Weight Decay / L2 Regularisation</h3>
+            <div class="formula">
+                \[\mathcal{L}=\mathcal{L}_{\text{task}}+\lambda \lVert\theta\rVert_2^2\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> controls overfitting (AdamW commonly used).</p>
+
+            <h3 id="e4-dropout">E.4 Dropout</h3>
+            <div class="formula">
+                \[\tilde{\mathbf{h}}=\mathbf{m}\odot \mathbf{h},\quad m_i\sim \text{Bernoulli}(1-p)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> regularisation in attention/MLP layers.</p>
+
+            <h3 id="e5-gradient-clipping">E.5 Gradient Clipping (Global Norm)</h3>
+            <div class="formula">
+                \[g \leftarrow g\cdot \min\Big(1,\frac{c}{\lVert g\rVert_2}\Big)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> prevents exploding gradients.</p>
+
+            <h3 id="e6-lr-schedules">E.6 Learning Rate Schedules (Warmup + Decay; Common Pattern)</h3>
+            <div class="formula">
+                \[\eta(t)=\eta_{\max}\cdot \min\Big(t^{-1/2},\,t\cdot \text{warmup}^{-3/2}\Big)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> stabilises early Transformer training.</p>
+
+            <hr>
+
+            <h2 id="f-metrics">F. Classification & Retrieval Metrics</h2>
+
+            <h3 id="f1-confusion">F.1 Confusion Matrix Terms</h3>
+            <p>True Positive (TP), False Positive (FP), True Negative (TN), False Negative (FN)</p>
+
+            <h3 id="f2-precision">F.2 Precision</h3>
+            <div class="formula">
+                \[\text{Precision}=\frac{\text{TP}}{\text{TP}+\text{FP}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> "How many predicted positives were correct?"</p>
+
+            <h3 id="f3-recall">F.3 Recall</h3>
+            <div class="formula">
+                \[\text{Recall}=\frac{\text{TP}}{\text{TP}+\text{FN}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> "How many true positives were found?"</p>
+
+            <h3 id="f4-f1">F.4 F1 Score</h3>
+            <div class="formula">
+                \[F1=2\cdot\frac{\text{Precision}\cdot \text{Recall}}{\text{Precision}+\text{Recall}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> balance precision/recall.</p>
+
+            <h3 id="f5-accuracy">F.5 Accuracy</h3>
+            <div class="formula">
+                \[\text{Accuracy}=\frac{\text{TP}+\text{TN}}{\text{TP}+\text{FP}+\text{TN}+\text{FN}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> overall correctness (watch class imbalance).</p>
+
+            <h3 id="f6-roc-auc">F.6 ROC-AUC (Conceptual)</h3>
+            <div class="formula">
+                \[\text{TPR}=\frac{\text{TP}}{\text{TP}+\text{FN}},\quad
+                \text{FPR}=\frac{\text{FP}}{\text{FP}+\text{TN}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> threshold-free ranking quality.</p>
+
+            <h3 id="f7-ap-map">F.7 Average Precision / mAP (Ranking)</h3>
+            <div class="formula">
+                \[\text{AP}=\sum_{k} P@k\cdot \Delta R@k\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> retrieval and ranking tasks.</p>
+
+            <h3 id="f8-precision-k">F.8 Precision@k</h3>
+            <div class="formula">
+                \[P@k=\frac{\#\text{relevant in top }k}{k}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> search / RAG evaluation.</p>
+
+            <h3 id="f9-recall-k">F.9 Recall@k</h3>
+            <div class="formula">
+                \[R@k=\frac{\#\text{relevant in top }k}{\#\text{relevant overall}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> whether the retriever finds needed evidence.</p>
+
+            <h3 id="f10-mrr">F.10 MRR (Mean Reciprocal Rank)</h3>
+            <div class="formula">
+                \[\text{MRR}=\frac{1}{N}\sum_{i=1}^{N}\frac{1}{\text{rank}_i}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> how early the first relevant result appears.</p>
+
+            <h3 id="f11-ndcg">F.11 NDCG@k</h3>
+            <div class="formula">
+                \[\text{DCG@k}=\sum_{i=1}^{k}\frac{2^{rel_i}-1}{\log_2(i+1)},\quad
+                \text{NDCG@k}=\frac{\text{DCG@k}}{\text{IDCG@k}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> graded relevance ranking.</p>
+
+            <hr>
+
+            <h2 id="g-generation">G. Language Generation & Sequence Metrics</h2>
+
+            <h3 id="g1-bleu">G.1 BLEU (n-gram precision with brevity penalty)</h3>
+            <div class="formula">
+                \[\text{BLEU}=\text{BP}\cdot \exp\Big(\sum_{n=1}^{N}w_n\log p_n\Big)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> machine translation (less ideal for open-ended generation).</p>
+
+            <h3 id="g2-rouge">G.2 ROUGE (Recall-Focused Overlap; Variants ROUGE-N / ROUGE-L)</h3>
+            <p>Typically computed from n-gram overlap or LCS overlap.</p>
+            <p class="formula-use"><strong>Use:</strong> summarisation evaluation.</p>
+
+            <h3 id="g3-exact-match">G.3 Exact Match (EM)</h3>
+            <div class="formula">
+                \[\text{EM}=\frac{\#\text{exact matches}}{N}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> extractive QA where answers are canonical.</p>
+
+            <h3 id="g4-token-accuracy">G.4 Token-Level Accuracy</h3>
+            <div class="formula">
+                \[\frac{1}{T}\sum_{t=1}^{T}\mathbb{1}[\hat{x}_t=x_t]\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> constrained tasks, probing, some structured generation.</p>
+
+            <hr>
+
+            <h2 id="h-decoding">H. Decoding & Search (Inference)</h2>
+
+            <h3 id="h1-greedy">H.1 Greedy Decoding</h3>
+            <div class="formula">
+                \[\hat{x}_t=\arg\max_i p_\theta(i\mid x_{<t})\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> fastest decoding; can be repetitive.</p>
+
+            <h3 id="h2-beam-search">H.2 Beam Search (Score Accumulation)</h3>
+            <div class="formula">
+                \[\text{score}(x_{1:T})=\sum_{t=1}^{T}\log p_\theta(x_t\mid x_{<t})\]
+            </div>
+            <p>Often with length normalisation:</p>
+            <div class="formula">
+                \[\frac{1}{T^\alpha}\sum_{t=1}^{T}\log p_\theta(\cdot)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> translation/summarisation baselines.</p>
+
+            <h3 id="h3-top-k">H.3 Top-k Sampling</h3>
+            <p>Sample only from the top \(k\) tokens by probability.</p>
+            <p class="formula-use"><strong>Use:</strong> limits tail risk.</p>
+
+            <h3 id="h4-top-p">H.4 Nucleus Sampling (Top-p)</h3>
+            <p>Choose smallest set \(S\) such that:</p>
+            <div class="formula">
+                \[\sum_{i\in S} p_i \ge p\]
+            </div>
+            <p>Sample from \(S\).</p>
+            <p class="formula-use"><strong>Use:</strong> adapts set size to distribution shape.</p>
+
+            <hr>
+
+            <h2 id="i-contrastive">I. Contrastive Learning & Embedding Losses</h2>
+
+            <h3 id="i1-triplet">I.1 Triplet Loss</h3>
+            <div class="formula">
+                \[\mathcal{L}=\max\big(0, d(a,p)-d(a,n)+m\big)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> embedding separation.</p>
+
+            <h3 id="i2-infonce">I.2 InfoNCE (Contrastive)</h3>
+            <div class="formula">
+                \[\mathcal{L}=-\log \frac{\exp(\text{sim}(q,k^+)/\tau)}{\exp(\text{sim}(q,k^+)/\tau)+\sum_{k^-}\exp(\text{sim}(q,k^-)/\tau)}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> retrieval models, dual encoders, representation learning.</p>
+
+            <hr>
+
+            <h2 id="j-alignment">J. Distillation & Alignment</h2>
+
+            <h3 id="j1-distillation">J.1 Distillation Loss (KL between Teacher and Student)</h3>
+            <div class="formula">
+                \[\mathcal{L}_{\text{distil}}=D_{\text{KL}}(p_{\text{teacher}}\Vert p_{\text{student}})\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> compress large LMs into smaller ones.</p>
+
+            <h3 id="j2-pairwise">J.2 Reward Modelling (Pairwise Preference Loss; Common Form)</h3>
+            <div class="formula">
+                \[\mathcal{L}=-\log \sigma\big(r_\phi(x,y^+)-r_\phi(x,y^-)\big)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> RLHF reward model training.</p>
+
+            <h3 id="j3-ppo">J.3 PPO Objective (Core Clipped Surrogate; Simplified)</h3>
+            <div class="formula">
+                \[\mathcal{L}_{\text{PPO}}=\mathbb{E}\Big[\min\big(r_t A_t,\ \text{clip}(r_t,1-\epsilon,1+\epsilon)A_t\big)\Big]\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> RLHF policy optimisation.</p>
+
+            <h3 id="j4-kl-penalty">J.4 KL Penalty (Policy Staying Close to Reference)</h3>
+            <div class="formula">
+                \[\mathcal{L}=\mathcal{L}_{\text{RL}}+\beta\,D_{\text{KL}}(\pi_\theta\Vert \pi_{\text{ref}})\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> reduces drift from the reference policy.</p>
+
+            <hr>
+
+            <h2 id="k-calibration">K. Calibration & Uncertainty</h2>
+
+            <h3 id="k1-ece">K.1 Expected Calibration Error (ECE; Binned)</h3>
+            <div class="formula">
+                \[\text{ECE}=\sum_{m=1}^{M}\frac{|B_m|}{N}\big|\text{acc}(B_m)-\text{conf}(B_m)\big|\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> probability calibration quality.</p>
+
+            <h3 id="k2-brier">K.2 Brier Score</h3>
+            <div class="formula">
+                \[\text{Brier}=\frac{1}{N}\sum_{i=1}^{N}(p_i-y_i)^2\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> probabilistic forecast accuracy.</p>
+
+            <hr>
+
+            <h2 id="l-complexity">L. Complexity & Scaling (Often Cited)</h2>
+
+            <h3 id="l1-attention-complexity">L.1 Self-Attention Complexity (Sequence Length \(n\))</h3>
+            <div class="formula">
+                \[\mathcal{O}(n^2)\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> motivates long-context optimisations.</p>
+
+            <h3 id="l2-parameter-count">L.2 Parameter Count (Rough Intuition)</h3>
+            <div class="formula">
+                \[\#\theta \approx d_{\text{in}}\cdot d_{\text{out}}\]
+            </div>
+            <p class="formula-use"><strong>Use:</strong> capacity comparisons.</p>
+
+            <hr>
+
+            <div class="quick-index">
+                <h2 id="m-quick-index">M. Quick "When to Use What" Index</h2>
+                <ul>
+                    <li><strong>Embedding similarity:</strong> cosine similarity, dot product, InfoNCE</li>
+                    <li><strong>LM training:</strong> NLL / cross-entropy, perplexity</li>
+                    <li><strong>RAG evaluation:</strong> Recall@k, MRR, NDCG, Precision@k</li>
+                    <li><strong>Classification:</strong> precision, recall, F1, ROC-AUC</li>
+                    <li><strong>Alignment:</strong> pairwise preference loss, PPO objective, KL penalty</li>
+                    <li><strong>Inference control:</strong> temperature, top-k, top-p, beam score</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

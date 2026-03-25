@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brand AI Chat — Learning Session</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #cc0000;
+    --red-light: #f5e0e0;
+    --red-mid: #e8b3b3;
+    --bg: #f4f4f4;
+    --white: #ffffff;
+    --grey-100: #f9f9f9;
+    --grey-200: #efefef;
+    --grey-300: #e0e0e0;
+    --grey-400: #c8c8c8;
+    --grey-600: #888888;
+    --grey-800: #444444;
+    --text: #222222;
+    --c1: #1a6eb5;
+    --c1-light: #e8f1fb;
+    --c2: #0a8a6e;
+    --c2-light: #e2f5f1;
+    --c3: #7a35b8;
+    --c3-light: #f0e8fb;
+    --c4: #d9800a;
+    --c4-light: #fdf3e3;
+    --c5: #b01a6e;
+    --c5-light: #fce8f3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* SLIDES */
+  .slide {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 72px;
+    border-bottom: 1px solid var(--grey-300);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide + .slide { border-top: none; }
+
+  /* Slide variants */
+  .slide-cover {
+    background: var(--white);
+    align-items: flex-start;
+  }
+
+  .slide-section {
+    background: var(--red);
+    color: #fff;
+    padding: 48px 72px;
+    min-height: 240px;
+    justify-content: flex-end;
+  }
+
+  .slide-content {
+    background: var(--white);
+  }
+
+  .slide-alt {
+    background: var(--grey-100);
+  }
+
+  /* COVER SLIDE */
+  .cover-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    background: var(--red-light);
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 36px;
+  }
+
+  .cover-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 24px;
+    max-width: 720px;
+  }
+
+  .cover-title span {
+    color: var(--red);
+  }
+
+  .cover-sub {
+    font-size: 1.1rem;
+    color: var(--grey-600);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 52px;
+    font-weight: 300;
+  }
+
+  .cover-meta {
+    font-size: 0.8rem;
+    color: var(--grey-400);
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
+
+  /* Decorative corner element */
+  .cover-deco {
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 420px;
+    height: 420px;
+    border: 1px solid var(--grey-200);
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+
+  .cover-deco::after {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border: 1px solid var(--grey-200);
+    border-radius: 50%;
+  }
+
+  /* SECTION DIVIDER */
+  .section-num {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .section-sub {
+    margin-top: 10px;
+    font-size: 1rem;
+    opacity: 0.75;
+    font-weight: 300;
+    max-width: 560px;
+  }
+
+  /* SLIDE HEADER */
+  .slide-header {
+    margin-bottom: 40px;
+  }
+
+  .slide-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .slide-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.15;
+  }
+
+  .slide-desc {
+    margin-top: 10px;
+    font-size: 0.92rem;
+    color: var(--grey-600);
+    max-width: 680px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* CATEGORY CARDS */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .cat-card {
+    border-radius: 16px;
+    padding: 22px 18px;
+    border: 1.5px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cat-card.c1 { background: var(--c1-light); border-color: #b8d4f0; }
+  .cat-card.c2 { background: var(--c2-light); border-color: #a8e0d4; }
+  .cat-card.c3 { background: var(--c3-light); border-color: #d0b8f0; }
+  .cat-card.c4 { background: var(--c4-light); border-color: #f0d4a0; }
+  .cat-card.c5 { background: var(--c5-light); border-color: #f0b8d8; }
+
+  .cat-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 14px;
+  }
+
+  .c1 .cat-icon { background: var(--c1); }
+  .c2 .cat-icon { background: var(--c2); }
+  .c3 .cat-icon { background: var(--c3); }
+  .c4 .cat-icon { background: var(--c4); }
+  .c5 .cat-icon { background: var(--c5); }
+
+  .cat-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .c1 .cat-label { color: var(--c1); }
+  .c2 .cat-label { color: var(--c2); }
+  .c3 .cat-label { color: var(--c3); }
+  .c4 .cat-label { color: var(--c4); }
+  .c5 .cat-label { color: var(--c5); }
+
+  .cat-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .cat-desc {
+    font-size: 0.8rem;
+    color: var(--grey-800);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  /* ELEMENT CARDS grid */
+  .el-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .el-card {
+    background: var(--white);
+    border: 1.5px solid var(--grey-300);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+
+  .el-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+  }
+
+  .el-card-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .el-sym {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .el-meta {}
+  .el-category {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .el-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .el-desc {
+    font-size: 0.82rem;
+    color: var(--grey-800);
+    line-height: 1.6;
+    font-weight: 300;
+    border-top: 1px solid var(--grey-200);
+    padding-top: 12px;
+  }
+
+  .el-priority {
+    position: absolute;
+    top: 14px; right: 14px;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+
+  .priority-critical { background: #fde8e8; color: var(--red); }
+  .priority-core { background: var(--grey-200); color: var(--grey-600); }
+  .priority-phase2 { background: var(--c3-light); color: var(--c3); }
+  .priority-phase3 { background: var(--c4-light); color: var(--c4); }
+
+  /* Layer architecture */
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .layer-row {
+    background: var(--white);
+    border: 1.5px solid var(--grey-300);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 48px 200px 1fr;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .layer-num {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .layer-info {}
+  .layer-cat {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+
+  .layer-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .layer-detail {
+    font-size: 0.82rem;
+    color: var(--grey-600);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .t-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .t-item::before {
+    content: '';
+    position: absolute;
+    left: 180px;
+    top: 0; bottom: 0;
+    width: 1.5px;
+    background: var(--grey-300);
+    transform: translateX(-50%);
+  }
+
+  .t-left {
+    padding: 28px 32px 28px 0;
+    text-align: right;
+  }
+
+  .t-phase-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .t-weeks {
+    font-size: 0.78rem;
+    color: var(--grey-400);
+    font-style: italic;
+  }
+
+  .t-right {
+    padding: 28px 0 28px 36px;
+    position: relative;
+  }
+
+  .t-dot {
+    position: absolute;
+    left: 0;
+    top: 34px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    transform: translateX(-50%);
+    box-shadow: 0 0 0 1.5px currentColor;
+  }
+
+  .t-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .t-desc {
+    font-size: 0.85rem;
+    color: var(--grey-600);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .t-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .t-pill {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Formula slide */
+  .formula-box {
+    background: var(--white);
+    border-radius: 20px;
+    border: 2px solid var(--red-mid);
+    padding: 44px 48px;
+    text-align: center;
+  }
+
+  .formula-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .formula-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .formula-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .formula-sub {
+    font-size: 0.9rem;
+    color: var(--grey-600);
+    max-width: 560px;
+    margin: 0 auto 32px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .formula-chain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .formula-el {
+    width: 64px; height: 64px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    gap: 2px;
+  }
+
+  .formula-el .sym {
+    font-size: 1.3rem;
+    color: #fff;
+  }
+
+  .formula-el .name {
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.02em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+  }
+
+  .formula-plus {
+    font-size: 1.2rem;
+    color: var(--grey-400);
+    font-weight: 300;
+  }
+
+  .formula-caption {
+    font-size: 0.8rem;
+    color: var(--grey-600);
+    font-style: italic;
+  }
+
+  /* Slide page number */
+  .slide-footer {
+    position: absolute;
+    bottom: 32px;
+    right: 72px;
+    font-size: 0.7rem;
+    color: var(--grey-400);
+    letter-spacing: 0.08em;
+  }
+
+  /* Two-col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .two-col-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Analogy box */
+  .analogy {
+    background: var(--grey-100);
+    border: 1.5px solid var(--grey-300);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+
+  .analogy-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey-600);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .analogy-text {
+    font-size: 0.88rem;
+    color: var(--grey-800);
+    line-height: 1.65;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  /* Colour assignments shorthand */
+  .bg-c1 { background: var(--c1); }
+  .bg-c2 { background: var(--c2); }
+  .bg-c3 { background: var(--c3); }
+  .bg-c4 { background: var(--c4); }
+  .bg-c5 { background: var(--c5); }
+  .bg-red { background: var(--red); }
+
+  .col-c1 { color: var(--c1); }
+  .col-c2 { color: var(--c2); }
+  .col-c3 { color: var(--c3); }
+  .col-c4 { color: var(--c4); }
+  .col-c5 { color: var(--c5); }
+  .col-red { color: var(--red); }
+
+  /* Print-friendly: each slide is one page */
+  @media print {
+    .slide { page-break-after: always; min-height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════════ -->
+<div class="slide slide-cover">
+  <div class="cover-deco"></div>
+  <div class="cover-eyebrow">Knowledge & Learning Session</div>
+  <h1 class="cover-title">Brand AI Chat<br><span>Architecture</span><br>Blueprint</h1>
+  <p class="cover-sub">A plain-language guide to the building blocks of a production-ready AI chat system for brands — explained so anyone can understand what each piece does and why it matters.</p>
+  <div class="cover-meta">Product Finder · AI Foundations · 2025</div>
+  <div class="slide-footer">1 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 2 — WHAT IS THIS?
+══════════════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="slide-header">
+    <div class="slide-eyebrow">Context</div>
+    <h2 class="slide-title">What are we building?</h2>
+    <p class="slide-desc">Think of it like hiring a very knowledgeable shop assistant — except it's AI, available 24/7, knows every product in your catalog, and can help thousands of customers at once.</p>
+  </div>
+
+  <div class="two-col" style="align-items:start; gap:32px;">
+    <div>
+      <div style="background:var(--red-light); border:1.5px solid var(--red-mid); border-radius:16px; padding:28px;">
+        <div style="font-size:2rem; margin-bottom:14px;">🛍️</div>
+        <div style="font-family:'Fraunces',serif; font-size:1.1rem; font-weight:700; margin-bottom:10px;">What customers experience</div>
+        <p style="font-size:0.85rem; color:var(--grey-800); line-height:1.65; font-weight:300;">"Find me something waterproof for hiking under £200" → The AI searches your entire product catalog, finds the best matches, and explains why — all in natural conversation.</p>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="analogy">
+        <div class="analogy-label">📦 Think of it like…</div>
+        <div class="analogy-text">A Lego set. Each AI "element" is a brick that does one specific job. You snap them together in the right order and you get a finished, working product.</div>
+      </div>
+      <div class="analogy">
+        <div class="analogy-label">🗺️ Today's session covers…</div>
+        <div class="analogy-text">14 AI building blocks grouped into 5 categories. We'll explain what each one does, why it's needed, and how they all connect — no technical background required.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">2 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 — 5 CATEGORIES OVERVIEW
+══════════════════════════════════════════════ -->
+<div class="slide slide-alt">
+  <div class="slide-header">
+    <div class="slide-eyebrow">The Big Picture</div>
+    <h2 class="slide-title">Five categories of AI elements</h2>
+    <p class="slide-desc">Every element in this architecture belongs to one of five functional groups. Together, they take a customer's question all the way through to a trustworthy, brand-safe answer.</p>
+  </div>
+
+  <div class="cat-grid">
+    <div class="cat-card c1">
+      <div class="cat-icon bg-c1">🎯</div>
+      <div class="cat-label">C1 · Reactive</div>
+      <div class="cat-name">Input & Intent</div>
+      <div class="cat-desc">Listens to what the customer is asking and decides what to do about it. The "front door" of the system.</div>
+    </div>
+    <div class="cat-card c2">
+      <div class="cat-icon bg-c2">📚</div>
+      <div class="cat-label">C2 · Retrieval</div>
+      <div class="cat-name">Product Knowledge</div>
+      <div class="cat-desc">Stores and searches your entire product catalog so the AI can find relevant items instantly.</div>
+    </div>
+    <div class="cat-card c3">
+      <div class="cat-icon bg-c3">⚙️</div>
+      <div class="cat-label">C3 · Orchestration</div>
+      <div class="cat-name">Pipeline & Logic</div>
+      <div class="cat-desc">The "manager" that coordinates all the other pieces — making sure everything runs in the right order.</div>
+    </div>
+    <div class="cat-card c4">
+      <div class="cat-icon bg-c4">🛡️</div>
+      <div class="cat-label">C4 · Validation</div>
+      <div class="cat-name">Safety & Trust</div>
+      <div class="cat-desc">The quality-control layer. Prevents wrong prices, off-brand responses, and harmful outputs.</div>
+    </div>
+    <div class="cat-card c5">
+      <div class="cat-icon bg-c5">🧠</div>
+      <div class="cat-label">C5 · Models</div>
+      <div class="cat-name">AI Brain Selection</div>
+      <div class="cat-desc">Choosing the right AI model for each task — from quick answers to deep product comparisons.</div>
+    </div>
+  </div>
+  <div class="slide-footer">3 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 4 — C1 REACTIVE ELEMENTS
+══════════════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="slide-header">
+    <div class="slide-eyebrow" style="color:var(--c1);">Category 1 · Reactive — Input & Intent Engine</div>
+    <h2 class="slide-title">How the AI listens and acts</h2>
+    <p class="slide-desc">These elements handle everything from the moment a customer types a message to the point where the AI knows exactly what action to take.</p>
+  </div>
+
+  <div class="el-grid">
+    <div class="el-card">
+      <div class="el-priority priority-critical">Critical</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c1">Pr</div>
+        <div class="el-meta">
+          <div class="el-category col-c1">Prompts</div>
+          <div class="el-name">Brand Voice Instructions</div>
+        </div>
+      </div>
+      <div class="el-desc">The written instructions you give the AI before every conversation. Like a briefing document — it tells the AI your brand's tone, what products to focus on, and how to format answers. <strong>Without this, the AI has no idea it's working for your brand.</strong></div>
+    </div>
+    <div class="el-card">
+      <div class="el-priority priority-critical">Critical</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c1">Fc</div>
+        <div class="el-meta">
+          <div class="el-category col-c1">Function Call</div>
+          <div class="el-name">Smart Action Router</div>
+        </div>
+      </div>
+      <div class="el-desc">When the AI needs to do something (look up stock levels, add to cart, check pricing) it uses Function Calls to trigger the right action automatically. <strong>Think of it as the AI pressing buttons in your systems on behalf of the customer.</strong></div>
+    </div>
+    <div class="el-card">
+      <div class="el-priority priority-core">Core</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c1">Ag</div>
+        <div class="el-meta">
+          <div class="el-category col-c1">Agent</div>
+          <div class="el-name">Multi-Step Task Handler</div>
+        </div>
+      </div>
+      <div class="el-desc">An Agent can carry out a sequence of steps to complete a goal — search, then compare, then recommend, then add to cart. <strong>It's like a capable employee who doesn't need hand-holding for every step.</strong></div>
+    </div>
+    <div class="el-card">
+      <div class="el-priority priority-phase3">Phase 3</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c1">Ma</div>
+        <div class="el-meta">
+          <div class="el-category col-c1">Multi-Agent</div>
+          <div class="el-name">Parallel Research Team</div>
+        </div>
+      </div>
+      <div class="el-desc">Multiple AI agents working simultaneously on different parts of a query. <strong>Imagine a research team — one person checks outdoor gear, another checks footwear, all at the same time.</strong> Faster, more thorough answers for complex requests.</div>
+    </div>
+  </div>
+  <div class="slide-footer">4 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 5 — C2 RETRIEVAL ELEMENTS
+══════════════════════════════════════════════ -->
+<div class="slide slide-alt">
+  <div class="slide-header">
+    <div class="slide-eyebrow" style="color:var(--c2);">Category 2 · Retrieval — Product Knowledge Store</div>
+    <h2 class="slide-title">How the AI finds the right products</h2>
+    <p class="slide-desc">These elements turn your product catalog into something an AI can search intelligently — finding the right match even when a customer doesn't use the exact product name.</p>
+  </div>
+
+  <div class="two-col" style="gap:20px; align-items:start;">
+    <div class="el-card" style="border-color:#a8e0d4;">
+      <div class="el-priority priority-critical">Critical</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c2">Em</div>
+        <div class="el-meta">
+          <div class="el-category col-c2">Embeddings</div>
+          <div class="el-name">Meaning Converter</div>
+        </div>
+      </div>
+      <div class="el-desc" style="margin-top:0; padding-top:0; border:none;">
+        <p style="margin-bottom:12px;">Every product in your catalog (name, description, specs, reviews) is converted into a unique mathematical "fingerprint" that captures its meaning. "Waterproof hiking boots" and "trail walking shoes for wet weather" would have similar fingerprints, even though the words are different.</p>
+        <div class="analogy" style="margin-top:12px;">
+          <div class="analogy-label">📖 Analogy</div>
+          <div class="analogy-text">Like translating every product into a universal language that the AI can compare and understand — even if customers describe things in unusual ways.</div>
+        </div>
+      </div>
+    </div>
+    <div class="el-card" style="border-color:#a8e0d4;">
+      <div class="el-priority priority-critical">Critical</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c2">Vx</div>
+        <div class="el-meta">
+          <div class="el-category col-c2">Vector DB</div>
+          <div class="el-name">Intelligent Product Library</div>
+        </div>
+      </div>
+      <div class="el-desc" style="margin-top:0; padding-top:0; border:none;">
+        <p style="margin-bottom:12px;">This is the database where all those "fingerprints" are stored. When a customer asks a question, the Vector DB instantly finds the products whose fingerprints are closest to the question — returning the best matches in milliseconds, across tens of thousands of products.</p>
+        <div class="analogy" style="margin-top:12px;">
+          <div class="analogy-label">📖 Analogy</div>
+          <div class="analogy-text">Like a super-smart library card catalog — instead of searching by exact title, it searches by meaning and relevance.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">5 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 6 — C3 ORCHESTRATION ELEMENTS
+══════════════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="slide-header">
+    <div class="slide-eyebrow" style="color:var(--c3);">Category 3 · Orchestration — Pipeline & Framework</div>
+    <h2 class="slide-title">How everything is coordinated</h2>
+    <p class="slide-desc">These elements act as the "operations manager" of the AI system — making sure each component runs in the right order and that responses are always grounded in your real product data.</p>
+  </div>
+
+  <div class="two-col" style="gap:20px; align-items:start;">
+    <div class="el-card" style="border-color:#d0b8f0;">
+      <div class="el-priority priority-critical">Critical</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c3">Rg</div>
+        <div class="el-meta">
+          <div class="el-category col-c3">RAG</div>
+          <div class="el-name">Retrieval-Augmented Generation</div>
+        </div>
+      </div>
+      <div class="el-desc" style="margin-top:0; padding-top:0; border:none;">
+        <p style="margin-bottom:12px;">RAG is the core process that stops the AI from making things up. Before answering, it first searches your product database for relevant information, then feeds that real data to the AI so it can compose an accurate, grounded response.</p>
+        <div class="analogy" style="margin-top:12px;">
+          <div class="analogy-label">📖 Analogy</div>
+          <div class="analogy-text">Like a journalist who looks up verified facts before writing a story — rather than guessing from memory.</div>
+        </div>
+      </div>
+    </div>
+    <div class="el-card" style="border-color:#d0b8f0;">
+      <div class="el-priority priority-core">Core</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c3">Fw</div>
+        <div class="el-meta">
+          <div class="el-category col-c3">Framework</div>
+          <div class="el-name">Orchestration Engine</div>
+        </div>
+      </div>
+      <div class="el-desc" style="margin-top:0; padding-top:0; border:none;">
+        <p style="margin-bottom:12px;">The software framework (LangChain, LlamaIndex) connects all the pieces — managing conversation memory, retrieval chains, API calls, and ensuring the whole pipeline flows correctly from query to answer.</p>
+        <div class="analogy" style="margin-top:12px;">
+          <div class="analogy-label">📖 Analogy</div>
+          <div class="analogy-text">Like a kitchen pass in a restaurant — the chef (AI) receives orders, the pass coordinates who does what and in which order, making the whole experience seamless.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">6 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 7 — C4 VALIDATION ELEMENTS
+══════════════════════════════════════════════ -->
+<div class="slide slide-alt">
+  <div class="slide-header">
+    <div class="slide-eyebrow" style="color:var(--c4);">Category 4 · Validation — Safety & Trust Layer</div>
+    <h2 class="slide-title">How the AI stays safe and on-brand</h2>
+    <p class="slide-desc">Before any response reaches a customer, it passes through a safety and quality layer. These elements protect your brand, your customers, and your business from AI mistakes.</p>
+  </div>
+
+  <div class="el-grid">
+    <div class="el-card" style="border-color:#f0d4a0;">
+      <div class="el-priority priority-critical">Critical</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c4">Gr</div>
+        <div class="el-meta">
+          <div class="el-category col-c4">Guardrails</div>
+          <div class="el-name">Response Safety Filters</div>
+        </div>
+      </div>
+      <div class="el-desc">Automated filters that catch and block problematic responses before they reach customers. Prevents hallucinated pricing, off-brand messaging, and harmful outputs. <strong>Think of them as the proofreader that runs before every reply is sent.</strong></div>
+    </div>
+    <div class="el-card" style="border-color:#f0d4a0;">
+      <div class="el-priority priority-core">Core</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c4">Rt</div>
+        <div class="el-meta">
+          <div class="el-category col-c4">Red-Teaming</div>
+          <div class="el-name">Adversarial Stress-Testing</div>
+        </div>
+      </div>
+      <div class="el-desc">Before launch, a team (or automated tool) deliberately tries to break the AI — asking trick questions, edge cases, and provocative queries to find weak spots. <strong>Like a fire drill: you'd rather discover problems in training than in front of real customers.</strong></div>
+    </div>
+    <div class="el-card" style="border-color:#f0d4a0;">
+      <div class="el-priority priority-phase2">Phase 2</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c4">In</div>
+        <div class="el-meta">
+          <div class="el-category col-c4">Interpretability</div>
+          <div class="el-name">AI Decision Explainer</div>
+        </div>
+      </div>
+      <div class="el-desc">Tools that let your team see why the AI made a specific recommendation. Essential for regulated industries (pharma, finance) where the brand must be able to account for every suggestion. <strong>Turns the AI from a "black box" into an auditable decision trail.</strong></div>
+    </div>
+  </div>
+  <div class="slide-footer">7 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 8 — C5 MODEL ELEMENTS
+══════════════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="slide-header">
+    <div class="slide-eyebrow" style="color:var(--c5);">Category 5 · Models — AI Brain Selection</div>
+    <h2 class="slide-title">Choosing the right AI for the job</h2>
+    <p class="slide-desc">Not every task needs the most powerful (and expensive) AI. This category is about using the right model for each situation — balancing speed, cost, and capability.</p>
+  </div>
+
+  <div class="el-grid">
+    <div class="el-card" style="border-color:#f0b8d8;">
+      <div class="el-priority priority-critical">Critical</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c5">Lg</div>
+        <div class="el-meta">
+          <div class="el-category col-c5">LLM</div>
+          <div class="el-name">Core Language Model</div>
+        </div>
+      </div>
+      <div class="el-desc">The main AI brain — models like Claude or GPT-4o. Handles understanding the customer's question and writing a natural, helpful response. <strong>The "writer and thinker" at the heart of the system.</strong> Tools: Claude Sonnet, GPT-4o, Gemini.</div>
+    </div>
+    <div class="el-card" style="border-color:#f0b8d8;">
+      <div class="el-priority priority-phase2">Phase 2</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c5">Mm</div>
+        <div class="el-meta">
+          <div class="el-category col-c5">Multimodal</div>
+          <div class="el-name">Image Understanding</div>
+        </div>
+      </div>
+      <div class="el-desc">AI that understands images as well as text. Enables visual product search: "find something like this photo." <strong>A customer can photograph an item they like and the AI finds similar products in your catalog.</strong></div>
+    </div>
+    <div class="el-card" style="border-color:#f0b8d8;">
+      <div class="el-priority priority-phase2">Phase 2</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c5">Sm</div>
+        <div class="el-meta">
+          <div class="el-category col-c5">Small Model</div>
+          <div class="el-name">Fast Pre-Filter AI</div>
+        </div>
+      </div>
+      <div class="el-desc">A lightweight, low-cost AI that handles simple tasks quickly — like classifying what a customer wants before routing to the main model. <strong>Like a receptionist who takes your name before you see the specialist — saves time and money.</strong></div>
+    </div>
+    <div class="el-card" style="border-color:#f0b8d8;">
+      <div class="el-priority priority-phase3">Phase 3</div>
+      <div class="el-card-top">
+        <div class="el-sym bg-c5">Th</div>
+        <div class="el-meta">
+          <div class="el-category col-c5">Thinking Model</div>
+          <div class="el-name">Deep Reasoning AI</div>
+        </div>
+      </div>
+      <div class="el-desc">Advanced models that "think through" complex problems step-by-step before answering. Used for comparing products across 50+ attributes, or handling high-consideration purchases where getting it exactly right matters more than speed.</div>
+    </div>
+  </div>
+  <div class="slide-footer">8 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 9 — 5-LAYER ARCHITECTURE FLOW
+══════════════════════════════════════════════ -->
+<div class="slide slide-alt">
+  <div class="slide-header">
+    <div class="slide-eyebrow">System Architecture</div>
+    <h2 class="slide-title">How the five layers work together</h2>
+    <p class="slide-desc">A customer's question flows through these five layers in sequence — from raw text input to a safe, grounded, on-brand product recommendation.</p>
+  </div>
+
+  <div class="layers">
+    <div class="layer-row">
+      <div class="layer-num bg-c1">1</div>
+      <div class="layer-info">
+        <div class="layer-cat col-c1">C1 · Reactive</div>
+        <div class="layer-name">Input & Intent Engine</div>
+      </div>
+      <div class="layer-detail">Customer types a question → Brand prompts define scope and tone → Function calls identify what action is needed → Agent decides how to proceed. <em>Example: "Find waterproof hiking boots under £200" → routed to product search pipeline.</em></div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-num bg-c2">2</div>
+      <div class="layer-info">
+        <div class="layer-cat col-c2">C2 · Retrieval</div>
+        <div class="layer-name">Product Knowledge Store</div>
+      </div>
+      <div class="layer-detail">The question's meaning is encoded into a fingerprint (Embeddings) → the Vector DB finds the most semantically similar products in your catalog — regardless of exact keyword matches. <em>Returns top matching products in milliseconds.</em></div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-num bg-c3">3</div>
+      <div class="layer-info">
+        <div class="layer-cat col-c3">C3 · Orchestration</div>
+        <div class="layer-name">RAG Pipeline & Framework</div>
+      </div>
+      <div class="layer-detail">The retrieved product data is injected into the AI's context (RAG) → the Framework manages memory, sequencing, and API calls → AI composes an answer grounded entirely in real product data — not guesswork.</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-num bg-c4">4</div>
+      <div class="layer-info">
+        <div class="layer-cat col-c4">C4 · Validation</div>
+        <div class="layer-name">Safety & Trust Layer</div>
+      </div>
+      <div class="layer-detail">Guardrails check the response for hallucinated prices, off-brand language, or harmful content → blocked before it reaches the customer. Red-teaming and Interpretability tools protect the brand and enable accountability.</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-num bg-c5">5</div>
+      <div class="layer-info">
+        <div class="layer-cat col-c5">C5 · Models</div>
+        <div class="layer-name">Model Selection Strategy</div>
+      </div>
+      <div class="layer-detail">The right AI model is selected for each task type — Fast Small Model for simple classification, LLM for language generation, Multimodal for image queries, Thinking Model for complex comparisons — balancing speed and cost.</div>
+    </div>
+  </div>
+  <div class="slide-footer">9 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 10 — BUILD ROADMAP
+══════════════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="slide-header">
+    <div class="slide-eyebrow">Phased Delivery Plan</div>
+    <h2 class="slide-title">How we build it — in three phases</h2>
+    <p class="slide-desc">Rather than build everything at once, the system is delivered in phases — starting with a working MVP and growing in capability over 12 weeks.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-left">
+        <div class="t-phase-label" style="color:var(--c1);">Phase 1 · MVP</div>
+        <div class="t-weeks">Weeks 1–4</div>
+      </div>
+      <div class="t-right">
+        <div class="t-dot" style="background:var(--c1); color:var(--c1);"></div>
+        <div class="t-title">Core Conversational Product Search</div>
+        <div class="t-desc">Embed your product catalog, set up the Vector DB, build the RAG pipeline, wire in the LLM with brand prompts, and deploy a chat widget brands can embed on their site. Customers can ask natural-language product questions and get accurate, grounded answers.</div>
+        <div class="t-pills">
+          <span class="t-pill" style="background:var(--c2-light);color:var(--c2);">Em · Embeddings</span>
+          <span class="t-pill" style="background:var(--c2-light);color:var(--c2);">Vx · Vector DB</span>
+          <span class="t-pill" style="background:var(--c3-light);color:var(--c3);">Rg · RAG</span>
+          <span class="t-pill" style="background:var(--c3-light);color:var(--c3);">Fw · Framework</span>
+          <span class="t-pill" style="background:var(--c5-light);color:var(--c5);">Lg · LLM</span>
+          <span class="t-pill" style="background:var(--c1-light);color:var(--c1);">Pr · Prompts</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <div class="t-left">
+        <div class="t-phase-label" style="color:var(--c3);">Phase 2 · Intelligence</div>
+        <div class="t-weeks">Weeks 5–8</div>
+      </div>
+      <div class="t-right">
+        <div class="t-dot" style="background:var(--c3); color:var(--c3);"></div>
+        <div class="t-title">Agentic Actions + Safety Layer</div>
+        <div class="t-desc">Connect to brand APIs (inventory, cart, checkout) via Function Calls. Add Agents for multi-step flows: search → compare → recommend → purchase. Apply Guardrails, run Red-teaming sprints, add Interpretability logging, and enable image-based search.</div>
+        <div class="t-pills">
+          <span class="t-pill" style="background:var(--c1-light);color:var(--c1);">Fc · Function Call</span>
+          <span class="t-pill" style="background:var(--c1-light);color:var(--c1);">Ag · Agent</span>
+          <span class="t-pill" style="background:var(--c4-light);color:var(--c4);">Gr · Guardrails</span>
+          <span class="t-pill" style="background:var(--c4-light);color:var(--c4);">Rt · Red-team</span>
+          <span class="t-pill" style="background:var(--c4-light);color:var(--c4);">In · Interpretability</span>
+          <span class="t-pill" style="background:var(--c5-light);color:var(--c5);">Mm · Multimodal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="t-item">
+      <div class="t-left">
+        <div class="t-phase-label" style="color:var(--c4);">Phase 3 · Advanced</div>
+        <div class="t-weeks">Weeks 9–12</div>
+      </div>
+      <div class="t-right">
+        <div class="t-dot" style="background:var(--c4); color:var(--c4);"></div>
+        <div class="t-title">Multi-Agent Intelligence & Scale</div>
+        <div class="t-desc">Deploy Multi-agent for parallel category research. Use Thinking models for complex comparisons and high-consideration purchases. Route simple queries through Small Models for cost efficiency. Launch multi-brand white-label version with tenant isolation.</div>
+        <div class="t-pills">
+          <span class="t-pill" style="background:var(--c1-light);color:var(--c1);">Ma · Multi-agent</span>
+          <span class="t-pill" style="background:var(--c5-light);color:var(--c5);">Th · Thinking</span>
+          <span class="t-pill" style="background:var(--c5-light);color:var(--c5);">Sm · Small Model</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">10 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 11 — MINIMUM VIABLE FORMULA
+══════════════════════════════════════════════ -->
+<div class="slide slide-alt" style="align-items:center; text-align:center;">
+  <div style="max-width:860px; margin:0 auto; width:100%;">
+    <div class="slide-header" style="text-align:center;">
+      <div class="slide-eyebrow" style="text-align:center;">Core Element Formula</div>
+      <h2 class="slide-title">The minimum to ship a working system</h2>
+      <p class="slide-desc" style="margin:10px auto 0;">Seven elements working in sequence is all you need to launch a functional, trustworthy brand AI chat product.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-eyebrow">
+        <div class="formula-dot"></div>
+        Minimum Viable Combination
+      </div>
+      <div class="formula-chain">
+        <div class="formula-el bg-c2"><span class="sym">Em</span><span class="name">Embeddings</span></div>
+        <div class="formula-plus">+</div>
+        <div class="formula-el bg-c2"><span class="sym">Vx</span><span class="name">Vector DB</span></div>
+        <div class="formula-plus">+</div>
+        <div class="formula-el bg-c3"><span class="sym">Rg</span><span class="name">RAG</span></div>
+        <div class="formula-plus">+</div>
+        <div class="formula-el bg-c1"><span class="sym">Pr</span><span class="name">Prompts</span></div>
+        <div class="formula-plus">+</div>
+        <div class="formula-el bg-c1"><span class="sym">Fc</span><span class="name">Func. Call</span></div>
+        <div class="formula-plus">+</div>
+        <div class="formula-el bg-c5"><span class="sym">Lg</span><span class="name">LLM</span></div>
+        <div class="formula-plus">+</div>
+        <div class="formula-el bg-c4"><span class="sym">Gr</span><span class="name">Guardrails</span></div>
+      </div>
+      <div class="formula-caption" style="color:var(--grey-600); font-size:0.85rem;">
+        Encode Products → Store Intelligently → Ground Answers in Data → Define Brand Voice → Route Actions → Generate Language → Protect the Brand
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">11 / 12</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 12 — SUMMARY
+══════════════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="slide-header">
+    <div class="slide-eyebrow">Summary</div>
+    <h2 class="slide-title">What we covered today</h2>
+    <p class="slide-desc">14 AI elements, 5 categories, 3 delivery phases — all working together to create a brand AI chat product that's accurate, safe, and genuinely useful.</p>
+  </div>
+
+  <div class="two-col-3" style="align-items:start;">
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <div style="font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--red); font-weight:500; margin-bottom:4px;">Key Takeaways</div>
+      <div style="background:var(--red-light); border:1.5px solid var(--red-mid); border-radius:14px; padding:18px 20px;">
+        <div style="font-size:0.85rem; font-weight:500; color:var(--text); margin-bottom:6px;">🎯 AI needs instructions</div>
+        <div style="font-size:0.8rem; color:var(--grey-800); font-weight:300; line-height:1.55;">Prompts define your brand voice. Without them, the AI doesn't know who it's working for.</div>
+      </div>
+      <div style="background:var(--red-light); border:1.5px solid var(--red-mid); border-radius:14px; padding:18px 20px;">
+        <div style="font-size:0.85rem; font-weight:500; color:var(--text); margin-bottom:6px;">📚 Grounding prevents hallucination</div>
+        <div style="font-size:0.8rem; color:var(--grey-800); font-weight:300; line-height:1.55;">RAG + Vector DB ensures every answer is based on your real product data — not AI guesses.</div>
+      </div>
+      <div style="background:var(--red-light); border:1.5px solid var(--red-mid); border-radius:14px; padding:18px 20px;">
+        <div style="font-size:0.85rem; font-weight:500; color:var(--text); margin-bottom:6px;">🛡️ Safety is non-negotiable</div>
+        <div style="font-size:0.8rem; color:var(--grey-800); font-weight:300; line-height:1.55;">Guardrails and red-teaming protect your brand and customers before anything goes live.</div>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <div style="font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--grey-600); font-weight:500; margin-bottom:4px;">The 5 Categories</div>
+      <div style="background:var(--c1-light); border-radius:12px; padding:14px 16px; border:1.5px solid #b8d4f0;">
+        <span style="font-weight:600; color:var(--c1); font-size:0.82rem;">C1 Reactive</span>
+        <span style="font-size:0.78rem; color:var(--grey-600); font-weight:300;"> — Listening & acting on user intent</span>
+      </div>
+      <div style="background:var(--c2-light); border-radius:12px; padding:14px 16px; border:1.5px solid #a8e0d4;">
+        <span style="font-weight:600; color:var(--c2); font-size:0.82rem;">C2 Retrieval</span>
+        <span style="font-size:0.78rem; color:var(--grey-600); font-weight:300;"> — Finding the right products</span>
+      </div>
+      <div style="background:var(--c3-light); border-radius:12px; padding:14px 16px; border:1.5px solid #d0b8f0;">
+        <span style="font-weight:600; color:var(--c3); font-size:0.82rem;">C3 Orchestration</span>
+        <span style="font-size:0.78rem; color:var(--grey-600); font-weight:300;"> — Coordinating the pipeline</span>
+      </div>
+      <div style="background:var(--c4-light); border-radius:12px; padding:14px 16px; border:1.5px solid #f0d4a0;">
+        <span style="font-weight:600; color:var(--c4); font-size:0.82rem;">C4 Validation</span>
+        <span style="font-size:0.78rem; color:var(--grey-600); font-weight:300;"> — Safety & quality control</span>
+      </div>
+      <div style="background:var(--c5-light); border-radius:12px; padding:14px 16px; border:1.5px solid #f0b8d8;">
+        <span style="font-weight:600; color:var(--c5); font-size:0.82rem;">C5 Models</span>
+        <span style="font-size:0.78rem; color:var(--grey-600); font-weight:300;"> — Right AI brain for each task</span>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <div style="font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--grey-600); font-weight:500; margin-bottom:4px;">Build in Phases</div>
+      <div style="background:var(--grey-100); border:1.5px solid var(--grey-300); border-radius:12px; padding:16px 18px;">
+        <div style="font-size:0.8rem; font-weight:500; color:var(--c1); margin-bottom:4px;">Phase 1 · Weeks 1–4</div>
+        <div style="font-size:0.78rem; color:var(--grey-800); font-weight:300; line-height:1.5;">Working chat widget with product search. Customers can ask questions and get grounded answers.</div>
+      </div>
+      <div style="background:var(--grey-100); border:1.5px solid var(--grey-300); border-radius:12px; padding:16px 18px;">
+        <div style="font-size:0.8rem; font-weight:500; color:var(--c3); margin-bottom:4px;">Phase 2 · Weeks 5–8</div>
+        <div style="font-size:0.78rem; color:var(--grey-800); font-weight:300; line-height:1.5;">AI takes actions — adds to cart, checks stock. Safety layer fully active. Image search enabled.</div>
+      </div>
+      <div style="background:var(--grey-100); border:1.5px solid var(--grey-300); border-radius:12px; padding:16px 18px;">
+        <div style="font-size:0.8rem; font-weight:500; color:var(--c4); margin-bottom:4px;">Phase 3 · Weeks 9–12</div>
+        <div style="font-size:0.78rem; color:var(--grey-800); font-weight:300; line-height:1.5;">Advanced reasoning, multi-agent research, cost optimisation. White-label ready for multiple brands.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">12 / 12</div>
+</div>
+
+</body>
+</html>
