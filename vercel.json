@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/ai-portfolio/?", "dest": "/ai-portfolio.html" },
+    { "src": "/ai-champion/?", "dest": "/ai-champion.html" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/ai-champion.html" }
+  ]
+}
+
