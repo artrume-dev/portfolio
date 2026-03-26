@@ -617,6 +617,12 @@
   }
 
   /* Commitment section */
+  #commitment {
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
   .commitment-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
