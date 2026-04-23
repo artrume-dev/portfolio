@@ -10,7 +10,7 @@
     { "src": "/ai-portfolio/?", "dest": "/ai-portfolio.html" },
     { "src": "/ai-champion/?", "dest": "/ai-champion.html" },
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/ai-champion.html" }
+    { "src": "/(.*)", "dest": "/ai-portfolio.html" }
   ]
 }
 
