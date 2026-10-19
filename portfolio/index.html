@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samar Mustafa — Applied AI Architect</title>
+<meta name="description" content="Samar Mustafa designs, directs and governs multi-agent AI systems that ship working software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<!--
+  Design system: Mono (skin: Stibo Chat). https://claude.ai/artifact/AW7DiK7xQkjMJFfyEyUUVC
+  The :root block below is the ONLY place raw values live. Re-skin = change that block.
+  Results figures in the case studies are mock data. Replace before relying on them.
+  Previous design: portfolio/archive/index-v1.html
+-->
+<style>
+:root{
+  --background:#ffffff;
+  --foreground:#111111;
+  --primary:#111111;
+  --primary-foreground:#ffffff;
+  --secondary:#f5f5f5;
+  --muted:#f7f7f7;
+  --accent:#eeeeee;
+  --border:#dddddd;
+  --ring:#111111;
+  --muted-foreground:#555555;
+  --body-foreground:#444444;
+  --panel-muted-foreground:#bbbbbb;
+  --panel-rule:#333333;
+  --font-display:"Space Grotesk", system-ui, sans-serif;
+  --font-sans:"Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono:"Geist Mono", ui-monospace, monospace;
+  --space-1:0.25rem; --space-2:0.5rem; --space-3:0.75rem; --space-4:1rem; --space-5:1.25rem;
+  --space-6:1.5rem; --space-8:2rem; --space-12:3rem; --space-18:4.5rem; --space-22:5.5rem;
+  --radius-none:0;
+  --radius-base:0.125rem;
+  --header-height:68px;
+  --content-width:1080px;
+  --reading-width:720px;
+  --touch-target:44px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-height) + var(--space-4));background:var(--background)}
+body{margin:0;background:var(--background);color:var(--foreground);font:400 15px/1.6 var(--font-sans);-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:var(--foreground);text-underline-offset:3px}
+a:hover{color:var(--muted-foreground)}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:var(--content-width);margin:0 auto;padding:0 var(--space-6)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* type */
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;margin:0}
+h1{font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.03em}
+h2{font-size:36px;line-height:1.15;letter-spacing:-.025em}
+h3{font-size:22px;line-height:1.25;letter-spacing:-.015em}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+.meta{font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)}
+.lede{font-size:18px;line-height:1.6;color:var(--body-foreground);max-width:600px}
+.copy{font-size:15px;line-height:1.65;color:var(--body-foreground);max-width:68ch}
+code{font-family:var(--font-mono);font-size:.9em}
+@media (max-width:640px){h2{font-size:30px}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:48px;padding:0 22px;border-radius:var(--radius-base);font:600 15px/1 var(--font-sans);text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{color:var(--primary-foreground);opacity:.88}
+.btn-outline{background:var(--background);color:var(--foreground);border-color:var(--foreground)}
+.btn-outline:hover{background:var(--accent);color:var(--foreground)}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:20;background:var(--background);border-bottom:1px solid var(--border)}
+.site-header .wrap{min-height:var(--header-height);display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-tile{width:28px;height:28px;background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);display:grid;place-items:center;font:500 12px/1 var(--font-mono)}
+.brand-name{font:600 17px/1 var(--font-display);letter-spacing:-.01em}
+.nav-toggle{display:none;min-height:var(--touch-target);padding:0 14px;background:var(--background);border:1px solid var(--border);border-radius:var(--radius-base);font:600 14px/1 var(--font-sans);color:var(--foreground);cursor:pointer}
+.site-nav ul{display:flex;align-items:center;gap:var(--space-1);list-style:none;margin:0;padding:0}
+.site-nav a{display:inline-flex;align-items:center;min-height:var(--touch-target);padding:0 10px;font-size:14px;font-weight:500;text-decoration:none}
+.site-nav a.nav-cta{margin-left:var(--space-2);padding:0 16px;background:var(--primary);color:var(--primary-foreground);font-weight:600;border-radius:var(--radius-base)}
+@media (max-width:960px){
+  .nav-toggle{display:inline-flex;align-items:center}
+  .site-nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--background);border-bottom:1px solid var(--border)}
+  .site-nav.open{display:block}
+  .site-nav ul{flex-direction:column;align-items:stretch;padding:var(--space-2) var(--space-6) var(--space-4)}
+  .site-nav a{border-bottom:1px solid var(--accent)}
+  .site-nav a.nav-cta{margin:var(--space-3) 0 0;justify-content:center;border-bottom:0}
+}
+
+/* sections */
+section{padding:var(--space-18) 0;border-bottom:1px solid var(--border)}
+section.band{background:var(--secondary)}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-8)}
+.section-head .lede{flex-basis:100%;font-size:16px;margin-top:var(--space-2)}
+
+/* hero */
+.hero{padding:var(--space-22) 0 var(--space-18)}
+.hero .wrap{display:flex;flex-wrap:wrap;gap:var(--space-12);align-items:flex-end}
+.hero-copy{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:var(--space-6)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);padding-top:var(--space-2)}
+.now{font-size:14px;color:var(--body-foreground);padding-top:var(--space-4);border-top:1px solid var(--border);max-width:600px}
+.now strong{color:var(--foreground)}
+
+/* signal panel */
+.signal{flex:1 1 320px;background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);padding:28px;display:flex;flex-direction:column;gap:22px}
+.signal-head{display:flex;justify-content:space-between;gap:var(--space-3);font:400 11px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--panel-muted-foreground)}
+.signal-metric{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--panel-rule);padding-top:18px}
+.signal-metric b{font:600 44px/1 var(--font-display);letter-spacing:-.03em}
+.signal-metric span{font-size:14px;line-height:1.5;color:var(--panel-muted-foreground)}
+
+/* chat */
+.chat{background:var(--muted)}
+.chat .col{max-width:var(--reading-width);margin:0 auto;padding:0 var(--space-6);display:flex;flex-direction:column;gap:var(--space-5)}
+.chat-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-3);flex-wrap:wrap}
+.chat-head h2{font-size:28px;letter-spacing:-.02em}
+.chat-log{display:flex;flex-direction:column;gap:var(--space-4)}
+.turn-user{align-self:flex-end;max-width:80%;background:var(--primary);color:var(--primary-foreground);padding:12px 16px;border-radius:var(--radius-base);font-size:15px;line-height:1.5}
+.turn-answer{background:var(--background);border:1px solid var(--border);border-radius:var(--radius-base);padding:var(--space-5);display:flex;flex-direction:column;gap:14px}
+.who{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.who .tile{width:22px;height:22px;background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);display:grid;place-items:center;font:400 10px/1 var(--font-mono)}
+.turn-answer p{font-size:15px;line-height:1.65}
+.source{border-top:1px solid var(--accent);padding-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
+.source .label{font:400 11px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)}
+.source a{font-weight:500}
+.composer{display:flex;gap:8px;background:var(--background);border:1px solid var(--foreground);border-radius:var(--radius-base);padding:6px}
+.composer input{flex:1 1 auto;min-width:0;border:0;font:inherit;font-size:15px;padding:10px 12px;background:transparent;color:var(--foreground)}
+.composer input:focus-visible{outline:none}
+.composer:focus-within{outline:2px solid var(--ring);outline-offset:2px}
+.composer button{min-height:var(--touch-target);padding:0 18px;background:var(--primary);color:var(--primary-foreground);border:0;border-radius:var(--radius-base);font:600 14px/1 var(--font-sans);cursor:pointer}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-height:var(--touch-target);font:500 13px/1.3 var(--font-sans);padding:10px 12px;border:1px solid var(--border);background:var(--background);color:var(--foreground);border-radius:var(--radius-base);cursor:pointer;text-align:left}
+.chip:hover{background:var(--accent)}
+.chat-note{font-size:13px;color:var(--muted-foreground)}
+
+/* tool trace */
+.trace{background:var(--background);border:1px solid var(--border);border-radius:var(--radius-base)}
+.trace summary{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;min-height:var(--touch-target);padding:12px var(--space-5);border-bottom:1px solid var(--accent)}
+.trace:not([open]) summary{border-bottom:0}
+.trace summary .t{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+.trace summary svg{transition:transform .15s}
+.trace:not([open]) summary svg{transform:rotate(-90deg)}
+.trace ol{list-style:none;margin:0;padding:6px 0;font:400 13px/1.5 var(--font-mono)}
+.trace li{display:flex;flex-wrap:wrap;gap:4px 16px;padding:9px var(--space-5);border-bottom:1px solid var(--secondary)}
+.trace li:last-child{border-bottom:0}
+.trace .n{flex:0 0 24px;color:var(--muted-foreground)}
+.trace .tool{flex:0 0 168px;font-weight:500}
+.trace .d{flex:1 1 200px;min-width:0;color:var(--muted-foreground)}
+.trace li.gate .tool::after{content:" · human";color:var(--muted-foreground);font-weight:400}
+.turn-answer .trace summary{padding:10px 14px}
+.turn-answer .trace li{padding:8px 14px}
+
+/* status shapes: filled = live / in use, empty = not yet live */
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;white-space:nowrap}
+.status::before{content:"";width:8px;height:8px;border-radius:1px;border:1.5px solid var(--foreground);background:var(--foreground)}
+.status.off::before{background:transparent}
+
+/* work index */
+.index{list-style:none;margin:0;padding:0;border-top:1px solid var(--foreground)}
+.index li{border-bottom:1px solid var(--border)}
+.index a{display:flex;flex-wrap:wrap;gap:12px 32px;padding:var(--space-6) 0;text-decoration:none;align-items:baseline}
+.index a:hover .t{text-decoration:underline;text-underline-offset:4px}
+.index .n{flex:0 0 40px;font:400 13px/1 var(--font-mono);color:var(--muted-foreground)}
+.index .body{flex:999 1 420px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.index .t{font:600 22px/1.25 var(--font-display);letter-spacing:-.015em;color:var(--foreground)}
+.index .desc{font-size:15px;line-height:1.6;color:var(--body-foreground)}
+.index .tags{font:400 12px/1.4 var(--font-mono);letter-spacing:.02em;color:var(--muted-foreground);text-transform:uppercase}
+.index .status{flex:1 1 160px;justify-content:flex-end;color:var(--foreground)}
+
+/* case studies */
+.case{display:grid;grid-template-columns:240px 1fr;gap:var(--space-12);padding:var(--space-12) 0;border-top:1px solid var(--border)}
+.case:first-of-type{border-top:0;padding-top:0}
+.case aside{display:flex;flex-direction:column;gap:var(--space-4)}
+.flag{align-self:flex-start;font:500 11px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border:1px solid var(--foreground);border-radius:var(--radius-base)}
+.case dl{margin:0;display:flex;flex-direction:column;gap:var(--space-3)}
+.case dt{font:400 11px/1.4 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)}
+.case dd{margin:2px 0 0;font-size:14px;line-height:1.5}
+.case-body{min-width:0;display:flex;flex-direction:column;gap:var(--space-4)}
+.case-body h3{font-size:28px;letter-spacing:-.02em}
+.case-body h4{font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-top:var(--space-4)}
+.case-body ul{margin:0;padding-left:1.2em;max-width:68ch;color:var(--body-foreground);display:flex;flex-direction:column;gap:6px}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);max-width:640px}
+.results div{border-top:1px solid var(--foreground);padding-top:var(--space-3);display:flex;flex-direction:column;gap:4px}
+.results b{font:600 32px/1 var(--font-display);letter-spacing:-.03em}
+.results span{font-size:13px;color:var(--muted-foreground)}
+@media (max-width:820px){.case{grid-template-columns:1fr;gap:var(--space-6)}}
+@media (max-width:520px){.results{grid-template-columns:1fr}}
+
+/* architecture layers */
+.layers{border:1px solid var(--border);border-radius:var(--radius-base);background:var(--background)}
+.layer{display:grid;grid-template-columns:120px 1fr;gap:var(--space-4);padding:14px var(--space-5);border-top:1px solid var(--accent)}
+.layer:first-child{border-top:0}
+.layer > span{font:400 11px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);padding-top:8px}
+.nodes{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.nodes li{border:1px solid var(--border);background:var(--muted);border-radius:var(--radius-base);padding:7px 10px;font-size:13px;font-weight:500;line-height:1.35;max-width:100%}
+.nodes li small{display:block;color:var(--muted-foreground);font-size:12px;font-weight:400}
+.nodes li.llm{border-color:var(--foreground);background:var(--background)}
+.nodes li.llm::before,.key i{content:"";display:inline-block;width:7px;height:7px;border-radius:1px;background:var(--foreground);margin-right:6px;vertical-align:1px}
+.key{font-size:13px;color:var(--muted-foreground)}
+@media (max-width:640px){.layer{grid-template-columns:1fr;gap:6px}.layer > span{padding-top:0}}
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;max-width:68ch;display:flex;flex-direction:column}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;padding:10px 0;border-bottom:1px solid var(--accent);color:var(--body-foreground)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font:400 13px/1.65 var(--font-mono);color:var(--muted-foreground)}
+dl.decisions{margin:0;max-width:72ch;display:flex;flex-direction:column}
+dl.decisions dt{font:600 15px/1.4 var(--font-sans);letter-spacing:0;text-transform:none;color:var(--foreground);margin-top:var(--space-4)}
+dl.decisions dd{margin:4px 0 0;font-size:15px;line-height:1.6;color:var(--body-foreground)}
+
+/* how I build */
+.build-grid{display:flex;flex-wrap:wrap;gap:var(--space-12)}
+.build-intro{flex:1 1 300px;display:flex;flex-direction:column;gap:var(--space-4)}
+.build-grid .trace{flex:999 1 520px;min-width:0}
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-8);margin-top:var(--space-12)}
+.principles div{border-top:1px solid var(--foreground);padding-top:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2)}
+.principles h3{font-size:18px}
+.principles p{font-size:15px;color:var(--body-foreground)}
+@media (max-width:820px){.principles{grid-template-columns:1fr}}
+
+/* projects */
+.group + .group{margin-top:var(--space-12)}
+.group h3{margin-bottom:var(--space-2)}
+.group > p{color:var(--body-foreground);margin-bottom:var(--space-2)}
+.rows{list-style:none;margin:var(--space-4) 0 0;padding:0;border-top:1px solid var(--foreground)}
+.rows li{display:grid;grid-template-columns:240px 1fr 110px 70px;gap:var(--space-5);align-items:baseline;padding:var(--space-4) 0;border-bottom:1px solid var(--border)}
+.rows .name{font:600 16px/1.35 var(--font-display)}
+.rows .desc{color:var(--body-foreground);font-size:14px}
+.rows .go{font-size:14px;font-weight:600;justify-self:end}
+@media (max-width:820px){.rows li{grid-template-columns:1fr auto;gap:6px 12px}.rows .desc{grid-column:1/-1;grid-row:2}.rows .go{grid-row:3;justify-self:start}}
+
+/* capabilities */
+.table-scroll{overflow-x:auto;border-top:1px solid var(--foreground)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:14px 16px 14px 0;border-bottom:1px solid var(--border)}
+th{font:400 11px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+td{color:var(--body-foreground)}
+td:first-child{font-weight:600;color:var(--foreground);width:22%}
+.depth{display:inline-flex;align-items:center;gap:3px;vertical-align:middle}
+.depth i{width:14px;height:8px;border-radius:1px;border:1.5px solid var(--foreground)}
+.depth i.on{background:var(--foreground)}
+.depth span{margin-left:8px;font:400 12px/1 var(--font-mono);color:var(--muted-foreground)}
+
+/* roadmap */
+ol.road{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
+ol.road li{border-top:1px solid var(--border);padding-top:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2)}
+ol.road li.current{border-top:3px solid var(--primary);padding-top:calc(var(--space-4) - 2px)}
+ol.road h3{font-size:18px}
+ol.road p{font-size:14px;color:var(--body-foreground)}
+@media (max-width:900px){ol.road{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){ol.road{grid-template-columns:1fr}}
+
+/* community */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-12)}
+.two .item + .item{margin-top:var(--space-6)}
+.two h3{font-size:18px;margin-bottom:var(--space-2)}
+.two p{color:var(--body-foreground)}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin:var(--space-2) 0 var(--space-5);padding:0;list-style:none}
+.stack li{border:1px solid var(--border);border-radius:var(--radius-base);padding:4px 10px;font:400 13px/1.5 var(--font-mono)}
+@media (max-width:820px){.two{grid-template-columns:1fr;gap:var(--space-8)}}
+
+/* contact band */
+.contact{padding:var(--space-6) 0;border-bottom:0}
+.contact-band{background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);padding:clamp(32px,6vw,64px);display:flex;flex-wrap:wrap;gap:var(--space-8);align-items:flex-end;justify-content:space-between}
+.contact-band .copy-col{flex:999 1 480px;display:flex;flex-direction:column;gap:var(--space-4)}
+.contact-band .eyebrow,.contact-band p{color:var(--panel-muted-foreground)}
+.contact-band h2{font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.03em}
+.contact-band .actions{flex:1 1 240px;display:flex;flex-direction:column;gap:var(--space-3)}
+.contact-band .btn-light{background:var(--background);color:var(--foreground)}
+.contact-band .btn-light:hover{background:var(--accent);color:var(--foreground)}
+.contact-band .btn-ghost{min-height:var(--touch-target);border:1px solid var(--panel-muted-foreground);color:var(--primary-foreground);font-size:14px;font-weight:500}
+.contact-band .btn-ghost:hover{color:var(--primary-foreground);border-color:var(--primary-foreground)}
+
+footer{padding:var(--space-6) 0}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:400 12px/1.4 var(--font-mono);color:var(--muted-foreground)}
+
+/* floating ask button */
+.ask-fab{position:fixed;right:var(--space-6);bottom:calc(var(--space-6) + env(safe-area-inset-bottom,0px));z-index:30;box-shadow:0 0 0 1px var(--background);transition:opacity .2s,transform .2s}
+.ask-fab[hidden]{display:inline-flex;opacity:0;transform:translateY(8px);pointer-events:none;visibility:hidden}
+@media (prefers-reduced-motion:reduce){.ask-fab{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Samar Mustafa, back to top">
+      <span class="brand-tile" aria-hidden="true">sm</span>
+      <span class="brand-name">Samar Mustafa</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#build">How I build</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#learning">Learning</a></li>
+        <li><a class="nav-cta" href="#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Applied AI Architect</p>
+      <h1>I design teams of AI agents that build real software, with people in charge of the decisions that matter.</h1>
+      <p class="lede">I plan, direct and govern multi-agent systems, from the first prompt to a shipped app. My focus is architecture, evaluation and safe delivery inside an enterprise.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#ask" data-ask-focus>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Ask my agent
+        </a>
+        <a class="btn btn-outline" href="#work">Read the case studies</a>
+      </div>
+      <p class="now"><strong>Now:</strong> building a program board app through my agent factory, and preparing for Claude Certified Architect – Foundations.</p>
+    </div>
+
+    <aside class="signal" aria-label="Build signals">
+      <div class="signal-head"><span>Build signals</span><span>2026.10</span></div>
+      <div class="signal-metric"><b>6</b><span>apps built by the agent factory, with human approval on every spec and release</span></div>
+      <div class="signal-metric"><b>2</b><span>AI products live in production: Betterfound and Heumyn</span></div>
+      <div class="signal-metric"><b>15</b><span>AI apps: the shipping goal this portfolio tracks</span></div>
+    </aside>
+  </div>
+</section>
+
+<!-- ASK MY AGENT -->
+<section class="chat" id="ask" aria-labelledby="ask-title">
+  <div class="col">
+    <div class="chat-head">
+      <h2 id="ask-title">Ask about my work</h2>
+      <span class="meta">grounded in this page · read-only</span>
+    </div>
+
+    <div class="chat-log" id="chat-log" aria-live="polite">
+      <article class="turn-answer">
+        <div class="who"><span class="tile" aria-hidden="true">sm</span>Samar's agent</div>
+        <p>Ask me about the agent factory, Betterfound, Heumyn, evaluation, MCP or how I keep agents safe. I answer from the write-ups on this page and link to the section I used.</p>
+      </article>
+    </div>
+
+    <form class="composer" id="chat-form" autocomplete="off">
+      <label class="sr" for="chat-input">Ask a question about Samar's work</label>
+      <input id="chat-input" name="q" type="text" maxlength="200" placeholder="Ask about agents, MCP, evals…">
+      <button type="submit">Ask</button>
+    </form>
+
+    <div class="chips" aria-label="Suggested questions">
+      <button class="chip" type="button">Where do humans approve in the agent factory?</button>
+      <button class="chip" type="button">Which models does Betterfound use?</button>
+      <button class="chip" type="button">Why build MCP first?</button>
+      <button class="chip" type="button">How do you evaluate AI systems?</button>
+    </div>
+    <p class="chat-note">Answers are matched from notes on this page, not generated by a live model.</p>
+  </div>
+</section>
+
+<!-- SELECTED WORK + CASE STUDIES -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <span class="meta">05 systems · enterprise + independent</span>
+      <p class="lede">Written up the way an architecture review would want them: the problem, the design, the trade-offs and what happened.</p>
+    </div>
+
+    <ol class="index">
+      <li><a href="#agent-factory">
+        <span class="n">01</span>
+        <span class="body"><span class="t">Agent factory</span><span class="desc">Turns a plain-language prompt into a working app with a team of specialised agents and human approval gates.</span><span class="tags">Claude Code · Anthropic SDK · MCP</span></span>
+        <span class="status">In use</span>
+      </a></li>
+      <li><a href="#a11ycheck">
+        <span class="n">02</span>
+        <span class="body"><span class="t">A11yCheck</span><span class="desc">An accessibility testing suite, and the first full app the agent factory built end to end.</span><span class="tags">Accessibility · WCAG · Built by the factory</span></span>
+        <span class="status off">Internal</span>
+      </a></li>
+      <li><a href="#pim-assistant">
+        <span class="n">03</span>
+        <span class="body"><span class="t">Product data quality assistant</span><span class="desc">A chat assistant that finds and helps fix product data problems in an enterprise PIM.</span><span class="tags">Enterprise · PIM · Anonymised</span></span>
+        <span class="status off">Scoping</span>
+      </a></li>
+      <li><a href="#betterfound">
+        <span class="n">04</span>
+        <span class="body"><span class="t">Betterfound</span><span class="desc">An AI product finder merchants embed on their storefront, with analytics on what shoppers can't find.</span><span class="tags">Next.js · Claude Haiku + Sonnet · Postgres · Redis</span></span>
+        <span class="status">Live</span>
+      </a></li>
+      <li><a href="#heumyn">
+        <span class="n">05</span>
+        <span class="body"><span class="t">Heumyn AI</span><span class="desc">Job search and CV tailoring with an AI matching layer, started as an MCP server.</span><span class="tags">React · Express · Claude · OpenAI · MCP</span></span>
+        <span class="status">Live</span>
+      </a></li>
+    </ol>
+  </div>
+</section>
+
+<section id="case-studies" aria-labelledby="cs-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="cs-title">Case studies</h2>
+      <span class="meta">01–03</span>
+    </div>
+
+    <article class="case" id="agent-factory">
+      <aside>
+        <span class="flag">Flagship</span>
+        <dl>
+          <div><dt>Role</dt><dd>Architect and director of the agent team</dd></div>
+          <div><dt>Status</dt><dd>In use; building its next app</dd></div>
+          <div><dt>Stack</dt><dd>Claude Code, Anthropic SDK, MCP</dd></div>
+        </dl>
+      </aside>
+      <div class="case-body">
+        <h3>Agent factory</h3>
+        <p class="copy">A system that turns a plain-language prompt into a working application, using a team of specialised AI agents.</p>
+        <h4>Problem</h4>
+        <p class="copy">Single-agent coding sessions lose the thread on larger apps: requirements drift, quality varies and nobody owns the final decision.</p>
+        <h4>Approach</h4>
+        <ul>
+          <li>Split the work across agents with clear roles: planning, building and reviewing.</li>
+          <li>Kept the system partly autonomous, with human approval gates on the spec and on release. <a href="#build">See the trace</a>.</li>
+          <li>Treated each app as a test of the factory itself, feeding lessons back into agent instructions.</li>
+        </ul>
+        <h4>Results</h4>
+        <div class="results">
+          <div><b>6</b><span>apps built</span></div>
+          <div><b>9 hrs</b><span>prompt to first release</span></div>
+          <div><b>$38</b><span>cost per build</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case" id="a11ycheck">
+      <aside>
+        <span class="flag">Built by the factory</span>
+        <dl>
+          <div><dt>Role</dt><dd>Planned, structured and directed the AI agents that built it</dd></div>
+          <div><dt>Status</dt><dd>Internal</dd></div>
+        </dl>
+      </aside>
+      <div class="case-body">
+        <h3>A11yCheck, an accessibility testing suite</h3>
+        <p class="copy">A web app that tests interfaces for accessibility problems. It is the first full app produced end to end by the agent factory.</p>
+        <h4>Why it matters</h4>
+        <p class="copy">It proves the factory delivers usable software, not just demos. Accessibility also has a clear right answer, which makes quality measurable.</p>
+        <h4>How I measure it</h4>
+        <ul>
+          <li>A test set of pages with known accessibility defects.</li>
+          <li>Detection rate and false alarms, tracked across versions.</li>
+        </ul>
+        <h4>Results</h4>
+        <div class="results">
+          <div><b>92%</b><span>known defects caught</span></div>
+          <div><b>4%</b><span>false alarms</span></div>
+          <div><b>38</b><span>WCAG criteria covered</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case" id="pim-assistant">
+      <aside>
+        <span class="flag">Enterprise</span>
+        <dl>
+          <div><dt>Role</dt><dd>Scoping and solution design</dd></div>
+          <div><dt>Status</dt><dd>Scoping; to be built in Claude Code</dd></div>
+          <div><dt>Note</dt><dd>Details anonymised</dd></div>
+        </dl>
+      </aside>
+      <div class="case-body">
+        <h3>Product data quality assistant</h3>
+        <p class="copy">A chat assistant for a product information management (PIM) system in a large enterprise. It finds and helps fix data quality problems that today are checked by hand.</p>
+        <h4>Use cases</h4>
+        <ul>
+          <li>Data quality and governance checks: duplicates, broken relationships, naming conventions, content hierarchy and embargoes.</li>
+          <li>Finding products missing between connected systems.</li>
+          <li>Supporting product onboarding, and linking "what's in the box" items across SKUs.</li>
+        </ul>
+        <h4>Design principles</h4>
+        <ul>
+          <li>The assistant proposes fixes; people approve them before anything changes.</li>
+          <li>Success is measured against the current manual process.</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- TECHNICAL ARCHITECTURE -->
+<section id="architecture" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Technical architecture</h2>
+      <span class="meta">04–05</span>
+      <p class="lede">Two production products, opened up: the layers, how one request moves through them, and the decisions behind the design.</p>
+    </div>
+
+    <!-- BETTERFOUND -->
+    <article class="case" id="betterfound">
+      <aside>
+        <span class="flag">Product</span>
+        <dl>
+          <div><dt>What it is</dt><dd>An AI product finder that merchants embed on their storefront</dd></div>
+          <div><dt>Role</dt><dd>Product, architecture and direction of the AI agents that built it</dd></div>
+          <div><dt>Status</dt><dd><span class="status">Live</span></dd></div>
+          <div><dt>Stack</dt><dd>Next.js 14, TypeScript, Claude (Sonnet and Haiku), Postgres, Redis, Drizzle</dd></div>
+          <div><dt>Links</dt><dd><a href="https://betterfound.ai" target="_blank" rel="noopener noreferrer">betterfound.ai</a></dd></div>
+        </dl>
+      </aside>
+      <div class="case-body">
+        <h3>Betterfound</h3>
+        <p class="copy">A shopper describes what they need in plain language. An agent searches that merchant's own live catalogue, recommends real products and explains why. Every search feeds an analytics dashboard that shows the merchant what customers want and where the catalogue falls short.</p>
+
+        <h4>System layers</h4>
+        <div class="layers" role="group" aria-label="Betterfound system layers">
+          <div class="layer"><span>Storefront</span>
+            <ul class="nodes">
+              <li>Embeddable widget<small>Framework-free web component, shadow DOM, streams answers over SSE</small></li>
+              <li>CMS installs<small>Shopify, WooCommerce, Magento, BigCommerce, WordPress</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Platform</span>
+            <ul class="nodes">
+              <li>Merchant dashboard and APIs<small>Next.js 14 App Router, NextAuth</small></li>
+              <li>Signed widget tokens<small>JWT with rotation and separately revocable preview links</small></li>
+              <li>Stripe billing</li>
+            </ul>
+          </div>
+          <div class="layer"><span>Agent</span>
+            <ul class="nodes">
+              <li class="llm">Search planner<small>Haiku picks structured search parameters with a forced tool call</small></li>
+              <li class="llm">Answer writer<small>Sonnet streams the recommendation</small></li>
+              <li class="llm">Page reader tool<small>Reads specs and FAQs, limited to the merchant's own site</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Catalogue</span>
+            <ul class="nodes">
+              <li>Data source connectors<small>Store APIs, SFCC, custom REST, MCP</small></li>
+              <li>Schema adapter<small>Maps any product JSON to one canonical model</small></li>
+              <li class="llm">Enrichment<small>Builds an intent vocabulary such as "waterproof" or "beginner friendly"</small></li>
+              <li>JSON-LD fallback<small>Recovers a catalogue from the site's structured data if the API fails</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Insight</span>
+            <ul class="nodes">
+              <li>Query and click events</li>
+              <li>SQL aggregates<small>Trends, click-through, zero-result searches</small></li>
+              <li class="llm">Intent clustering<small>Haiku groups similar searches</small></li>
+              <li>Embeddings<small>Voyage, kept for semantic product search</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Data</span>
+            <ul class="nodes">
+              <li>Postgres 16<small>Tenants, data sources, events</small></li>
+              <li>Redis<small>Conversation memory, 30-minute expiry</small></li>
+              <li>Railway<small>Long-running container, migrations before deploy, health check</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="key"><i aria-hidden="true"></i>Calls a language model</p>
+
+        <h4>How one search works</h4>
+        <ol class="steps">
+          <li>The widget sends the shopper's message with the merchant's signed token. The server checks the token and loads the last 30 minutes of conversation.</li>
+          <li>A small, fast model turns the message into structured search parameters: keywords, category, price range, tags and intents.</li>
+          <li>The server queries every connected catalogue in parallel, maps the results to one product model and applies the merchant's include and exclude rules.</li>
+          <li>If nothing matches, it relaxes the search step by step (wider price range, fewer tags) and labels the results as close alternatives.</li>
+          <li>It records one analytics event in the background, so logging never slows the answer.</li>
+          <li>A larger model streams the reply alongside product cards. If no product genuinely fits, it flags this, and the event is marked as a catalogue gap.</li>
+        </ol>
+
+        <h4>Key decisions and trade-offs</h4>
+        <dl class="decisions">
+          <dt>Two models, two jobs</dt>
+          <dd>Haiku plans the search and Sonnet writes the answer. Planning is a short structured task, so the cheaper model keeps cost and first-token time down without weakening the reply.</dd>
+          <dt>Search the live catalogue, not a copy</dt>
+          <dd>The agent queries the merchant's own API at request time, so prices and stock never drift out of sync. Vector search over products is kept as a separate, later track.</dd>
+          <dt>Tested embeddings before trusting them</dt>
+          <dd>A spike on real queries showed embeddings caught typos and near duplicates, but scored two paraphrases of the same intent at only 0.52 similarity. Search grouping moved to Haiku clustering, which grouped them correctly, with a 10-minute cache and a safe fallback if the model fails.</dd>
+          <dt>Three kinds of "no result"</dt>
+          <dd>An empty search, a relaxed search, and the model judging results irrelevant all count as zero-result searches. Together they give merchants a clear list of products customers want but cannot find.</dd>
+          <dt>Tenant isolation by construction</dt>
+          <dd>The merchant ID always comes from the signed-in session or the verified widget token, never from the request body. Every analytics query is scoped by it.</dd>
+          <dt>Limited reach for the agent</dt>
+          <dd>The page-reading tool only fetches pages on the merchant's own domain, using signed requests and checks against server-side request forgery.</dd>
+          <dt>Tests against a real database</dt>
+          <dd>Behavioural tests are written first. Anything with real SQL runs against an in-memory Postgres, which caught bugs that mocked tests missed.</dd>
+        </dl>
+        <h4>Results</h4>
+        <div class="results">
+          <div><b>12</b><span>merchants or pilots</span></div>
+          <div><b>0.8s</b><span>time to first token</span></div>
+          <div><b>34%</b><span>search click-through</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- HEUMYN -->
+    <article class="case" id="heumyn">
+      <aside>
+        <span class="flag">Product</span>
+        <dl>
+          <div><dt>What it is</dt><dd>A job search and CV tailoring app with an AI matching layer</dd></div>
+          <div><dt>Role</dt><dd>Product, architecture and direction of the AI agents that built it</dd></div>
+          <div><dt>Status</dt><dd><span class="status">Live</span></dd></div>
+          <div><dt>Stack</dt><dd>React, Vite, Express, TypeScript, Postgres, Claude, OpenAI, MCP</dd></div>
+          <div><dt>Links</dt><dd><a href="https://heumyn.ai/" target="_blank" rel="noopener noreferrer">heumyn.ai</a></dd></div>
+        </dl>
+      </aside>
+      <div class="case-body">
+        <h3>Heumyn AI</h3>
+        <p class="copy">People describe the job they want in their own words. Heumyn searches job boards and company career pages, scores each role against their CV and explains the fit. It then helps them tailor their CV to the role.</p>
+        <p class="copy">It started as an MCP server with Claude Code sub-agents for my own job search. The same tools were later put behind a web API so anyone could use them without a terminal.</p>
+
+        <h4>System layers</h4>
+        <div class="layers" role="group" aria-label="Heumyn system layers">
+          <div class="layer"><span>Client</span>
+            <ul class="nodes">
+              <li>Web app<small>React, Vite, TanStack Query, Zustand</small></li>
+              <li>CV editor<small>Rich text, version history and side-by-side comparison</small></li>
+              <li>Google sign-in</li>
+            </ul>
+          </div>
+          <div class="layer"><span>API</span>
+            <ul class="nodes">
+              <li>Express API<small>TypeScript, JWT auth</small></li>
+              <li>Abuse controls<small>Rate limits per route group, Turnstile, guest quotas</small></li>
+              <li>Stripe billing<small>Plans and entitlements</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Intelligence</span>
+            <ul class="nodes">
+              <li class="llm">Query parser<small>Turns plain language into validated search fields</small></li>
+              <li class="llm">Job filter<small>Scores fit 0–100 with reasons and seniority match</small></li>
+              <li class="llm">Qualification matcher<small>Fast rule-based check, or deep model analysis</small></li>
+              <li class="llm">CV tools<small>Enhance, humanise and suggest sentences</small></li>
+              <li>Provider manager<small>Routes each task to Anthropic, OpenAI or a local model</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Job sources</span>
+            <ul class="nodes">
+              <li>Career page scrapers<small>Greenhouse, Lever, Ashby, Workday, SmartRecruiters</small></li>
+              <li>Job APIs<small>Adzuna, Google Jobs, Himalayas, Reed</small></li>
+              <li>Semantic ranking<small>Synonym-aware scoring, keyword fallback</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Data</span>
+            <ul class="nodes">
+              <li>Postgres<small>SQLite adapter for local development</small></li>
+              <li>Email<small>Resend</small></li>
+              <li>Railway</li>
+            </ul>
+          </div>
+          <div class="layer"><span>Agent tools</span>
+            <ul class="nodes">
+              <li>MCP server<small>Search, analyse, track and CV tools, usable from Claude Code</small></li>
+              <li class="llm">Sub-agents<small>Job analyser, CV optimiser, CV humaniser</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="key"><i aria-hidden="true"></i>Calls a language model</p>
+
+        <h4>How one search works</h4>
+        <ol class="steps">
+          <li>The person types something like "remote design systems roles in London".</li>
+          <li>A model turns it into structured fields: title, company, location, remote only, seniority. The output is checked against a strict schema before use.</li>
+          <li>Hard limits such as location are applied, and recent results are served from cache.</li>
+          <li>The app queries job APIs and company career pages, then merges the results into one format.</li>
+          <li>Semantic ranking orders roles by relevance, with plain keyword matching as a fallback.</li>
+          <li>The job filter scores each role against the person's CV profile and explains why it does or does not fit.</li>
+          <li>The person sees a qualification breakdown, saves or applies, and can tailor their CV to that role.</li>
+        </ol>
+
+        <h4>Key decisions and trade-offs</h4>
+        <dl class="decisions">
+          <dt>MCP first, web second</dt>
+          <dd>Building the tools as an MCP server meant I could test them from Claude Code before any UI existed. The web API reuses the same services instead of reimplementing them.</dd>
+          <dt>Choose the model per task</dt>
+          <dd>A provider manager sends each task to Anthropic, OpenAI or a local model. Bulk filtering uses cheaper models, and an internal endpoint compares providers on the same jobs.</dd>
+          <dt>Cut prompt cost at the source</dt>
+          <dd>The job filter uses a fixed system prompt with job data passed as JSON, and builds the CV profile once per sync, not once per job. That reduced prompt tokens by about 70%.</dd>
+          <dt>Two-speed matching</dt>
+          <dd>The list view uses a free rule-based match so it stays instant. The paid model analysis runs only when someone opens a role.</dd>
+          <dt>No vector database yet</dt>
+          <dd>Ranking uses lightweight semantic scoring with a keyword fallback, so the stack stays simple until real usage shows a vector store is needed.</dd>
+          <dt>Treat model output and the web as untrusted</dt>
+          <dd>Parsed queries are schema-validated and length-capped. Scraping uses URL safety checks, and expensive endpoints sit behind Turnstile, quotas and rate limits.</dd>
+        </dl>
+        <h4>Results</h4>
+        <div class="results">
+          <div><b>450</b><span>active users</span></div>
+          <div><b>18k</b><span>jobs indexed</span></div>
+          <div><b>87%</b><span>filter agreement with people</span></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- HOW I BUILD -->
+<section id="build">
+  <div class="wrap">
+    <div class="build-grid">
+      <div class="build-intro">
+        <h2>How I build</h2>
+        <p class="copy">Agents that write and change things need limits. Agents plan and build; people sign off on the spec and the release. This is one run of the agent factory, from prompt to shipped app.</p>
+      </div>
+
+      <details class="trace" open>
+        <summary>
+          <span class="t"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>Agent factory · one build</span>
+          <span class="meta">7 steps · 2 human gates</span>
+        </summary>
+        <ol>
+          <li><span class="n">01</span><span class="tool">prompt.receive</span><span class="d">your plain-language prompt</span></li>
+          <li><span class="n">02</span><span class="tool">plan.spec</span><span class="d">planning agent writes the spec</span></li>
+          <li class="gate"><span class="n">03</span><span class="tool">approve.spec</span><span class="d">you approve the spec before any build starts</span></li>
+          <li><span class="n">04</span><span class="tool">build.parallel</span><span class="d">front end · back end · tests agents</span></li>
+          <li><span class="n">05</span><span class="tool">review.check</span><span class="d">review agent checks the build</span></li>
+          <li class="gate"><span class="n">06</span><span class="tool">approve.release</span><span class="d">you approve release</span></li>
+          <li><span class="n">07</span><span class="tool">ship</span><span class="d">shipped app, e.g. A11yCheck</span></li>
+        </ol>
+      </details>
+    </div>
+
+    <div class="principles" id="responsible-ai">
+      <div>
+        <h3>People approve what matters</h3>
+        <p>Agents plan and build; people sign off on the spec and the release. In enterprise tools, agents propose changes to data and a person applies them.</p>
+      </div>
+      <div>
+        <h3>Measure before trusting</h3>
+        <p>Every system gets a test set and a quality bar before it is called done. New model versions are checked against real tasks, not just leaderboards.</p>
+      </div>
+      <div>
+        <h3>Limit what agents can touch</h3>
+        <p>Tools get the narrowest permissions that work. I plan for prompt injection and data leakage, and keep a risk record for anything that reaches users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Projects</h2>
+      <span class="meta">goal: 15 AI apps</span>
+      <p class="lede">Smaller builds and experiments, grouped by what they explore. Each one is marked live or in build.</p>
+    </div>
+
+    <div class="group">
+      <h3>Agents and AI engineering</h3>
+      <ul class="rows">
+        <li><span class="name">Betterfound</span><span class="desc">An AI product finder for storefronts. Shoppers ask in plain language; an agent searches the live catalogue. <a href="#betterfound">Architecture</a></span><span class="status">Live</span><a class="go" href="https://betterfound.ai" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Heumyn AI</span><span class="desc">A multi-agent job matching experience. It breaks down a task, coordinates agents and helps people reach a result. <a href="#heumyn">Architecture</a></span><span class="status">Live</span><a class="go" href="https://heumyn.ai/" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Code review and optimisation</span><span class="desc">Claude Code skills for systematic reviews that improve correctness, readability and performance.</span><span class="status">Live</span><span></span></li>
+        <li><span class="name">F1 Score: recall, rank and similarity</span><span class="desc">An evaluation score that balances recall, ranking quality and semantic similarity.</span><span class="status">Live</span><a class="go" href="/formula-glossary.html" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Figma MCP proof of concept</span><span class="desc">Connects design tools to agent workflows through MCP, so design context becomes something agents can act on.</span><span class="status">Live</span><span></span></li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <h3>Design systems and AI</h3>
+      <p>Where my design systems background meets agentic tooling.</p>
+      <ul class="rows">
+        <li><span class="name">Tokenchain</span><span class="desc">A design token visualiser that helps teams inspect, iterate on and apply token data.</span><span class="status">Live</span><a class="go" href="https://tokenchain.up.railway.app/" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Design System Dashboard</span><span class="desc">Automates routine design system work: runs checks, summarises changes and suggests next actions.</span><span class="status off">In build</span><span></span></li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <h3>Teaching and community</h3>
+      <ul class="rows">
+        <li><span class="name">Vibe coding for designers</span><span class="desc">A talk on thinking in agentic loops, shaping intent and shipping with confidence.</span><span class="status">Talk</span><a class="go" href="https://intodesignsystems.com" target="_blank" rel="noopener noreferrer">Watch</a></li>
+        <li><span class="name">Vibe coding</span><span class="desc">Agentic coding terms and frameworks to help teams build and learn faster.</span><span class="status">Talk</span><a class="go" href="https://vibecode.up.railway.app/" target="_blank" rel="noopener noreferrer">Slides</a></li>
+        <li><span class="name">AI glossary</span><span class="desc">Plain-language explanations of AI terms for non-specialists.</span><span class="status">Live</span><a class="go" href="/ai-elements-definitions.html" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Hypergigs</span><span class="desc">A marketplace of practical AI resources: prompts, patterns and reusable building blocks.</span><span class="status off">In build</span><span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Capabilities</h2>
+      <span class="meta">self-assessed</span>
+      <p class="lede">What I can do, and where to see the evidence. Depth is only marked high where a project backs it up.</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Area</th><th>What it covers</th><th>Evidence</th><th>Depth</th></tr></thead>
+        <tbody>
+          <tr><td>Multi-agent architecture</td><td>Agent roles, handoffs, supervisor and parallel patterns, human approval gates, failure handling</td><td><a href="#agent-factory">Agent factory</a>, <a href="#heumyn">Heumyn AI</a></td><td><span class="depth"><i class="on"></i><i class="on"></i><i class="on"></i><span>High</span></span></td></tr>
+          <tr><td>LLM engineering</td><td>Context management, prompt caching, tool and schema design, structured output, sampling</td><td><a href="#betterfound">Betterfound</a>, <a href="#heumyn">Heumyn AI</a>, agent factory</td><td><span class="depth"><i class="on"></i><i class="on"></i><i class="on"></i><span>High</span></span></td></tr>
+          <tr><td>MCP and integration</td><td>MCP server design, connecting design and business systems to agents</td><td>Heumyn MCP server, Figma MCP proof of concept</td><td><span class="depth"><i class="on"></i><i class="on"></i><i></i><span>Medium</span></span></td></tr>
+          <tr><td>Evaluation</td><td>Test sets, scoring, regression tracking, LLM-as-judge</td><td>F1 Score, A11yCheck test set, Betterfound embeddings spike</td><td><span class="depth"><i class="on"></i><i class="on"></i><i></i><span>Medium</span></span></td></tr>
+          <tr><td>Retrieval (RAG)</td><td>Chunking, embeddings, hybrid search, re-ranking, retrieval evals</td><td>Betterfound catalogue search; RAG project with measured evals, planned for early 2027</td><td><span class="depth"><i class="on"></i><i></i><i></i><span>Developing</span></span></td></tr>
+          <tr><td>AI governance</td><td>Risk classification, human oversight design, threat modelling, EU AI Act</td><td><a href="#build">How I build</a>; AIGP in progress</td><td><span class="depth"><i class="on"></i><i></i><i></i><span>Developing</span></span></td></tr>
+          <tr><td>ML foundations</td><td>Attention, backpropagation, embeddings, loss functions</td><td>Formula appendix, study notes</td><td><span class="depth"><i class="on"></i><i class="on"></i><i></i><span>Medium</span></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING ROADMAP -->
+<section id="learning" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Learning roadmap</h2>
+      <span class="meta">started Jan 2026</span>
+      <p class="lede">Each stage pairs a certification with a build that proves it.</p>
+    </div>
+    <ol class="road">
+      <li class="current">
+        <span class="meta">Oct–Dec 2026 · current</span>
+        <h3>Architecture</h3>
+        <p>Claude Certified Architect – Foundations. Publish the agent factory case study.</p>
+      </li>
+      <li>
+        <span class="meta">Jan–Mar 2027</span>
+        <h3>Production quality</h3>
+        <p>Evals, tracing and agent security. Ship a RAG project with measured results.</p>
+      </li>
+      <li>
+        <span class="meta">Apr–Jun 2027</span>
+        <h3>Governance and delivery</h3>
+        <p>AIGP, then Certified AI Programme Manager. Ship the program board.</p>
+      </li>
+      <li>
+        <span class="meta">Jul–Sep 2027</span>
+        <h3>Breadth and depth</h3>
+        <p>Google AI Professional, then Claude Certified Architect – Professional.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- RESEARCH, COMMUNITY, STACK -->
+<section id="community">
+  <div class="wrap">
+    <div class="section-head"><h2>Research and community</h2></div>
+    <div class="two">
+      <div>
+        <div class="item">
+          <h3>Talks</h3>
+          <p>Speaker on AI for design systems teams at <a href="https://intodesignsystems.com">intodesignsystems.com</a>, connecting design practice with applied AI.</p>
+        </div>
+        <div class="item">
+          <h3>Reading</h3>
+          <p>Anthropic's interpretability and safety research, Andrej Karpathy's work on LLM internals, and papers on attention, RLHF, reasoning and retrieval.</p>
+        </div>
+        <div class="item">
+          <h3>Model evaluation</h3>
+          <p>Hands-on testing of new model releases against real engineering and creative tasks.</p>
+        </div>
+      </div>
+      <div>
+        <h3>Tools I use</h3>
+        <p class="eyebrow">Models</p>
+        <ul class="stack"><li>Claude</li><li>GPT</li><li>Gemini</li><li>Llama</li><li>Mistral</li><li>DeepSeek</li></ul>
+        <p class="eyebrow">Building</p>
+        <ul class="stack"><li>Claude Code</li><li>Anthropic SDK</li><li>OpenAI SDK</li><li>Vercel AI SDK</li><li>Cursor</li><li>MCP</li><li>Next.js</li><li>React</li></ul>
+        <p class="eyebrow">Data and automation</p>
+        <ul class="stack"><li>Postgres</li><li>Redis</li><li>Supabase</li><li>pgvector</li><li>Voyage AI</li><li>Hugging Face</li><li>n8n</li></ul>
+        <p class="eyebrow">Shipping</p>
+        <ul class="stack"><li>Railway</li><li>Vercel</li><li>Stripe</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="contact-band">
+      <div class="copy-col">
+        <span class="eyebrow">Contact</span>
+        <h2>Working on agentic systems in an enterprise? Let's talk.</h2>
+        <p>I'm happy to compare notes on multi-agent architecture, evaluation or AI governance.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-light" href="mailto:samar@betterfound.ai">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>Last updated October 2026</span>
+  </div>
+</footer>
+
+<a class="btn btn-primary ask-fab" href="#ask" data-ask-focus hidden>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  Ask my agent
+</a>
+
+<script type="module">
+import { ask } from "/portfolio/chat.js";
+
+// Mobile menu
+const toggle = document.querySelector(".nav-toggle");
+const nav = document.getElementById("site-nav");
+toggle.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", String(open));
+});
+nav.addEventListener("click", (e) => {
+  if (e.target.closest("a")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
+});
+
+// Chat
+const log = document.getElementById("chat-log");
+const form = document.getElementById("chat-form");
+const input = document.getElementById("chat-input");
+
+function el(tag, attrs = {}, text) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+  if (text != null) node.textContent = text;
+  return node;
+}
+
+function chevron() {
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  for (const [k, v] of Object.entries({ width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": 2.2, "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true" })) svg.setAttribute(k, v);
+  const p = document.createElementNS(ns, "polyline");
+  p.setAttribute("points", "6 9 12 15 18 9");
+  svg.append(p);
+  return svg;
+}
+
+function renderAnswer(result, ms) {
+  const card = el("article", { class: "turn-answer" });
+  const who = el("div", { class: "who" });
+  who.append(el("span", { class: "tile", "aria-hidden": "true" }, "sm"), "Samar's agent ");
+  const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  who.append(el("span", { class: "meta" }, `· ${time}`));
+  card.append(who, el("p", {}, result.answer));
+
+  if (result.trace.length) {
+    const details = el("details", { class: "trace" });
+    const summary = el("summary");
+    const t = el("span", { class: "t" });
+    t.append(chevron(), `Used ${result.trace.length} ${result.trace.length === 1 ? "tool" : "tools"}`);
+    summary.append(t, el("span", { class: "meta" }, `${ms}ms · read-only`));
+    const ol = el("ol");
+    result.trace.forEach((step, i) => {
+      const li = el("li");
+      li.append(el("span", { class: "n" }, String(i + 1).padStart(2, "0")), el("span", { class: "tool" }, step.tool), el("span", { class: "d" }, step.detail));
+      ol.append(li);
+    });
+    details.append(summary, ol);
+    card.append(details);
+  }
+
+  for (const s of result.sources) {
+    const src = el("div", { class: "source" });
+    src.append(el("span", { class: "label" }, "Source"), el("a", { href: s.href }, s.title));
+    card.append(src);
+  }
+  return card;
+}
+
+function submit(question) {
+  const q = question.trim();
+  if (!q) { input.focus(); return; }
+  log.append(el("div", { class: "turn-user" }, q));
+  const start = performance.now();
+  const result = ask(q);
+  log.append(renderAnswer(result, Math.max(1, Math.round(performance.now() - start))));
+  input.value = "";
+  log.lastElementChild.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+
+form.addEventListener("submit", (e) => { e.preventDefault(); submit(input.value); });
+document.querySelectorAll(".chip").forEach((chip) => chip.addEventListener("click", () => submit(chip.textContent)));
+
+// "Ask my agent" links focus the composer
+document.querySelectorAll("[data-ask-focus]").forEach((a) => a.addEventListener("click", () => {
+  setTimeout(() => input.focus({ preventScroll: true }), 400);
+}));
+
+// Floating button: shown when neither the hero nor the chat is on screen
+const fab = document.querySelector(".ask-fab");
+const visible = new Map();
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) visible.set(e.target, e.isIntersecting);
+  fab.hidden = [...visible.values()].some(Boolean);
+}, { threshold: 0.1 });
+[document.querySelector(".hero"), document.getElementById("ask"), document.getElementById("contact")].forEach((s) => io.observe(s));
+</script>
+</body>
+</html>

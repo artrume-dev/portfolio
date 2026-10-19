@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "PORT=3000 node server.js"
+    "dev": "PORT=3000 node server.js",
+    "test": "node --test tests/"
   },
   "engines": {
     "node": ">=18"
@@ -15,4 +16,3 @@
     "express": "^4.19.2"
   }
 }
-
