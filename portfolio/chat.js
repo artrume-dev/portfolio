@@ -18,7 +18,7 @@ export const KNOWLEDGE = [
     title: "Agent factory",
     href: "#agent-factory",
     keywords: ["agent", "factory", "multi", "team", "pipeline", "human", "approve", "approval", "gate", "spec", "release", "planning", "review"],
-    answer: "The agent factory turns a plain-language prompt into a working app using specialised agents for planning, building and reviewing. It is partly autonomous: a person approves the spec before build agents start, and approves the release after a review agent checks the build. Each app is also a test of the factory, and lessons feed back into the agents' instructions.",
+    answer: "The agent factory turns a plain-language idea into a working app in 11 steps. An agent first interviews me to surface hidden decisions, then writes a spec against a shared domain language. A person approves the spec, the work is cut into vertical slices, and each slice is built test-first in its own worktree. A dual review checks standards and spec compliance, and release is risk-tiered: low-risk slices auto-merge, the rest need a person. After shipping, production signals and factory evals feed back, and recurring feedback becomes a lint rule, test or skill.",
   },
   {
     id: "a11ycheck",
