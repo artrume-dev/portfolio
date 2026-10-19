@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samar Mustafa — Applied AI Architect</title>
+<meta name="description" content="Samar Mustafa designs, directs and governs multi-agent AI systems that ship working software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  TO-DO BEFORE PUBLISHING
+  Every pink dashed box (class="todo") is a placeholder for something only you know:
+  real links, metrics, dates and your contact email. Search this file for class="todo".
+  Also check the agent factory diagram matches your actual pipeline.
+  The PIM case study is anonymised on purpose; get internal clearance before adding detail.
+  The Heumyn and Betterfound architecture sections were written from the codebases
+  (RE-BUILT-WITH/cursor/cv-match and Product-Finder). Check nothing there is too
+  sensitive to publish, and confirm the model names are current.
+-->
+<style>
+:root{
+  --ink:#13203A; --panel:#1A2B4A; --line:#2E4468;
+  --paper:#E9EDF3; --muted:#A3B1C8;
+  --wire:#7CC6E0; --gate:#F0B44C; --todo:#E58FB0;
+  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --max:1120px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px));background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--paper);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+a{color:var(--wire);text-underline-offset:3px}
+a:hover{color:var(--paper)}
+:focus-visible{outline:2px solid var(--gate);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.todo{border:1px dashed var(--todo);color:var(--todo);padding:0 .3em;border-radius:3px;font-style:normal;background:none}
+
+/* nav */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(19,32,58,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:64px}
+.brand{font:500 1.15rem/1 var(--serif);color:var(--paper);text-decoration:none}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:.92rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--paper)}
+@media (max-width:900px){nav{display:none}}
+
+/* type */
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.12;margin:0}
+h1{font-size:clamp(2.4rem,5.2vw,4rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,3.4vw,2.5rem);margin-bottom:.4em}
+h3{font-size:1.45rem}
+p{margin:0 0 1em;max-width:68ch}
+.lede{font-size:1.15rem;color:var(--muted);max-width:60ch}
+section{padding:96px 0;border-top:1px solid var(--line)}
+section.hero{border-top:0;padding:72px 0 88px}
+
+/* hero */
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.hero h1{margin-bottom:24px}
+.now{margin-top:32px;padding-left:16px;border-left:2px solid var(--gate);color:var(--muted);font-size:.95rem}
+.now strong{color:var(--paper);font-weight:500}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-block;padding:11px 20px;border-radius:6px;text-decoration:none;font-weight:500;font-size:.95rem}
+.btn.primary{background:var(--paper);color:var(--ink)}
+.btn.primary:hover{background:#fff;color:var(--ink)}
+.btn.ghost{border:1px solid var(--line);color:var(--paper)}
+.btn.ghost:hover{border-color:var(--muted)}
+figure.diagram{margin:0;padding:20px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+figure.diagram figcaption{font-size:.85rem;color:var(--muted);margin-top:12px}
+.legend{display:inline-flex;align-items:center;gap:6px;margin-right:14px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+
+/* diagram motion: one orchestrated draw on load */
+.flow path,.flow line{stroke-dasharray:240;stroke-dashoffset:240;animation:draw 1.6s ease-out forwards}
+.flow .d2{animation-delay:.25s}.flow .d3{animation-delay:.5s}.flow .d4{animation-delay:.75s}.flow .d5{animation-delay:1s}.flow .d6{animation-delay:1.25s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.flow path,.flow line{animation:none;stroke-dashoffset:0}html{scroll-behavior:auto}}
+
+/* case studies */
+.case{display:grid;grid-template-columns:260px 1fr;gap:48px;padding:48px 0;border-top:1px solid var(--line)}
+.case:first-of-type{border-top:0;padding-top:16px}
+.case aside dl{margin:16px 0 0;font-size:.9rem}
+.case aside dt{color:var(--muted);margin-top:12px}
+.case aside dd{margin:2px 0 0}
+.case .flag{display:inline-block;font-size:.8rem;padding:2px 10px;border-radius:999px;border:1px solid var(--gate);color:var(--gate)}
+.case h4{font:600 .95rem/1.4 var(--sans);color:var(--wire);margin:24px 0 6px}
+.case ul{margin:0 0 1em;padding-left:1.2em;max-width:68ch}
+.case li{margin-bottom:.35em}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 8px;max-width:640px}
+.results div{border-left:2px solid var(--wire);padding:4px 0 4px 12px}
+.results b{display:block;font:500 1.3rem/1.2 var(--serif)}
+.results span{font-size:.85rem;color:var(--muted)}
+@media (max-width:820px){.case{grid-template-columns:1fr;gap:16px}.results{grid-template-columns:1fr}}
+
+/* technical architecture */
+.layers{margin:8px 0 0;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:8px 20px}
+.layer{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.layer:first-child{border-top:0}
+.layer > span{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding-top:6px}
+.nodes{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.nodes li{border:1px solid var(--line);background:var(--ink);border-radius:6px;padding:6px 10px;font-size:.88rem;line-height:1.35;max-width:100%}
+.nodes li small{display:block;color:var(--muted);font-size:.78rem}
+.nodes li.llm{border-color:var(--wire)}
+.nodes li.llm::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--wire);margin-right:6px;vertical-align:1px}
+.layers-key{font-size:.85rem;color:var(--muted);margin:10px 0 0}
+.layers-key .legend i{border-radius:50%}
+@media (max-width:640px){.layer{grid-template-columns:1fr;gap:6px}.layer > span{padding-top:0}}
+ol.steps{list-style:none;counter-reset:s;margin:0 0 1em;padding:0;max-width:68ch}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 12px 36px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--wire);font-size:.75rem;display:grid;place-items:center;color:var(--paper)}
+ol.steps li:not(:last-child)::after{content:"";position:absolute;left:11.5px;top:27px;bottom:2px;border-left:1px solid var(--line)}
+dl.decisions{margin:0;max-width:72ch}
+dl.decisions dt{font-weight:500;margin-top:14px}
+dl.decisions dd{margin:2px 0 0;color:var(--muted);font-size:.95rem}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:0 .3em}
+
+/* projects */
+.group{margin-top:48px}
+.group h3{margin-bottom:8px}
+.group > p{color:var(--muted)}
+.rows{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--line)}
+.rows li{display:grid;grid-template-columns:240px 1fr 110px 90px;gap:20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.rows .name{font-weight:500}
+.rows .desc{color:var(--muted);font-size:.95rem}
+.status{font-size:.8rem;justify-self:start;padding:1px 9px;border-radius:999px}
+.status.live{color:var(--wire);border:1px solid var(--wire)}
+.status.build{color:var(--muted);border:1px dashed var(--muted)}
+.rows a{font-size:.9rem;justify-self:end}
+@media (max-width:820px){.rows li{grid-template-columns:1fr auto;gap:4px 12px}.rows .desc{grid-column:1/-1;grid-row:2}.rows a{grid-row:3;justify-self:start}}
+
+/* capabilities */
+.table-scroll{overflow-x:auto;margin-top:32px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:14px 16px 14px 0;border-bottom:1px solid var(--line)}
+th{font-weight:500;color:var(--muted);font-size:.85rem}
+td:first-child{font-weight:500;width:22%}
+.depth{display:inline-flex;gap:3px;vertical-align:middle}
+.depth i{width:14px;height:6px;border-radius:2px;background:var(--line)}
+.depth i.on{background:var(--wire)}
+
+/* responsible AI */
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:40px}
+.principles h3{font-size:1.2rem;margin-bottom:8px;padding-top:14px;border-top:2px solid var(--gate)}
+.principles p{color:var(--muted);font-size:.95rem}
+@media (max-width:820px){.principles{grid-template-columns:1fr;gap:24px}}
+
+/* roadmap: a true sequence, so it is numbered */
+ol.road{list-style:none;counter-reset:q;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+ol.road li{counter-increment:q;padding:20px 20px 0 0;border-top:2px solid var(--line);position:relative}
+ol.road li::before{content:counter(q);position:absolute;top:-13px;left:0;width:24px;height:24px;border-radius:50%;background:var(--ink);border:2px solid var(--line);font-size:.75rem;display:grid;place-items:center;color:var(--muted)}
+ol.road li.current{border-top-color:var(--wire)}
+ol.road li.current::before{border-color:var(--wire);color:var(--paper)}
+ol.road .when{font-size:.85rem;color:var(--muted)}
+ol.road h3{font-size:1.15rem;margin:4px 0 8px}
+ol.road p{font-size:.92rem;color:var(--muted)}
+@media (max-width:900px){ol.road{grid-template-columns:1fr 1fr;row-gap:32px}}
+@media (max-width:560px){ol.road{grid-template-columns:1fr}}
+
+/* community + stack */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:32px}
+.two h3{font-size:1.2rem;margin-bottom:6px}
+.two .item{margin-bottom:28px}
+.two p{color:var(--muted);font-size:.95rem}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px;padding:0;list-style:none}
+.stack li{border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-size:.88rem}
+.stack-label{font-size:.9rem;color:var(--muted);margin:0}
+@media (max-width:820px){.two{grid-template-columns:1fr;gap:24px}}
+
+/* contact */
+.contact h2{max-width:20ch}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top">Samar Mustafa</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#case-studies">Case studies</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#responsible-ai">Responsible AI</a></li>
+        <li><a href="#learning">Learning</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="lede" style="margin-bottom:12px">Applied AI Architect</p>
+      <h1>I design teams of AI agents that build real software, with people in charge of the decisions that matter.</h1>
+      <p class="lede">I plan, direct and govern multi-agent systems, from the first prompt to a shipped app. My focus is architecture, evaluation and safe delivery inside an enterprise.</p>
+      <div class="cta">
+        <a class="btn primary" href="#case-studies">Read the case studies</a>
+        <a class="btn ghost" href="#architecture">See the architecture</a>
+      </div>
+      <p class="now"><strong>Now:</strong> building a program board app through my agent factory, and preparing for Claude Certified Architect – Foundations.</p>
+    </div>
+
+    <figure class="diagram">
+      <!-- Illustrative pipeline. Check the stages match your real agent factory. -->
+      <svg viewBox="0 0 360 470" role="img" aria-labelledby="dg-t dg-d" class="flow">
+        <title id="dg-t">Agent factory pipeline</title>
+        <desc id="dg-d">A prompt goes to a planning agent, then a human approval gate, then build agents, then review agents, then a second human approval gate, and finally a shipped app such as A11yCheck.</desc>
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7CC6E0"/></marker>
+        </defs>
+        <g font-family="IBM Plex Sans, system-ui, sans-serif" font-size="13" fill="#E9EDF3">
+          <rect x="105" y="8" width="150" height="36" rx="18" fill="none" stroke="#A3B1C8"/>
+          <text x="180" y="31" text-anchor="middle">Your prompt</text>
+
+          <rect x="80" y="78" width="200" height="40" rx="6" fill="#13203A" stroke="#7CC6E0"/>
+          <text x="180" y="103" text-anchor="middle">Planning agent writes the spec</text>
+
+          <rect x="110" y="152" width="140" height="36" rx="6" fill="#13203A" stroke="#F0B44C" stroke-width="1.5"/>
+          <text x="180" y="175" text-anchor="middle" fill="#F0B44C">You approve the spec</text>
+
+          <rect x="30" y="222" width="90" height="40" rx="6" fill="#13203A" stroke="#7CC6E0"/>
+          <text x="75" y="247" text-anchor="middle">Front end</text>
+          <rect x="135" y="222" width="90" height="40" rx="6" fill="#13203A" stroke="#7CC6E0"/>
+          <text x="180" y="247" text-anchor="middle">Back end</text>
+          <rect x="240" y="222" width="90" height="40" rx="6" fill="#13203A" stroke="#7CC6E0"/>
+          <text x="285" y="247" text-anchor="middle">Tests</text>
+
+          <rect x="80" y="296" width="200" height="40" rx="6" fill="#13203A" stroke="#7CC6E0"/>
+          <text x="180" y="321" text-anchor="middle">Review agent checks the build</text>
+
+          <rect x="110" y="370" width="140" height="36" rx="6" fill="#13203A" stroke="#F0B44C" stroke-width="1.5"/>
+          <text x="180" y="393" text-anchor="middle" fill="#F0B44C">You approve release</text>
+
+          <rect x="105" y="430" width="150" height="36" rx="18" fill="#7CC6E0"/>
+          <text x="180" y="453" text-anchor="middle" fill="#13203A" font-weight="600">Shipped app</text>
+        </g>
+        <g stroke="#7CC6E0" stroke-width="1.5" fill="none" marker-end="url(#ar)">
+          <line x1="180" y1="44" x2="180" y2="76" class="d1"/>
+          <line x1="180" y1="118" x2="180" y2="150" class="d2"/>
+          <path d="M180 188 V205 H75 V220" class="d3"/>
+          <line x1="180" y1="188" x2="180" y2="220" class="d3"/>
+          <path d="M180 188 V205 H285 V220" class="d3"/>
+          <path d="M75 262 V279 H180 V294" class="d4"/>
+          <line x1="180" y1="262" x2="180" y2="294" class="d4"/>
+          <path d="M285 262 V279 H180 V294" class="d4"/>
+          <line x1="180" y1="336" x2="180" y2="368" class="d5"/>
+          <line x1="180" y1="406" x2="180" y2="428" class="d6"/>
+        </g>
+      </svg>
+      <figcaption>
+        <span class="legend"><i style="background:#7CC6E0"></i>AI agents</span>
+        <span class="legend"><i style="background:#F0B44C"></i>Human approval</span>
+        <br>The agent factory: partly autonomous, with approval gates before build and before release.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="case-studies">
+  <div class="wrap">
+    <h2>Case studies</h2>
+    <p class="lede">Three systems, written up the way an architecture review would want them: the problem, the design, the trade-offs and what happened.</p>
+
+    <article class="case">
+      <aside>
+        <span class="flag">Flagship</span>
+        <dl>
+          <dt>Role</dt><dd>Architect and director of the agent team</dd>
+          <dt>Status</dt><dd>In use; building its next app</dd>
+          <dt>Stack</dt><dd>Claude Code, Anthropic SDK, MCP</dd>
+        </dl>
+      </aside>
+      <div>
+        <h3>Agent factory</h3>
+        <p>A system that turns a plain-language prompt into a working application, using a team of specialised AI agents.</p>
+        <h4>Problem</h4>
+        <p>Single-agent coding sessions lose the thread on larger apps: requirements drift, quality varies and nobody owns the final decision.</p>
+        <h4>Approach</h4>
+        <ul>
+          <li>Split the work across agents with clear roles: planning, building and reviewing.</li>
+          <li>Kept the system partly autonomous, with human approval gates on the spec and on release.</li>
+          <li>Treated each app as a test of the factory itself, feeding lessons back into agent instructions.</li>
+        </ul>
+        <h4>Results</h4>
+        <div class="results">
+          <div><b>6</b><span>apps built</span></div>
+          <div><b>9 hrs</b><span>prompt to first release</span></div>
+          <div><b>$38</b><span>cost per build</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <span class="flag">Built by the factory</span>
+        <dl>
+          <dt>Role</dt><dd>Planned, structured and directed the AI agents that built it</dd>
+          <dt>Status</dt><dd>Internal</dd>
+        </dl>
+      </aside>
+      <div>
+        <h3>A11yCheck, an accessibility testing suite</h3>
+        <p>A web app that tests interfaces for accessibility problems. It is the first full app produced end to end by the agent factory.</p>
+        <h4>Why it matters</h4>
+        <p>It proves the factory delivers usable software, not just demos. Accessibility also has a clear right answer, which makes quality measurable.</p>
+        <h4>How I measure it</h4>
+        <ul>
+          <li>A test set of pages with known accessibility defects.</li>
+          <li>Detection rate and false alarms, tracked across versions.</li>
+        </ul>
+        <div class="results">
+          <div><b>92%</b><span>known defects caught</span></div>
+          <div><b>4%</b><span>false alarms</span></div>
+          <div><b>38</b><span>WCAG criteria covered</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case">
+      <aside>
+        <span class="flag">Enterprise</span>
+        <dl>
+          <dt>Role</dt><dd>Scoping and solution design</dd>
+          <dt>Status</dt><dd>Scoping; to be built in Claude Code</dd>
+          <dt>Note</dt><dd>Details anonymised</dd>
+        </dl>
+      </aside>
+      <div>
+        <h3>Product data quality assistant</h3>
+        <p>A chat assistant for a product information management (PIM) system in a large enterprise. It finds and helps fix data quality problems that today are checked by hand.</p>
+        <h4>Use cases</h4>
+        <ul>
+          <li>Data quality and governance checks: duplicates, broken relationships, naming conventions, content hierarchy and embargoes.</li>
+          <li>Finding products missing between connected systems.</li>
+          <li>Supporting product onboarding, and linking "what's in the box" items across SKUs.</li>
+        </ul>
+        <h4>Design principles</h4>
+        <ul>
+          <li>The assistant proposes fixes; people approve them before anything changes.</li>
+          <li>Success is measured against the current manual process.</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- TECHNICAL ARCHITECTURE -->
+<section id="architecture">
+  <div class="wrap">
+    <h2>Technical architecture</h2>
+    <p class="lede">Two production products, opened up: the layers, how one request moves through them, and the decisions behind the design.</p>
+
+    <!-- BETTERFOUND -->
+    <article class="case" id="betterfound">
+      <aside>
+        <span class="flag">Product</span>
+        <dl>
+          <dt>What it is</dt><dd>An AI product finder that merchants embed on their storefront</dd>
+          <dt>Role</dt><dd>Product, architecture and direction of the AI agents that built it</dd>
+          <dt>Status</dt><dd>Live</dd>
+          <dt>Stack</dt><dd>Next.js 14, TypeScript, Claude (Sonnet and Haiku), Postgres, Redis, Drizzle</dd>
+          <dt>Links</dt><dd><a href="https://betterfound.ai" target="_blank" rel="noopener noreferrer">betterfound.ai</a></dd>
+        </dl>
+      </aside>
+      <div>
+        <h3>Betterfound</h3>
+        <p>A shopper describes what they need in plain language. An agent searches that merchant's own live catalogue, recommends real products and explains why. Every search feeds an analytics dashboard that shows the merchant what customers want and where the catalogue falls short.</p>
+
+        <h4>System layers</h4>
+        <div class="layers" role="group" aria-label="Betterfound system layers">
+          <div class="layer"><span>Storefront</span>
+            <ul class="nodes">
+              <li>Embeddable widget<small>Framework-free web component, shadow DOM, streams answers over SSE</small></li>
+              <li>CMS installs<small>Shopify, WooCommerce, Magento, BigCommerce, WordPress</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Platform</span>
+            <ul class="nodes">
+              <li>Merchant dashboard and APIs<small>Next.js 14 App Router, NextAuth</small></li>
+              <li>Signed widget tokens<small>JWT with rotation and separately revocable preview links</small></li>
+              <li>Stripe billing</li>
+            </ul>
+          </div>
+          <div class="layer"><span>Agent</span>
+            <ul class="nodes">
+              <li class="llm">Search planner<small>Haiku picks structured search parameters with a forced tool call</small></li>
+              <li class="llm">Answer writer<small>Sonnet streams the recommendation</small></li>
+              <li class="llm">Page reader tool<small>Reads specs and FAQs, limited to the merchant's own site</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Catalogue</span>
+            <ul class="nodes">
+              <li>Data source connectors<small>Store APIs, SFCC, custom REST, MCP</small></li>
+              <li>Schema adapter<small>Maps any product JSON to one canonical model</small></li>
+              <li class="llm">Enrichment<small>Builds an intent vocabulary such as "waterproof" or "beginner friendly"</small></li>
+              <li>JSON-LD fallback<small>Recovers a catalogue from the site's structured data if the API fails</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Insight</span>
+            <ul class="nodes">
+              <li>Query and click events</li>
+              <li>SQL aggregates<small>Trends, click-through, zero-result searches</small></li>
+              <li class="llm">Intent clustering<small>Haiku groups similar searches</small></li>
+              <li>Embeddings<small>Voyage, kept for semantic product search</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Data</span>
+            <ul class="nodes">
+              <li>Postgres 16<small>Tenants, data sources, events</small></li>
+              <li>Redis<small>Conversation memory, 30-minute expiry</small></li>
+              <li>Railway<small>Long-running container, migrations before deploy, health check</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="layers-key"><span class="legend"><i style="background:var(--wire)"></i>Calls a language model</span></p>
+
+        <h4>How one search works</h4>
+        <ol class="steps">
+          <li>The widget sends the shopper's message with the merchant's signed token. The server checks the token and loads the last 30 minutes of conversation.</li>
+          <li>A small, fast model turns the message into structured search parameters: keywords, category, price range, tags and intents.</li>
+          <li>The server queries every connected catalogue in parallel, maps the results to one product model and applies the merchant's include and exclude rules.</li>
+          <li>If nothing matches, it relaxes the search step by step (wider price range, fewer tags) and labels the results as close alternatives.</li>
+          <li>It records one analytics event in the background, so logging never slows the answer.</li>
+          <li>A larger model streams the reply alongside product cards. If no product genuinely fits, it flags this, and the event is marked as a catalogue gap.</li>
+        </ol>
+
+        <h4>Key decisions and trade-offs</h4>
+        <dl class="decisions">
+          <dt>Two models, two jobs</dt>
+          <dd>Haiku plans the search and Sonnet writes the answer. Planning is a short structured task, so the cheaper model keeps cost and first-token time down without weakening the reply.</dd>
+          <dt>Search the live catalogue, not a copy</dt>
+          <dd>The agent queries the merchant's own API at request time, so prices and stock never drift out of sync. Vector search over products is kept as a separate, later track.</dd>
+          <dt>Tested embeddings before trusting them</dt>
+          <dd>A spike on real queries showed embeddings caught typos and near duplicates, but scored two paraphrases of the same intent at only 0.52 similarity. Search grouping moved to Haiku clustering, which grouped them correctly, with a 10-minute cache and a safe fallback if the model fails.</dd>
+          <dt>Three kinds of "no result"</dt>
+          <dd>An empty search, a relaxed search, and the model judging results irrelevant all count as zero-result searches. Together they give merchants a clear list of products customers want but cannot find.</dd>
+          <dt>Tenant isolation by construction</dt>
+          <dd>The merchant ID always comes from the signed-in session or the verified widget token, never from the request body. Every analytics query is scoped by it.</dd>
+          <dt>Limited reach for the agent</dt>
+          <dd>The page-reading tool only fetches pages on the merchant's own domain, using signed requests and checks against server-side request forgery.</dd>
+          <dt>Tests against a real database</dt>
+          <dd>Behavioural tests are written first. Anything with real SQL runs against an in-memory Postgres, which caught bugs that mocked tests missed.</dd>
+        </dl>
+        <h4>Results</h4>
+        <div class="results">
+          <div><b>12</b><span>merchants or pilots</span></div>
+          <div><b>0.8s</b><span>time to first token</span></div>
+          <div><b>34%</b><span>search click-through</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- HEUMYN -->
+    <article class="case" id="heumyn">
+      <aside>
+        <span class="flag">Product</span>
+        <dl>
+          <dt>What it is</dt><dd>A job search and CV tailoring app with an AI matching layer</dd>
+          <dt>Role</dt><dd>Product, architecture and direction of the AI agents that built it</dd>
+          <dt>Status</dt><dd>Live</dd>
+          <dt>Stack</dt><dd>React, Vite, Express, TypeScript, Postgres, Claude, OpenAI, MCP</dd>
+          <dt>Links</dt><dd><a href="https://heumyn.ai/" target="_blank" rel="noopener noreferrer">heumyn.ai</a></dd>
+        </dl>
+      </aside>
+      <div>
+        <h3>Heumyn AI</h3>
+        <p>People describe the job they want in their own words. Heumyn searches job boards and company career pages, scores each role against their CV and explains the fit. It then helps them tailor their CV to the role.</p>
+        <p>It started as an MCP server with Claude Code sub-agents for my own job search. The same tools were later put behind a web API so anyone could use them without a terminal.</p>
+
+        <h4>System layers</h4>
+        <div class="layers" role="group" aria-label="Heumyn system layers">
+          <div class="layer"><span>Client</span>
+            <ul class="nodes">
+              <li>Web app<small>React, Vite, TanStack Query, Zustand</small></li>
+              <li>CV editor<small>Rich text, version history and side-by-side comparison</small></li>
+              <li>Google sign-in</li>
+            </ul>
+          </div>
+          <div class="layer"><span>API</span>
+            <ul class="nodes">
+              <li>Express API<small>TypeScript, JWT auth</small></li>
+              <li>Abuse controls<small>Rate limits per route group, Turnstile, guest quotas</small></li>
+              <li>Stripe billing<small>Plans and entitlements</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Intelligence</span>
+            <ul class="nodes">
+              <li class="llm">Query parser<small>Turns plain language into validated search fields</small></li>
+              <li class="llm">Job filter<small>Scores fit 0–100 with reasons and seniority match</small></li>
+              <li class="llm">Qualification matcher<small>Fast rule-based check, or deep model analysis</small></li>
+              <li class="llm">CV tools<small>Enhance, humanise and suggest sentences</small></li>
+              <li>Provider manager<small>Routes each task to Anthropic, OpenAI or a local model</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Job sources</span>
+            <ul class="nodes">
+              <li>Career page scrapers<small>Greenhouse, Lever, Ashby, Workday, SmartRecruiters</small></li>
+              <li>Job APIs<small>Adzuna, Google Jobs, Himalayas, Reed</small></li>
+              <li>Semantic ranking<small>Synonym-aware scoring, keyword fallback</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Data</span>
+            <ul class="nodes">
+              <li>Postgres<small>SQLite adapter for local development</small></li>
+              <li>Email<small>Resend</small></li>
+              <li>Railway</li>
+            </ul>
+          </div>
+          <div class="layer"><span>Agent tools</span>
+            <ul class="nodes">
+              <li>MCP server<small>Search, analyse, track and CV tools, usable from Claude Code</small></li>
+              <li class="llm">Sub-agents<small>Job analyser, CV optimiser, CV humaniser</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="layers-key"><span class="legend"><i style="background:var(--wire)"></i>Calls a language model</span></p>
+
+        <h4>How one search works</h4>
+        <ol class="steps">
+          <li>The person types something like "remote design systems roles in London".</li>
+          <li>A model turns it into structured fields: title, company, location, remote only, seniority. The output is checked against a strict schema before use.</li>
+          <li>Hard limits such as location are applied, and recent results are served from cache.</li>
+          <li>The app queries job APIs and company career pages, then merges the results into one format.</li>
+          <li>Semantic ranking orders roles by relevance, with plain keyword matching as a fallback.</li>
+          <li>The job filter scores each role against the person's CV profile and explains why it does or does not fit.</li>
+          <li>The person sees a qualification breakdown, saves or applies, and can tailor their CV to that role.</li>
+        </ol>
+
+        <h4>Key decisions and trade-offs</h4>
+        <dl class="decisions">
+          <dt>MCP first, web second</dt>
+          <dd>Building the tools as an MCP server meant I could test them from Claude Code before any UI existed. The web API reuses the same services instead of reimplementing them.</dd>
+          <dt>Choose the model per task</dt>
+          <dd>A provider manager sends each task to Anthropic, OpenAI or a local model. Bulk filtering uses cheaper models, and an internal endpoint compares providers on the same jobs.</dd>
+          <dt>Cut prompt cost at the source</dt>
+          <dd>The job filter uses a fixed system prompt with job data passed as JSON, and builds the CV profile once per sync, not once per job. That reduced prompt tokens by about 70%.</dd>
+          <dt>Two-speed matching</dt>
+          <dd>The list view uses a free rule-based match so it stays instant. The paid model analysis runs only when someone opens a role.</dd>
+          <dt>No vector database yet</dt>
+          <dd>Ranking uses lightweight semantic scoring with a keyword fallback, so the stack stays simple until real usage shows a vector store is needed.</dd>
+          <dt>Treat model output and the web as untrusted</dt>
+          <dd>Parsed queries are schema-validated and length-capped. Scraping uses URL safety checks, and expensive endpoints sit behind Turnstile, quotas and rate limits.</dd>
+        </dl>
+        <h4>Results</h4>
+        <div class="results">
+          <div><b>450</b><span>active users</span></div>
+          <div><b>18k</b><span>jobs indexed</span></div>
+          <div><b>87%</b><span>filter agreement with people</span></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <h2>Projects</h2>
+    <p class="lede">Smaller builds and experiments, grouped by what they explore. Part of a goal to ship 15 AI apps; each one is marked live or in build.</p>
+
+    <div class="group">
+      <h3>Agents and AI engineering</h3>
+      <ul class="rows">
+        <li><span class="name">Betterfound</span><span class="desc">An AI product finder for storefronts. Shoppers ask in plain language; an agent searches the live catalogue. <a href="#betterfound">Architecture</a></span><span class="status live">Live</span><a href="https://betterfound.ai" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Heumyn AI</span><span class="desc">A multi-agent job matching experience. It breaks down a task, coordinates agents and helps people reach a result. <a href="#heumyn">Architecture</a></span><span class="status live">Live</span><a href="https://heumyn.ai/" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Code review and optimisation</span><span class="desc">Claude Code skills for systematic reviews that improve correctness, readability and performance.</span><span class="status live">Live</span><span></span></li>
+        <li><span class="name">F1 Score: recall, rank and similarity</span><span class="desc">An evaluation score that balances recall, ranking quality and semantic similarity.</span><span class="status live">Live</span><a href="/formula-glossary.html" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Figma MCP proof of concept</span><span class="desc">Connects design tools to agent workflows through MCP, so design context becomes something agents can act on.</span><span class="status live">Live</span><span></span></li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <h3>Design systems and AI</h3>
+      <p>Where my design systems background meets agentic tooling.</p>
+      <ul class="rows">
+        <li><span class="name">Tokenchain</span><span class="desc">A design token visualiser that helps teams inspect, iterate on and apply token data.</span><span class="status live">Live</span><a href="https://tokenchain.up.railway.app/" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Design System Dashboard</span><span class="desc">Automates routine design system work: runs checks, summarises changes and suggests next actions.</span><span class="status build">In build</span><span></span></li>
+      </ul>
+    </div>
+
+    <div class="group">
+      <h3>Teaching and community</h3>
+      <ul class="rows">
+        <li><span class="name">Vibe coding for designers</span><span class="desc">A talk on thinking in agentic loops, shaping intent and shipping with confidence.</span><span class="status live">Talk</span><a href="https://intodesignsystems.com" target="_blank" rel="noopener noreferrer">Watch</a></li>
+        <li><span class="name">Vibe coding</span><span class="desc">Agentic coding terms and frameworks to help teams build and learn faster.</span><span class="status live">Talk</span><a href="https://vibecode.up.railway.app/" target="_blank" rel="noopener noreferrer">Slides</a></li>
+        <li><span class="name">AI glossary</span><span class="desc">Plain-language explanations of AI terms for non-specialists.</span><span class="status live">Live</span><a href="/ai-elements-definitions.html" target="_blank" rel="noopener noreferrer">Open</a></li>
+        <li><span class="name">Hypergigs</span><span class="desc">A marketplace of practical AI resources: prompts, patterns and reusable building blocks.</span><span class="status build">In build</span><span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="wrap">
+    <h2>Capabilities</h2>
+    <p class="lede">What I can do, and where to see the evidence. Depth is self-assessed and only marked high where a project backs it up.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Area</th><th>What it covers</th><th>Evidence</th><th>Depth</th></tr></thead>
+        <tbody>
+          <tr><td>Multi-agent architecture</td><td>Agent roles, handoffs, supervisor and parallel patterns, human approval gates, failure handling</td><td><a href="#case-studies">Agent factory</a>, <a href="#heumyn">Heumyn AI</a></td><td><span class="depth" aria-label="High"><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr>
+          <tr><td>LLM engineering</td><td>Context management, prompt caching, tool and schema design, structured output, sampling</td><td><a href="#betterfound">Betterfound</a>, <a href="#heumyn">Heumyn AI</a>, agent factory</td><td><span class="depth" aria-label="High"><i class="on"></i><i class="on"></i><i class="on"></i></span></td></tr>
+          <tr><td>MCP and integration</td><td>MCP server design, connecting design and business systems to agents</td><td>Heumyn MCP server, Figma MCP proof of concept</td><td><span class="depth" aria-label="Medium"><i class="on"></i><i class="on"></i><i></i></span></td></tr>
+          <tr><td>Evaluation</td><td>Test sets, scoring, regression tracking, LLM-as-judge</td><td>F1 Score, A11yCheck test set, Betterfound embeddings spike</td><td><span class="depth" aria-label="Medium"><i class="on"></i><i class="on"></i><i></i></span></td></tr>
+          <tr><td>Retrieval (RAG)</td><td>Chunking, embeddings, hybrid search, re-ranking, retrieval evals</td><td>Betterfound catalogue search; RAG project with measured evals, planned for early 2027</td><td><span class="depth" aria-label="Developing"><i class="on"></i><i></i><i></i></span></td></tr>
+          <tr><td>AI governance</td><td>Risk classification, human oversight design, threat modelling, EU AI Act</td><td><a href="#responsible-ai">Responsible AI</a>; AIGP in progress</td><td><span class="depth" aria-label="Developing"><i class="on"></i><i></i><i></i></span></td></tr>
+          <tr><td>ML foundations</td><td>Attention, backpropagation, embeddings, loss functions</td><td>Formula appendix, study notes</td><td><span class="depth" aria-label="Medium"><i class="on"></i><i class="on"></i><i></i></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- RESPONSIBLE AI -->
+<section id="responsible-ai">
+  <div class="wrap">
+    <h2>How I build responsibly</h2>
+    <p class="lede">Agents that write and change things need limits. These are the rules I design to.</p>
+    <div class="principles">
+      <div>
+        <h3>People approve what matters</h3>
+        <p>Agents plan and build; people sign off on the spec and the release. In enterprise tools, agents propose changes to data and a person applies them.</p>
+      </div>
+      <div>
+        <h3>Measure before trusting</h3>
+        <p>Every system gets a test set and a quality bar before it is called done. New model versions are checked against real tasks, not just leaderboards.</p>
+      </div>
+      <div>
+        <h3>Limit what agents can touch</h3>
+        <p>Tools get the narrowest permissions that work. I plan for prompt injection and data leakage, and keep a risk record for anything that reaches users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING ROADMAP -->
+<section id="learning">
+  <div class="wrap">
+    <h2>Learning roadmap</h2>
+    <p class="lede">Each stage pairs a certification with a build that proves it. I started with theory in January 2026.</p>
+    <ol class="road">
+      <li class="current">
+        <span class="when">Oct–Dec 2026</span>
+        <h3>Architecture</h3>
+        <p>Claude Certified Architect – Foundations. Publish the agent factory case study.</p>
+      </li>
+      <li>
+        <span class="when">Jan–Mar 2027</span>
+        <h3>Production quality</h3>
+        <p>Evals, tracing and agent security. Ship a RAG project with measured results.</p>
+      </li>
+      <li>
+        <span class="when">Apr–Jun 2027</span>
+        <h3>Governance and delivery</h3>
+        <p>AIGP, then Certified AI Programme Manager. Ship the program board.</p>
+      </li>
+      <li>
+        <span class="when">Jul–Sep 2027</span>
+        <h3>Breadth and depth</h3>
+        <p>Google AI Professional, then Claude Certified Architect – Professional.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- RESEARCH, COMMUNITY, STACK -->
+<section id="community">
+  <div class="wrap">
+    <h2>Research and community</h2>
+    <div class="two">
+      <div>
+        <div class="item">
+          <h3>Talks</h3>
+          <p>Speaker on AI for design systems teams at <a href="https://intodesignsystems.com">intodesignsystems.com</a>, connecting design practice with applied AI.</p>
+        </div>
+        <div class="item">
+          <h3>Reading</h3>
+          <p>Anthropic's interpretability and safety research, Andrej Karpathy's work on LLM internals, and papers on attention, RLHF, reasoning and retrieval.</p>
+        </div>
+        <div class="item">
+          <h3>Model evaluation</h3>
+          <p>Hands-on testing of new model releases against real engineering and creative tasks.</p>
+        </div>
+      </div>
+      <div>
+        <h3>Tools I use</h3>
+        <p class="stack-label">Models</p>
+        <ul class="stack"><li>Claude</li><li>GPT</li><li>Gemini</li><li>Llama</li><li>Mistral</li><li>DeepSeek</li></ul>
+        <p class="stack-label">Building</p>
+        <ul class="stack"><li>Claude Code</li><li>Anthropic SDK</li><li>OpenAI SDK</li><li>Vercel AI SDK</li><li>Cursor</li><li>MCP</li><li>Next.js</li><li>React</li></ul>
+        <p class="stack-label">Data and automation</p>
+        <ul class="stack"><li>Postgres</li><li>Redis</li><li>Supabase</li><li>pgvector</li><li>Voyage AI</li><li>Hugging Face</li><li>n8n</li></ul>
+        <p class="stack-label">Shipping</p>
+        <ul class="stack"><li>Railway</li><li>Vercel</li><li>Stripe</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Working on agentic systems in an enterprise? Let's talk.</h2>
+    <p class="lede">I'm happy to compare notes on multi-agent architecture, evaluation or AI governance.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:samar@betterfound.ai">Email me</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>Last updated October 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
