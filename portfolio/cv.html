@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CV — Samar Mustafa</title>
+<meta name="description" content="CV of Samar Mustafa, Applied AI Architect: multi-agent systems, LLM engineering and enterprise design systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<!--
+  Source of truth: the Google Doc linked below. Downloads in /assets/cv are exports of it.
+  Tokens mirror the :root block in portfolio/index.html. Change both together.
+-->
+<style>
+:root{
+  --background:#ffffff;
+  --foreground:#111111;
+  --primary:#111111;
+  --primary-foreground:#ffffff;
+  --secondary:#f5f5f5;
+  --accent:#eeeeee;
+  --border:#dddddd;
+  --ring:#111111;
+  --muted-foreground:#555555;
+  --body-foreground:#444444;
+  --font-display:"Space Grotesk", system-ui, sans-serif;
+  --font-sans:"Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono:"Geist Mono", ui-monospace, monospace;
+  --space-1:0.25rem; --space-2:0.5rem; --space-3:0.75rem; --space-4:1rem; --space-5:1.25rem;
+  --space-6:1.5rem; --space-8:2rem; --space-12:3rem; --space-18:4.5rem;
+  --radius-base:0.125rem;
+  --header-height:68px;
+  --content-width:1080px;
+  --touch-target:44px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--background)}
+body{margin:0;background:var(--background);color:var(--foreground);font:400 15px/1.6 var(--font-sans);-webkit-font-smoothing:antialiased}
+a{color:var(--foreground);text-underline-offset:3px}
+a:hover{color:var(--muted-foreground)}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.wrap{max-width:var(--content-width);margin:0 auto;padding:0 var(--space-6)}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;margin:0}
+h1{font-size:clamp(32px,4.2vw,48px);line-height:1.08;letter-spacing:-.03em}
+h2{font-size:22px;line-height:1.25;letter-spacing:-.015em}
+h3{font-size:17px;line-height:1.35;letter-spacing:-.01em}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+.meta{font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--touch-target);padding:0 18px;border-radius:var(--radius-base);font:600 14px/1 var(--font-sans);text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--primary);color:var(--primary-foreground)}
+.btn-primary:hover{color:var(--primary-foreground);opacity:.88}
+.btn-outline{background:var(--background);color:var(--foreground);border-color:var(--foreground)}
+.btn-outline:hover{background:var(--accent);color:var(--foreground)}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:20;background:var(--background);border-bottom:1px solid var(--border)}
+.site-header .wrap{min-height:var(--header-height);display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-tile{width:28px;height:28px;background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);display:grid;place-items:center;font:500 12px/1 var(--font-mono)}
+.brand-name{font:600 17px/1 var(--font-display);letter-spacing:-.01em}
+.back{display:inline-flex;align-items:center;min-height:var(--touch-target);font-size:14px;font-weight:500;text-decoration:none}
+
+/* cv head */
+.cv-head{padding:var(--space-12) 0 var(--space-8);border-bottom:1px solid var(--border)}
+.cv-head .wrap{display:flex;flex-direction:column;gap:var(--space-4)}
+.role{font-size:18px;color:var(--body-foreground)}
+.contact{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);list-style:none;margin:0;padding:0;font-size:14px;color:var(--body-foreground)}
+.downloads{display:flex;flex-wrap:wrap;gap:var(--space-3);padding-top:var(--space-2)}
+
+/* body */
+.cv-section{padding:var(--space-8) 0;border-bottom:1px solid var(--border)}
+.cv-section .wrap{display:grid;grid-template-columns:220px minmax(0,1fr);gap:var(--space-6)}
+.cv-section .body{display:flex;flex-direction:column;gap:var(--space-4);max-width:72ch;color:var(--body-foreground)}
+.cv-section ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:var(--space-2)}
+.cv-section li strong,.cv-section p strong{color:var(--foreground);font-weight:600}
+.job{display:flex;flex-direction:column;gap:var(--space-3)}
+.job + .job{padding-top:var(--space-6);border-top:1px solid var(--accent)}
+.job-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-1) var(--space-4);align-items:baseline}
+.job h3{color:var(--foreground)}
+.stack{font-family:var(--font-mono);font-size:12px;color:var(--muted-foreground)}
+.end{padding:var(--space-8) 0 var(--space-12)}
+footer{padding:var(--space-6) 0;border-top:1px solid var(--border)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:400 12px/1.4 var(--font-mono);color:var(--muted-foreground)}
+@media (max-width:720px){
+  .wrap{padding:0 var(--space-4)}
+  .cv-section .wrap{grid-template-columns:1fr;gap:var(--space-3)}
+}
+@media print{
+  .site-header,.downloads,footer{display:none}
+  .cv-head{padding-top:0}
+  .cv-section{break-inside:avoid-page}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Samar Mustafa, portfolio home">
+      <span class="brand-tile" aria-hidden="true">sm</span>
+      <span class="brand-name">Samar Mustafa</span>
+    </a>
+    <a class="back" href="/">← Back to portfolio</a>
+  </div>
+</header>
+
+<main>
+
+<section class="cv-head" aria-labelledby="cv-name">
+  <div class="wrap">
+    <span class="eyebrow">Curriculum vitae</span>
+    <h1 id="cv-name">Samar Mustafa</h1>
+    <p class="role">Applied AI Architect | Multi-Agent Systems | Enterprise Design Systems</p>
+    <ul class="contact">
+      <li><a href="mailto:samar@betterfound.ai">samar@betterfound.ai</a></li>
+      <li><a href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">linkedin.com/in/samarmustafa</a></li>
+      <li><a href="https://samar-mustafa.vercel.app">samar-mustafa.vercel.app</a></li>
+      <li>London, UK</li>
+    </ul>
+    <div class="downloads" aria-label="Download the CV">
+      <a class="btn btn-primary" href="/assets/cv/samar-mustafa-cv.pdf" download>Download PDF</a>
+      <a class="btn btn-outline" href="/assets/cv/samar-mustafa-cv.docx" download>Download Word</a>
+      <a class="btn btn-outline" href="https://docs.google.com/document/d/1CpQmHnDNoq5SyU23ileuqlfKbZKBDhMafkdbY8HEdWM/edit" target="_blank" rel="noopener noreferrer">Open Google Doc</a>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="summary">
+  <div class="wrap">
+    <h2 id="summary">Professional summary</h2>
+    <div class="body">
+      <p>Applied AI Architect who designs teams of AI agents that build real software, with people in charge of the decisions that matter. I plan, direct and govern multi-agent systems from first prompt to shipped app, with a focus on architecture, evaluation and safe delivery in the enterprise.</p>
+      <p>Built an agent factory that has shipped 6 apps (about 9 hours and $38 per build), and founded two live AI products: Betterfound (12 merchants and pilots) and Heumyn AI (450 active users). Backed by 13 years leading Canon EMEA's design system across 57 localised websites in 27 languages, so I know how to take AI from prototype into governed, accessible, production-grade delivery.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="competencies">
+  <div class="wrap">
+    <h2 id="competencies">Core competencies</h2>
+    <div class="body">
+      <ul>
+        <li><strong>Multi-Agent Architecture:</strong> Design specialised planning, building and review agents with human approval gates on spec and release</li>
+        <li><strong>LLM Engineering:</strong> Per-task model routing (Haiku/Sonnet), context and prompt engineering, ~70% prompt-token reduction, streaming at sub-second time to first token</li>
+        <li><strong>MCP &amp; Integration:</strong> MCP-first products, Claude Code sub-agents, Figma MCP, enterprise PIM and CMS integration patterns</li>
+        <li><strong>Evaluation &amp; Quality:</strong> Eval metrics (F1 score), human-agreement testing, defect-catch and false-alarm rates, tests against real databases</li>
+        <li><strong>AI Governance &amp; Safe Delivery:</strong> Human-in-the-loop approvals, tenant isolation, EU AI Act risk classification (AIGP in progress)</li>
+        <li><strong>Enterprise Design Systems:</strong> Design tokens, governance models, WCAG 2.2 AA accessibility, adoption at 27-language scale</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="experience">
+  <div class="wrap">
+    <h2 id="experience">Professional experience</h2>
+    <div class="body">
+      <article class="job">
+        <div class="job-head">
+          <h3>Founder – Betterfound &amp; Heumyn AI</h3>
+          <span class="meta">London, UK · 2025 – Present</span>
+        </div>
+        <p>Design, build and ship AI products end to end, from architecture and model choice to pricing, deployment and customer pilots.</p>
+        <ul>
+          <li><strong>Betterfound</strong> – AI product finder that merchants embed on their storefronts, searching the live catalogue and reporting unmet shopper demand. 12 merchants and pilots, 0.8s time to first token, 34% search click-through. Haiku plans searches, Sonnet writes answers; tenant isolation via signed tokens.<br><span class="stack">Next.js 14, TypeScript, Claude, Postgres 16, Redis, Drizzle, Voyage embeddings, Stripe, Railway</span></li>
+          <li><strong>Heumyn AI</strong> – Job search and CV tailoring platform that searches job boards and career pages and scores fit against a CV (0–100). 450 active users, 18k jobs indexed, 87% filter agreement with human reviewers. Built MCP-first with Claude Code sub-agents, then exposed via web API; per-task model routing cut prompt tokens by ~70%.<br><span class="stack">React, Vite, Express, TypeScript, Postgres, Claude, OpenAI, MCP</span></li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>Canon Europe (EMEA)</h3>
+          <span class="meta">London, UK · 2013 – Present</span>
+        </div>
+        <p><strong>Design System Lead &amp; Senior UI Engineering Product Owner</strong></p>
+        <ul>
+          <li>Scaled design system adoption from 30% to 70% across 50+ Canon marketing websites in 27 languages</li>
+          <li>Cut component delivery time by 40% through automated workflows; achieved 100% WCAG 2.2 AA compliance across 30+ components</li>
+          <li>Launched Canon's first unified design system: 50+ reusable components and a Figma token architecture for global teams</li>
+          <li>Created a three-tier governance model with contribution guidelines, versioning and release cycles; led weekly, monthly and quarterly rituals across UX, Engineering, Product and Marketing</li>
+          <li>Led migration of 80+ legacy components to a token-based architecture with zero downtime, across 3 product teams and 2 external contributors</li>
+          <li>Established an accessibility review process and automated testing pipeline catching 80% of issues, plus inclusive design training</li>
+          <li><strong>Applied AI:</strong> Introduced LLM documentation generation (60% less manual effort), automated accessibility testing and context-based component generation; built Token Chain and a Design Token Usage Tracker with Claude Code</li>
+          <li><strong>Enterprise AI scoping:</strong> Product data quality assistant for the PIM, finding and fixing duplicates, broken relationships, naming, embargo and missing-product issues across connected systems, with people approving every fix</li>
+        </ul>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>Earlier career</h3>
+        </div>
+        <ul>
+          <li><strong>Senior UI Engineer, Addison Corporate Marketing (WPP)</strong> <span class="meta">London · 2011 – 2013</span><br>Led 6 developers delivering component-based UI for FIFA, KPN, BASF, Heineken, Unilever and Visa; reusable libraries cut development time by 35%</li>
+          <li><strong>Frontend Developer, BPP Professional Education</strong> <span class="meta">London · 2007 – 2011</span><br>Accessible marketing components for 10,000+ students and a UI pattern library for the learning platform</li>
+          <li><strong>Frontend Developer, Titan Entertainment Group</strong> <span class="meta">London · 2006 – 2007</span><br>Launched the first responsive ForbiddenPlanet.com on a component-based architecture</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="ai-projects">
+  <div class="wrap">
+    <h2 id="ai-projects">Selected AI projects</h2>
+    <div class="body">
+      <ul>
+        <li><strong>Agent Factory (flagship, in use)</strong> – Turns a plain-language prompt into a working app using specialised agents for planning, building and reviewing, with human approval gates on spec and release. 6 apps built, 9 hours from prompt to first release, $38 per build. Currently building a programme board app through it.<br><span class="stack">Claude Code, Anthropic SDK, MCP</span></li>
+        <li><strong>A11yCheck (built by the factory)</strong> – Accessibility testing web app: 92% of known defects caught, 4% false alarms, 38 WCAG criteria covered.</li>
+        <li><strong>Token Chain</strong> – Design token visualiser showing token specifications and dependencies, built with the Claude Agent SDK. Design System Dashboard in build.</li>
+        <li><strong>Agent skills &amp; evaluation</strong> – Code review and optimisation skills, an F1 score evaluation metric, and a Figma MCP proof of concept (all live).</li>
+      </ul>
+      <p>Full portfolio and case studies: <a href="/">samar-mustafa.vercel.app</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="skills">
+  <div class="wrap">
+    <h2 id="skills">Technical skills</h2>
+    <div class="body">
+      <ul>
+        <li><strong>Models:</strong> Claude (Haiku, Sonnet, Opus, Fabel), GPT, Gemini, Mistral, DeepSeek</li>
+        <li><strong>AI Engineering:</strong> Claude Code, Claude Agent SDK, OpenAI SDK, Vercel AI SDK, MCP, Cursor, GitHub Copilot, context engineering, evals</li>
+        <li><strong>Data &amp; Automation:</strong> Postgres, Redis, Supabase, pgvector, Hugging Face, n8n</li>
+        <li><strong>Web &amp; Shipping:</strong> Next.js, React, TypeScript, Vite, Express, Tailwind, Railway, Vercel, Stripe, GitHub, Jenkins</li>
+        <li><strong>Design Systems:</strong> Figma, Tokens Studio, Style Dictionary, Storybook, Chromatic, design tokens, atomic design, Frontify</li>
+        <li><strong>Accessibility:</strong> WCAG 2.2, ARIA, screen reader and keyboard testing, colour contrast, inclusive design</li>
+        <li><strong>Delivery:</strong> Jira, Confluence, Miro, SAFe, Scrum</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="certs">
+  <div class="wrap">
+    <h2 id="certs">Certifications</h2>
+    <div class="body">
+      <ul>
+        <li>Claude Certified Architect – Foundations (in progress, Q1 2027)</li>
+        <li>AIGP – AI Governance Professional (in progress)</li>
+        <li>AI Framework &amp; Foundations – Anthropic</li>
+        <li>Certified SAFe 5 Product Owner / Product Manager</li>
+        <li>Certified Scrum Product Owner</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="speaking">
+  <div class="wrap">
+    <h2 id="speaking">Speaking &amp; community</h2>
+    <div class="body">
+      <ul>
+        <li>"AI for design systems teams" – Into Design Systems</li>
+        <li>"Vibe coding for designers" talk, and an <a href="/ai-elements-definitions.html">AI glossary for non-specialists</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="education">
+  <div class="wrap">
+    <h2 id="education">Education</h2>
+    <div class="body">
+      <p><strong>BSc Applied Business Computing (Scholarship)</strong> – Northumbria University, Newcastle, UK, 2003</p>
+    </div>
+  </div>
+</section>
+
+<section class="cv-section" aria-labelledby="awards">
+  <div class="wrap">
+    <h2 id="awards">Awards</h2>
+    <div class="body">
+      <ul>
+        <li>Canon President Award, Customer-Focused Innovation – 2020</li>
+        <li>Canon Customer Focused Award – 2014</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="end">
+  <div class="wrap"><p class="meta">References available on request.</p></div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>CV updated November 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>

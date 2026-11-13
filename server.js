@@ -22,6 +22,8 @@ app.use(
 
 // Nice routes
 app.get("/", (_req, res) => res.sendFile(path.join(publicDir, "portfolio", "index.html")));
+app.get("/cv", (_req, res) => res.sendFile(path.join(publicDir, "portfolio", "cv.html")));
+app.get("/cv/", (_req, res) => res.redirect(301, "/cv"));
 app.get("/ai-champion", (_req, res) => res.sendFile(path.join(publicDir, "ai-champion.html")));
 app.get("/ai-champion/", (_req, res) => res.redirect(301, "/ai-champion"));
 app.get("/ai-portfolio", (_req, res) => res.sendFile(path.join(publicDir, "ai-portfolio.html")));
