@@ -8,6 +8,7 @@
   ],
   "routes": [
     { "src": "/", "dest": "/portfolio/index.html" },
+    { "src": "/cv/?", "dest": "/portfolio/cv.html" },
     { "src": "/ai-portfolio/?", "dest": "/ai-portfolio.html" },
     { "src": "/ai-champion/?", "dest": "/ai-champion.html" },
     { "handle": "filesystem" },
