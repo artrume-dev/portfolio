@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Heumyn AI — Case study · Samar Mustafa</title>
+<meta name="description" content="How Heumyn AI scores jobs against a CV with layered, explainable matching, uses LLMs only where they add value, and rewrites CVs without inventing experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/case-studies/case-study.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Samar Mustafa, portfolio home">
+      <span class="brand-tile" aria-hidden="true">sm</span>
+      <span class="brand-name">Samar Mustafa</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#applied-ai" aria-current="page">Applied AI work</a></li>
+        <li><a href="/#build">How I build</a></li>
+        <li><a href="/#capabilities">Capabilities</a></li>
+        <li><a href="/#learning">Learning plan</a></li>
+        <li><a class="nav-cta" href="/#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<nav class="breadcrumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#applied-ai">Applied AI</a></li>
+    <li><span aria-current="page">Heumyn AI</span></li>
+  </ol>
+</nav>
+
+<header class="cs-hero">
+  <div class="wrap">
+    <div class="flags"><span class="flag">Product</span><span class="status">Live</span></div>
+    <h1>Heumyn AI</h1>
+    <p class="lede">A two-sided job platform that scores every job against your CV, explains why it matches, and rewrites your CV for the role without inventing anything.</p>
+    <div class="cs-actions">
+      <a class="btn btn-primary" href="https://heumyn.ai/" target="_blank" rel="noopener noreferrer">Open heumyn.ai</a>
+      <a class="btn btn-outline" href="#technical">Technical details</a>
+    </div>
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>Product, architecture and direction of the AI agents that built it</dd></div>
+      <div><dt>Timeline</dt><dd>Nov 2025 – present</dd></div>
+      <div><dt>Stack</dt><dd>React, Express, TypeScript, Postgres</dd></div>
+      <div><dt>AI</dt><dd>Claude, OpenAI, embeddings, MCP</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="Case study sections">
+  <div class="wrap">
+    <a href="#intro" aria-current="true">Intro</a>
+    <a href="#technical" aria-current="false">Technical details</a>
+    <span class="meta">Case study 05 of 05</span>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="part" id="intro" aria-labelledby="intro-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="intro-title">Intro</h2>
+      <span class="meta">problem · product · decisions</span>
+    </div>
+
+    <div class="block">
+      <h3>The problem</h3>
+      <div class="block-body">
+        <p class="copy">Job hunting means scrolling through hundreds of listings across job boards and company career pages, most of which don't fit. Generic "match %" badges don't say why a job fits, and AI CV tools often make up experience the candidate doesn't have.</p>
+        <p class="copy">I wanted a tool that pulls jobs from where they're actually posted, ranks them with a score you can inspect, uses a language model only where it adds value, and rewrites a CV for a specific role while staying truthful.</p>
+        <p class="copy">It started as an MCP server with Claude Code sub-agents for my own job search. The same tools were later put behind a web API so anyone could use them without a terminal.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>What it does</h3>
+      <div class="block-body">
+        <div class="cards">
+          <div class="card"><h4>Job feed from the source</h4><p>Scrapes Greenhouse, Lever, Ashby, Workday and SmartRecruiters, plus Adzuna, Reed, JobSpy, Google Jobs and Himalayas. It detects which applicant tracking system a company uses from its careers URL.</p></div>
+          <div class="card"><h4>Explainable match scores</h4><p>Every job gets a 0–100 score broken down by skills, title, domain and seniority, plus a requirement-by-requirement checklist.</p></div>
+          <div class="card"><h4>Deep AI analysis</h4><p>An LLM agent scores role, technical, company, growth and practical fit, calling tools for skill extraction, seniority and embedding similarity.</p></div>
+          <div class="card"><h4>Truthful CV rewriting</h4><p>A multi-step pipeline tailors and humanises the CV for a job, then checks the output against the original so nothing is invented.</p></div>
+          <div class="card"><h4>Chat search</h4><p>Ask in plain English, for example "remote senior React roles in London". A model turns it into filters, then results are ranked.</p></div>
+          <div class="card"><h4>Employer side</h4><p>Employers post jobs and the same engine ranks candidates, with an optional AI analysis per candidate.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Key decisions</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>Rules first, LLM second</dt>
+          <dd>Running a model on every scraped job is slow and expensive. A rule-based first pass handles the clear cases in milliseconds and only the uncertain ones go to the LLM. People choose between rule-based, hybrid and full-LLM modes.</dd>
+          <dt>MCP first, web second</dt>
+          <dd>Building the tools as an MCP server meant I could test them from Claude Code before any UI existed. The web API reuses the same services instead of reimplementing them.</dd>
+          <dt>Choose the model per task</dt>
+          <dd>Claude for nuanced analysis and writing, GPT-4o-mini for cheap structured filtering, embeddings for similarity, and an optional local model. Providers fall back automatically when one runs out of credit, and people can bring their own encrypted API keys.</dd>
+          <dt>Guard against made-up CV content</dt>
+          <dd>Early rewrites sometimes added experience the candidate didn't have. Four layers now prevent it: a strict prompt, a diff of the output against the source CV, better matching so rewrites aren't attempted for poor fits, and a warning before export.</dd>
+          <dt>Measure prompts, not just ship them</dt>
+          <dd>The job-analysis prompt is evaluated in Braintrust against human-labelled jobs for score accuracy, valid JSON, consistency, latency and cost.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>By the numbers</h3>
+      <div class="block-body">
+        <div class="results">
+          <div><b>~93k</b><span>lines of TypeScript</span></div>
+          <div><b>10</b><span>job sources and ATS integrations</span></div>
+          <div><b>4</b><span>layers of scoring</span></div>
+          <div><b>528</b><span>commits since Nov 2025</span></div>
+        </div>
+        <p class="formula-note">Counted from the codebase, November 2026.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>What I'd do next</h3>
+      <div class="block-body">
+        <ul>
+          <li><strong>Learn the weights.</strong> Scoring weights are hand-tuned. The app already collects feedback on jobs, which could be used as labels to fit them properly.</li>
+          <li><strong>Real semantic search.</strong> Store job embeddings in pgvector and blend cosine similarity with the current keyword ranking in chat search.</li>
+          <li><strong>Smarter skill matching.</strong> Add synonyms and embeddings so "k8s" matches "Kubernetes".</li>
+          <li><strong>Measure the filter.</strong> Compute true precision and recall of the job filter against user feedback, alongside the per-job confidence score.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL DETAILS -->
+<section class="part band" id="technical" aria-labelledby="tech-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="tech-title">Technical details</h2>
+      <span class="meta">architecture · pipeline · formulas</span>
+      <p class="lede">The layers, how a job moves through them, and every formula behind the scores.</p>
+    </div>
+
+    <div class="block">
+      <h3>System layers</h3>
+      <div class="block-body">
+        <div class="layers" role="group" aria-label="Heumyn system layers">
+          <div class="layer"><span>Client</span>
+            <ul class="nodes">
+              <li>Web app<small>React 19, Vite, Tailwind, Radix UI, TanStack Query, Zustand</small></li>
+              <li>CV editor<small>TipTap rich text, version history, side-by-side comparison, PDF export</small></li>
+              <li>Employer portal<small>Postings, ranked candidates, analytics</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>API</span>
+            <ul class="nodes">
+              <li>Express API<small>Node 22, TypeScript, Zod validation, REST and SSE</small></li>
+              <li>Auth<small>15-minute JWTs, rotating hashed refresh tokens, Google sign-in</small></li>
+              <li>Abuse controls<small>Rate limits, Turnstile, guest quotas, strict CORS</small></li>
+              <li>Stripe billing<small>Per-feature monthly and daily limits</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Intelligence</span>
+            <ul class="nodes">
+              <li>Rule-based scorer<small>Skills, title, domain, seniority; F1 confidence</small></li>
+              <li class="llm">LLM job filter<small>Only for uncertain jobs in hybrid mode</small></li>
+              <li class="llm">Deep analysis agent<small>5 weighted categories with tool calls</small></li>
+              <li class="llm">Query parser<small>Plain language into validated search fields</small></li>
+              <li class="llm">CV pipeline<small>Enhance, humanise, validate</small></li>
+              <li>Provider manager<small>Anthropic, OpenAI or local Ollama, with fallback</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Job sources</span>
+            <ul class="nodes">
+              <li>ATS scrapers<small>Greenhouse, Lever, Ashby, Workday, SmartRecruiters</small></li>
+              <li>Job APIs<small>Adzuna, Reed, JobSpy, Google Jobs, Himalayas</small></li>
+              <li>ATS detector<small>Finds the ATS from a careers URL; host allow-list</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Data</span>
+            <ul class="nodes">
+              <li>Postgres 16<small>Migrations run at startup</small></li>
+              <li>Resend<small>Verification and notification email</small></li>
+              <li>Railway<small>Separate UI and API services</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Agent tools</span>
+            <ul class="nodes">
+              <li>MCP server<small>Search, analyse, track and CV tools, usable from Claude</small></li>
+              <li class="llm">Sub-agents<small>Job analyser, CV optimiser, CV humaniser</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="key"><i aria-hidden="true"></i>Calls a language model</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>How a job is processed</h3>
+      <div class="block-body">
+        <ol class="steps">
+          <li>Jobs arrive from ATS scrapers, job-board APIs and employer postings, and are merged into one shape: title, description, requirements, tech stack, location.</li>
+          <li>The candidate's context is built once per sync: skills from the active CV, years of experience, seniority, chosen domains and a minimum score.</li>
+          <li>Every job gets a rule-based 0–100 score and F1 metrics in milliseconds.</li>
+          <li>In hybrid mode, confident results skip the LLM: excluded jobs scoring under 20 and included jobs scoring over 80. The uncertain middle goes to the LLM, highest scores first, capped per sync.</li>
+          <li>Scores, breakdowns and F1 metrics are stored and shown in the feed with a qualification checklist.</li>
+          <li>When someone opens a job, the deep analysis agent runs and can call similarity and seniority tools.</li>
+          <li>The person can save, track an application, or tailor their CV to that job.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>1 · Rule-based match score</h3>
+      <div class="block-body">
+        <p class="copy">Fast, free and fully explainable. Each component is capped so no single signal dominates.</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Signal</th><th>Max</th><th>How it's calculated</th></tr></thead>
+            <tbody>
+              <tr><td>Skills</td><td>50</td><td>10 points per skill found in both the CV and the job (matched against a skill dictionary)</td></tr>
+              <tr><td>Domain</td><td>20</td><td>Domain alignment × 0.20; a flat 12 when no domain preferences are set</td></tr>
+              <tr><td>Title</td><td>15</td><td>3 per role keyword in the title, 5 per key skill in the title</td></tr>
+              <tr><td>Seniority</td><td>±15</td><td>Penalty of 0, −5, −10 or −15 for a level mismatch</td></tr>
+            </tbody>
+          </table>
+        </div>
+<pre>score     = clamp(0, 100, skills + title + domain + seniority)
+include   = score ≥ 30   (10 when no preferences are set)
+
+alignment = matched/total × 100 + transferable/total × 60 + mismatched/total × 20</pre>
+        <p class="formula-note">Jobs with weak skills (under 15/50) and a weak title (under 3/15) are excluded early. Location, job type and industry are shown but don't change the score.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>2 · Precision, recall and F1</h3>
+      <div class="block-body">
+        <p class="copy">A single score can hide a lopsided match: strong skills but the wrong role, or the right title with few skills. The engine also computes a precision-style and a recall-style score and combines them with a harmonic mean, which stays low unless both are good.</p>
+<pre>s = skills/50   t = title/15   d = domain/20
+
+precision = 0.55·s + 0.30·t + 0.15·d
+recall    = 0.50·(matched / job skills) + 0.25·(matched / CV skills)
+          + 0.15·t + 0.10·d
+F1        = 2·P·R / (P + R)</pre>
+        <div class="callout"><strong>Honest caveat:</strong> this isn't F1 in the evaluation sense, where precision and recall are counted against labelled data. Here they're weighted blends of the same features, used as a per-job confidence score. Measuring the filter's real precision and recall against user feedback is on the roadmap.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>3 · Embedding similarity</h3>
+      <div class="block-body">
+        <p class="copy">During deep analysis the CV and job text are embedded with OpenAI's <code>text-embedding-3-small</code> and compared with cosine similarity. The agent calls this as a <code>calculate_similarity</code> tool for role alignment and company fit.</p>
+<pre>similarity = (a · b) / (‖a‖ · ‖b‖)
+score      = clamp(0, 100, similarity × 100)</pre>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>4 · LLM deep analysis</h3>
+      <div class="block-body">
+        <p class="copy">Claude scores five categories and can call tools for skill extraction, seniority analysis and similarity while it reasons. It also receives the rule-based and F1 scores as context.</p>
+<pre>overall = 0.30·role alignment + 0.25·technical match + 0.20·company fit
+        + 0.15·growth potential + 0.10·practical factors</pre>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Chat search ranking</h3>
+      <div class="block-body">
+        <p class="copy">A model first turns the query into structured filters, which are schema-checked; hard limits such as location and company are then enforced. Ranking itself is lightweight: keyword overlap with synonym expansion, no vector database.</p>
+<pre>score = 0.45·title + 0.23·description + 0.17·tech + 0.07·company + 0.05·location
+      + boosts: exact phrase in title 0.12 · posted ≤7 days 0.06 · level 0.08
+                remote 0.06 · job type 0.07</pre>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Models</h3>
+      <div class="block-body">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Provider</th><th>Model</th><th>Used for</th></tr></thead>
+            <tbody>
+              <tr><td>Anthropic</td><td>Claude Sonnet 4.5</td><td>Deep analysis, CV enhancement and humanisation, filtering</td></tr>
+              <tr><td>OpenAI</td><td>GPT-4o-mini</td><td>Cheap structured filtering, query parsing</td></tr>
+              <tr><td>OpenAI</td><td>text-embedding-3-small</td><td>Embedding similarity</td></tr>
+              <tr><td>Ollama</td><td>Llama 3.1 8B</td><td>Optional local, zero-cost filtering</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Trade-offs and limits</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>Two-speed matching</dt>
+          <dd>The feed uses the free rule-based score so it stays instant. Paid model analysis runs only when someone opens a role.</dd>
+          <dt>Cut prompt cost at the source</dt>
+          <dd>The LLM filter uses a fixed system prompt with job data passed as JSON, and builds the candidate profile once per sync instead of once per job, about 70% fewer prompt tokens.</dd>
+          <dt>No vector database yet</dt>
+          <dd>Ranking uses keyword overlap with synonyms so the stack stays simple until real usage shows a vector store is needed.</dd>
+          <dt>Treat model output and the web as untrusted</dt>
+          <dd>Parsed queries are schema-validated and length-capped. Scrapers only reach allow-listed ATS hosts, with checks against server-side request forgery.</dd>
+          <dt>Known limits</dt>
+          <dd>Exact-match skills miss synonyms, weights are set by hand, and the model computes its own weighted total. Each has a fix on the roadmap above.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next" aria-label="More case studies">
+  <div class="wrap">
+    <a class="next-link" href="/case-studies/agent-factory">
+      <span class="eyebrow">Next case study · 01</span>
+      <span class="t">Agent factory →</span>
+    </a>
+    <a class="btn btn-outline" href="/#applied-ai">All Applied AI work</a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-band">
+      <div class="copy-col">
+        <span class="eyebrow">Contact</span>
+        <h2>Working on agentic systems in an enterprise? Let's talk.</h2>
+        <p>I'm happy to compare notes on multi-agent architecture, evaluation or AI governance.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-light" href="mailto:samar@betterfound.ai">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn btn-ghost" href="/assets/cv/samar-mustafa-cv.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>Last updated November 2026</span>
+  </div>
+</footer>
+
+<script type="module" src="/portfolio/case-studies/case-study.js"></script>
+</body>
+</html>

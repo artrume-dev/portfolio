@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Betterfound — Case study · Samar Mustafa</title>
+<meta name="description" content="How Betterfound lets shoppers ask for products in plain language, searches the merchant's live catalogue with a two-model agent, and turns every search into catalogue insight.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/case-studies/case-study.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Samar Mustafa, portfolio home">
+      <span class="brand-tile" aria-hidden="true">sm</span>
+      <span class="brand-name">Samar Mustafa</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#applied-ai" aria-current="page">Applied AI work</a></li>
+        <li><a href="/#build">How I build</a></li>
+        <li><a href="/#capabilities">Capabilities</a></li>
+        <li><a href="/#learning">Learning plan</a></li>
+        <li><a class="nav-cta" href="/#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<nav class="breadcrumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#applied-ai">Applied AI</a></li>
+    <li><span aria-current="page">Betterfound</span></li>
+  </ol>
+</nav>
+
+<header class="cs-hero">
+  <div class="wrap">
+    <div class="flags"><span class="flag">Product</span><span class="status">Live</span></div>
+    <h1>Betterfound</h1>
+    <p class="lede">An AI product finder merchants embed on their storefront. Shoppers describe what they need; an agent searches the merchant's own live catalogue, recommends real products and explains why.</p>
+    <div class="cs-actions">
+      <a class="btn btn-primary" href="https://betterfound.ai" target="_blank" rel="noopener noreferrer">Open betterfound.ai</a>
+      <a class="btn btn-outline" href="#technical">Technical details</a>
+    </div>
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>Product, architecture and direction of the AI agents that built it</dd></div>
+      <div><dt>Stack</dt><dd>Next.js 14, TypeScript, Postgres, Redis, Drizzle</dd></div>
+      <div><dt>AI</dt><dd>Claude Haiku and Sonnet, Voyage embeddings</dd></div>
+      <div><dt>Deploy</dt><dd>Railway, long-running containers</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="Case study sections">
+  <div class="wrap">
+    <a href="#intro" aria-current="true">Intro</a>
+    <a href="#technical" aria-current="false">Technical details</a>
+    <span class="meta">Case study 04 of 05</span>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="part" id="intro" aria-labelledby="intro-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="intro-title">Intro</h2>
+      <span class="meta">problem · product · decisions</span>
+    </div>
+
+    <div class="block">
+      <h3>The problem</h3>
+      <div class="block-body">
+        <p class="copy">Storefront search expects shoppers to know the right keywords. Someone looking for "a waterproof jacket for a beginner hiker under £150" gets nothing, or a page of irrelevant results, and leaves. The merchant never finds out what that shopper wanted.</p>
+        <p class="copy">Betterfound replaces the keyword box with a conversation grounded in the merchant's real catalogue, and turns every search into a signal about what customers want and what the catalogue is missing.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>What it does</h3>
+      <div class="block-body">
+        <div class="cards">
+          <div class="card"><h4>Embeddable product finder</h4><p>A framework-free web component that drops onto any storefront, in floating, inline, discover, overlay or bar modes, streaming answers as they're written.</p></div>
+          <div class="card"><h4>Searches the live catalogue</h4><p>Queries the merchant's own store API at request time, so prices and stock are always current. No copy of the catalogue to drift out of sync.</p></div>
+          <div class="card"><h4>Connects to any store</h4><p>Shopify, WooCommerce, Magento, BigCommerce, Salesforce Commerce Cloud or a custom REST API, mapped onto one product model.</p></div>
+          <div class="card"><h4>Catalogue gap insight</h4><p>An analytics dashboard groups searches by intent and shows what shoppers asked for but couldn't find.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Key decisions</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>Two models, two jobs</dt>
+          <dd>Haiku plans the search with a forced tool call and Sonnet writes the answer. Planning is a short structured task, so the cheaper model keeps cost and first-token time down without weakening the reply.</dd>
+          <dt>Search the live catalogue, not a copy</dt>
+          <dd>The agent queries the merchant's API at request time. Vector search over products is kept as a separate, later track.</dd>
+          <dt>Test embeddings before trusting them</dt>
+          <dd>A spike on real queries showed embeddings caught typos and near duplicates, but scored two paraphrases of the same intent at only 0.52 similarity. Search grouping moved to Haiku clustering, which grouped them correctly.</dd>
+          <dt>Tenant isolation by construction</dt>
+          <dd>The merchant ID always comes from the signed-in session or the verified widget token, never from the request body.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>By the numbers</h3>
+      <div class="block-body">
+        <div class="results">
+          <div><b>6</b><span>catalogue platforms supported</span></div>
+          <div><b>5</b><span>widget display modes</span></div>
+          <div><b>2</b><span>Claude models, one job each</span></div>
+          <div><b>0.52</b><span>paraphrase similarity that ruled out embeddings for grouping</span></div>
+        </div>
+        <p class="formula-note">Taken from the codebase and the embeddings spike.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>What I'd do next</h3>
+      <div class="block-body">
+        <ul>
+          <li><strong>Semantic product search.</strong> Use the stored embeddings where the spike showed they work: matching products, not grouping searches.</li>
+          <li><strong>Shared cache.</strong> Move the in-process cluster cache to Redis when the service scales beyond one container.</li>
+          <li><strong>Sandbox-aware clicks.</strong> Add a sandbox flag to click events so preview traffic never skews click-through.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL DETAILS -->
+<section class="part band" id="technical" aria-labelledby="tech-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="tech-title">Technical details</h2>
+      <span class="meta">architecture · request flow · semantic layer</span>
+      <p class="lede">The layers, how one search moves through them, and how searches become insight.</p>
+    </div>
+
+    <div class="block">
+      <h3>System layers</h3>
+      <div class="block-body">
+        <div class="layers" role="group" aria-label="Betterfound system layers">
+          <div class="layer"><span>Storefront</span>
+            <ul class="nodes">
+              <li>Embeddable widget<small>Custom element, shadow DOM, streams answers over SSE</small></li>
+              <li>CMS installs<small>Shopify, WooCommerce, Magento, BigCommerce, WordPress</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Platform</span>
+            <ul class="nodes">
+              <li>Merchant dashboard and APIs<small>Next.js 14 App Router, NextAuth with Google and email sign-in</small></li>
+              <li>Signed widget tokens<small>Rotating tokens, separately revocable preview links</small></li>
+              <li>Onboarding wizard<small>Organisation, catalogue, widget style, embed snippet</small></li>
+              <li>Stripe billing</li>
+            </ul>
+          </div>
+          <div class="layer"><span>Agent</span>
+            <ul class="nodes">
+              <li class="llm">Search planner<small>Haiku picks structured search parameters with a forced tool call</small></li>
+              <li class="llm">Answer writer<small>Sonnet streams the recommendation</small></li>
+              <li class="llm">Page reader tool<small>Reads specs and FAQs, limited to the merchant's own site</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Catalogue</span>
+            <ul class="nodes">
+              <li>Data source connectors<small>Store APIs, SFCC, custom REST, MCP</small></li>
+              <li>Schema adapter<small>Maps any product JSON to one canonical model</small></li>
+              <li class="llm">Enrichment<small>Builds an intent vocabulary such as "waterproof" or "beginner friendly"</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Insight</span>
+            <ul class="nodes">
+              <li>Query and click events</li>
+              <li>SQL aggregates<small>Trends, click-through, zero-result searches</small></li>
+              <li class="llm">Intent clustering<small>Haiku groups similar searches</small></li>
+              <li>Embeddings<small>Voyage, kept for semantic product search</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Data</span>
+            <ul class="nodes">
+              <li>Postgres 16<small>Tenants, data sources, events, embeddings</small></li>
+              <li>Redis 7<small>Conversation memory, 30-minute expiry</small></li>
+              <li>Railway<small>Long-running container, migrations before deploy</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="key"><i aria-hidden="true"></i>Calls a language model</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>How one search works</h3>
+      <div class="block-body">
+        <ol class="steps">
+          <li>The widget sends the shopper's message with the merchant's signed token. The server checks the token and loads the last 30 minutes of conversation from Redis.</li>
+          <li>Haiku turns the message into structured search parameters: keywords, category, price range, tags, intents, sort order.</li>
+          <li>The server queries every connected catalogue in parallel, maps the results to one product model and applies the merchant's include and exclude rules.</li>
+          <li>If nothing matches, it relaxes the search step by step (wider price range, fewer tags) and labels the results as close alternatives.</li>
+          <li>It records one analytics event in the background, so logging never slows the answer.</li>
+          <li>Sonnet streams the reply alongside product cards, and may read a page on the merchant's site for specs. If no product genuinely fits, it adds a hidden marker that the server strips and records as a catalogue gap.</li>
+          <li>A product-card click sends a non-blocking beacon that records the click.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Three kinds of "no result"</h3>
+      <div class="block-body">
+        <p class="copy">All three land in the zero-result insight, giving merchants a clear list of products customers want but can't find.</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Kind</th><th>Detected by</th></tr></thead>
+            <tbody>
+              <tr><td>Truly empty</td><td>No product matched, even after relaxing the search</td></tr>
+              <tr><td>Relaxed</td><td>Results only appeared after widening the price or dropping tags</td></tr>
+              <tr><td>Irrelevant</td><td>The model judged the results didn't genuinely fit the request</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Analytics and the semantic layer</h3>
+      <div class="block-body">
+        <p class="copy">Shoppers type unique sentences, so "top searches" grouped by exact text is noise. Two mechanisms were tested on real data before choosing.</p>
+<pre>analytics      = SQL aggregates scoped by tenant and time window
+trend          = (current − previous) / previous   for equal-length windows
+click-through  = clicks / queries                  (safe when queries = 0)
+
+embeddings     = voyage-3-lite, 512 dimensions, cosine similarity
+  typos and near duplicates   0.93 – 0.97   merged correctly
+  paraphrases of one intent   0.52          missed
+
+clustering     = Haiku groups queries by intent → {label, members}
+                 10-minute cache · on failure every query stays its own group</pre>
+        <p class="formula-note">Embeddings are stored but deliberately not used for grouping; they're kept for future semantic product search.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Trade-offs and safeguards</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>Best-effort writes</dt>
+          <dd>Query events, click beacons, embeddings and catalogue-gap updates are all fire-and-forget. A logging failure never breaks the shopper's answer.</dd>
+          <dt>Long-running containers, not serverless</dt>
+          <dd>No cold starts, so in-process caches are viable. A shared Redis cache is the follow-up for scaling out.</dd>
+          <dt>Limited reach for the agent</dt>
+          <dd>The page-reading tool only fetches pages on the merchant's own domain, using signed requests and checks against server-side request forgery.</dd>
+          <dt>Every query scoped by tenant</dt>
+          <dd>Dashboard reads take the tenant from the session; widget endpoints take it from the verified token. Any tenant ID in the request body is ignored.</dd>
+          <dt>Tests against a real database</dt>
+          <dd>Behavioural tests are written first. Anything with real SQL runs against an in-memory Postgres, which caught grouping, middleware and clustering bugs that mocked tests missed.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next" aria-label="More case studies">
+  <div class="wrap">
+    <a class="next-link" href="/case-studies/heumyn">
+      <span class="eyebrow">Next case study · 05</span>
+      <span class="t">Heumyn AI →</span>
+    </a>
+    <a class="btn btn-outline" href="/#applied-ai">All Applied AI work</a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-band">
+      <div class="copy-col">
+        <span class="eyebrow">Contact</span>
+        <h2>Working on agentic systems in an enterprise? Let's talk.</h2>
+        <p>I'm happy to compare notes on multi-agent architecture, evaluation or AI governance.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-light" href="mailto:samar@betterfound.ai">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn btn-ghost" href="/assets/cv/samar-mustafa-cv.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>Last updated November 2026</span>
+  </div>
+</footer>
+
+<script type="module" src="/portfolio/case-studies/case-study.js"></script>
+</body>
+</html>

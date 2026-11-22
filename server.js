@@ -29,6 +29,12 @@ app.get("/ai-champion/", (_req, res) => res.redirect(301, "/ai-champion"));
 app.get("/ai-portfolio", (_req, res) => res.sendFile(path.join(publicDir, "ai-portfolio.html")));
 app.get("/ai-portfolio/", (_req, res) => res.redirect(301, "/ai-portfolio"));
 
+app.get("/case-studies/:slug", (req, res, next) => {
+  if (!/^[a-z0-9-]+$/.test(req.params.slug)) return next();
+  // Express routing is non-strict, so this also serves /case-studies/<slug>/
+  res.sendFile(path.join(publicDir, "portfolio", "case-studies", `${req.params.slug}.html`), (err) => err && next());
+});
+
 // Fallback to the portfolio (mirrors vercel.json)
 app.use((_req, res) => res.status(200).sendFile(path.join(publicDir, "portfolio", "index.html")));
 

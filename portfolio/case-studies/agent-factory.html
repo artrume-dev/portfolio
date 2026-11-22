@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agent factory — Case study · Samar Mustafa</title>
+<meta name="description" content="A system that turns a plain-language prompt into a working application using a team of specialised AI agents, with people approving the spec and risky releases.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/case-studies/case-study.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Samar Mustafa, portfolio home">
+      <span class="brand-tile" aria-hidden="true">sm</span>
+      <span class="brand-name">Samar Mustafa</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#applied-ai" aria-current="page">Applied AI work</a></li>
+        <li><a href="/#build">How I build</a></li>
+        <li><a href="/#capabilities">Capabilities</a></li>
+        <li><a href="/#learning">Learning plan</a></li>
+        <li><a class="nav-cta" href="/#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<nav class="breadcrumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#applied-ai">Applied AI</a></li>
+    <li><span aria-current="page">Agent factory</span></li>
+  </ol>
+</nav>
+
+<header class="cs-hero">
+  <div class="wrap">
+    <div class="flags"><span class="flag">Flagship</span><span class="status">In use</span></div>
+    <h1>Agent factory</h1>
+    <p class="lede">A system that turns a plain-language prompt into a working application, using a team of specialised AI agents, with people approving the decisions that matter.</p>
+    <div class="cs-actions">
+      <a class="btn btn-primary" href="#technical">Technical details</a>
+      <a class="btn btn-outline" href="/#build">See one build run</a>
+    </div>
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>Architect and director of the agent team</dd></div>
+      <div><dt>Status</dt><dd>In use; building its next app</dd></div>
+      <div><dt>Stack</dt><dd>Claude Code, Anthropic SDK, MCP</dd></div>
+      <div><dt>Context</dt><dd>Enterprise; details kept general</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="Case study sections">
+  <div class="wrap">
+    <a href="#intro" aria-current="true">Intro</a>
+    <a href="#technical" aria-current="false">Technical details</a>
+    <span class="meta">Case study 01 of 05</span>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="part" id="intro" aria-labelledby="intro-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="intro-title">Intro</h2>
+      <span class="meta">problem · approach · principles</span>
+    </div>
+
+    <div class="block">
+      <h3>The problem</h3>
+      <div class="block-body">
+        <p class="copy">Single-agent coding sessions lose the thread on larger apps. Requirements drift, quality varies from session to session, and nobody clearly owns the final decision.</p>
+        <p class="copy">The factory treats building software as a process with roles, shared language, quality checks and sign-off points, the way a good engineering team works, with agents doing the planning and building and people approving what carries risk.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Approach</h3>
+      <div class="block-body">
+        <div class="cards">
+          <div class="card"><h4>Agents with clear roles</h4><p>The work is split across agents for planning, building and reviewing, instead of one agent doing everything.</p></div>
+          <div class="card"><h4>Partly autonomous</h4><p>Agents run most of the loop. People approve the spec before any build starts, and any release that carries risk.</p></div>
+          <div class="card"><h4>Every app tests the factory</h4><p>Each build is also a test of the factory itself. Recurring feedback becomes a lint rule, a test or an agent skill.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Principles</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>People approve what matters</dt>
+          <dd>Agents plan and build; people sign off on the spec and on any release that carries risk.</dd>
+          <dt>Measure before trusting</dt>
+          <dd>Every system gets a test set and a quality bar before it's called done. New model versions are checked against real tasks, not leaderboards.</dd>
+          <dt>Limit what agents can touch</dt>
+          <dd>Tools get the narrowest permissions that work, with planning for prompt injection and data leakage.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>By the numbers</h3>
+      <div class="block-body">
+        <div class="results">
+          <div><b>11</b><span>steps from prompt to shipped app</span></div>
+          <div><b>2</b><span>human approval gates</span></div>
+        </div>
+        <p class="formula-note">A11yCheck was the first full app it built end to end. <a href="/case-studies/a11ycheck">Read that case study</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL DETAILS -->
+<section class="part band" id="technical" aria-labelledby="tech-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="tech-title">Technical details</h2>
+      <span class="meta">flow · build loop · feedback</span>
+      <p class="lede">How one build runs, where people step in, and how each build improves the next.</p>
+    </div>
+
+    <div class="block">
+      <h3>Stages</h3>
+      <div class="block-body">
+        <div class="layers" role="group" aria-label="Agent factory stages">
+          <div class="layer"><span>Intent</span>
+            <ul class="nodes">
+              <li class="llm">Interview<small>An agent questions you to surface hidden decisions</small></li>
+              <li>Domain context<small>CONTEXT.md and decision records: a shared language</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Plan</span>
+            <ul class="nodes">
+              <li class="llm">Spec<small>Written against the shared language</small></li>
+              <li>Human approval<small>Nothing is built until the spec is approved</small></li>
+              <li class="llm">Slicing<small>Vertical tracer-bullet slices with a dependency graph</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Build</span>
+            <ul class="nodes">
+              <li class="llm">Build loop per slice<small>Own worktree, test-first, end-to-end check, commit</small></li>
+              <li>Session state<small>A progress file and feature flags carry state across sessions</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Review</span>
+            <ul class="nodes">
+              <li class="llm">Dual review<small>Standards and spec compliance; a failure loops back to build</small></li>
+              <li>Risk-tiered release<small>Low-risk slices auto-merge; the rest need a person</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Operate</span>
+            <ul class="nodes">
+              <li>Production signals</li>
+              <li>Factory evals<small>Cost, escaped defects, gate rejections</small></li>
+              <li>Codify<small>Recurring feedback becomes a lint rule, test or skill</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="key"><i aria-hidden="true"></i>Done by an agent</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>One build, step by step</h3>
+      <div class="block-body">
+        <ol class="steps">
+          <li>An agent interviews you about the idea and surfaces decisions you hadn't made yet.</li>
+          <li>It writes the domain context and decision records, so every agent uses the same language.</li>
+          <li>It writes a spec against that language.</li>
+          <li class="gate">You approve the spec before any build starts.</li>
+          <li>The work is cut into vertical slices, each a thin end-to-end piece, with a dependency graph.</li>
+          <li>Each slice is built in its own worktree: failing test first, then code until it passes, an end-to-end check, then a commit. A progress file and feature flags carry state between sessions.</li>
+          <li>A dual review checks coding standards and spec compliance. A failure sends the slice back to the build loop.</li>
+          <li class="gate">Release is risk-tiered: low-risk slices merge automatically, the rest need your approval.</li>
+          <li>The app ships.</li>
+          <li>Production signals and factory evals are tracked: cost, defects that escaped review, and how often gates reject work.</li>
+          <li>Recurring feedback is turned into a lint rule, a test or an agent skill, and the loop starts again.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Design decisions</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>Shared language before a spec</dt>
+          <dd>Agents drift when they name the same thing differently. Writing the domain context first keeps the spec, code and reviews consistent.</dd>
+          <dt>Vertical slices, not layers</dt>
+          <dd>Each slice works end to end, so progress is always testable and a failure is contained to one slice.</dd>
+          <dt>State outside the conversation</dt>
+          <dd>Long builds outlast any one session. A progress file and feature flags mean a new session picks up exactly where the last one stopped.</dd>
+          <dt>Risk decides who approves</dt>
+          <dd>Making a person approve everything slows delivery and dulls attention. Tiering by risk keeps human review for the changes that need it.</dd>
+          <dt>Evaluate the factory, not just the app</dt>
+          <dd>Cost, escaped defects and gate rejections show whether the factory itself is getting better from build to build.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next" aria-label="More case studies">
+  <div class="wrap">
+    <a class="next-link" href="/case-studies/a11ycheck">
+      <span class="eyebrow">Next case study · 02</span>
+      <span class="t">A11yCheck →</span>
+    </a>
+    <a class="btn btn-outline" href="/#applied-ai">All Applied AI work</a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-band">
+      <div class="copy-col">
+        <span class="eyebrow">Contact</span>
+        <h2>Working on agentic systems in an enterprise? Let's talk.</h2>
+        <p>I'm happy to compare notes on multi-agent architecture, evaluation or AI governance.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-light" href="mailto:samar@betterfound.ai">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn btn-ghost" href="/assets/cv/samar-mustafa-cv.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>Last updated November 2026</span>
+  </div>
+</footer>
+
+<script type="module" src="/portfolio/case-studies/case-study.js"></script>
+</body>
+</html>
