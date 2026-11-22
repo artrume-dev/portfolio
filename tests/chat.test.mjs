@@ -82,7 +82,7 @@ test("home page links to every case study and each page links back home", async 
   const home = await readFile(new URL("../portfolio/index.html", import.meta.url), "utf8");
   const dir = new URL("../portfolio/case-studies/", import.meta.url);
   const pages = (await readdir(dir)).filter((f) => f.endsWith(".html"));
-  assert.equal(pages.length, 5);
+  assert.equal(pages.length, 6);
   for (const file of pages) {
     const slug = file.replace(/\.html$/, "");
     assert.ok(home.includes(`href="/case-studies/${slug}"`), `home page is missing a link to ${slug}`);
