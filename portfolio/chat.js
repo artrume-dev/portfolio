@@ -10,8 +10,8 @@ export const KNOWLEDGE = [
     id: "about",
     title: "About Samar",
     href: "#top",
-    keywords: ["who", "about", "samar", "role", "architect", "background", "focus", "do"],
-    answer: "I'm an applied AI architect. I plan, direct and govern multi-agent systems, from the first prompt to a shipped app, with a focus on architecture, evaluation and safe delivery inside an enterprise. Right now I'm building a program board app through my agent factory and preparing for Claude Certified Architect – Foundations.",
+    keywords: ["who", "about", "samar", "role", "architect", "background", "focus", "do", "consulting", "consultant", "services", "governance"],
+    answer: "I'm an applied AI architect and consultant. I help organisations put AI to work safely, from use case to working agents, with governance built in: finding where AI adds real value, designing the architecture and delivering it, often with multi-agent systems and always with people approving what matters. My focus is architecture, evaluation and safe delivery inside an enterprise.",
   },
   {
     id: "agent-factory",

@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Samar Mustafa — Applied AI Architect</title>
-<meta name="description" content="Samar Mustafa designs, directs and governs multi-agent AI systems that ship working software.">
+<meta name="description" content="Samar Mustafa helps organisations put AI to work safely, from use case to working agents, with governance built in.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -100,16 +102,15 @@ section.band{background:var(--secondary)}
 
 /* hero */
 .hero{padding:var(--space-22) 0 var(--space-18)}
-.hero .wrap{display:flex;flex-wrap:wrap;gap:var(--space-12);align-items:flex-end}
-.hero-copy{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:var(--space-6)}
+.hero .wrap{display:flex;flex-direction:column;gap:var(--space-12)}
+.hero-copy{max-width:780px;min-width:0;display:flex;flex-direction:column;gap:var(--space-6)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);padding-top:var(--space-2)}
-.now{font-size:14px;color:var(--body-foreground);padding-top:var(--space-4);border-top:1px solid var(--border);max-width:600px}
-.now strong{color:var(--foreground)}
 
 /* signal panel */
-.signal{flex:1 1 320px;background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);padding:28px;display:flex;flex-direction:column;gap:22px}
-.signal-head{display:flex;justify-content:space-between;gap:var(--space-3);font:400 11px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--panel-muted-foreground)}
+.signal{background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);padding:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px var(--space-8)}
+.signal-head{grid-column:1/-1;display:flex;justify-content:space-between;gap:var(--space-3);font:400 11px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--panel-muted-foreground)}
 .signal-metric{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--panel-rule);padding-top:18px}
+@media (max-width:720px){.signal{grid-template-columns:1fr}}
 .signal-metric b{font:600 44px/1 var(--font-display);letter-spacing:-.03em}
 .signal-metric span{font-size:14px;line-height:1.5;color:var(--panel-muted-foreground)}
 
@@ -276,8 +277,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   <div class="wrap">
     <div class="hero-copy">
       <p class="eyebrow">Applied AI Architect</p>
-      <h1>I design teams of AI agents that build real software, with people in charge of the decisions that matter.</h1>
-      <p class="lede">I plan, direct and govern multi-agent systems, from the first prompt to a shipped app. My focus is architecture, evaluation and safe delivery inside an enterprise.</p>
+      <h1>I help organisations put AI to work safely, from use case to working agents, with governance built in.</h1>
+      <p class="lede">I work with teams to find where AI adds real value, design the architecture and deliver it, often with multi-agent systems and always with people approving what matters.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#ask" data-ask-focus>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -288,7 +289,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
           Download CV
         </a>
       </div>
-      <p class="now"><strong>Now:</strong> building a program board app through my agent factory, and preparing for Claude Certified Architect – Foundations.</p>
     </div>
 
     <aside class="signal" aria-label="Build signals">
