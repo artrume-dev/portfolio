@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MathsGarden — Case study · Samar Mustafa</title>
+<meta name="description" content="A times-table practice app I built for my kid, with a daily prize reward, shared progress across devices and offline practice, built by a team of AI agents from a written brief.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/case-studies/case-study.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Samar Mustafa, portfolio home">
+      <span class="brand-tile" aria-hidden="true">sm</span>
+      <span class="brand-name">Samar Mustafa</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#applied-ai" aria-current="page">Applied AI work</a></li>
+        <li><a href="/#build">How I build</a></li>
+        <li><a href="/#capabilities">Capabilities</a></li>
+        <li><a href="/#learning">Learning plan</a></li>
+        <li><a class="nav-cta" href="/#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<nav class="breadcrumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#applied-ai">Applied AI</a></li>
+    <li><span aria-current="page">MathsGarden</span></li>
+  </ol>
+</nav>
+
+<header class="cs-hero">
+  <div class="wrap">
+    <div class="flags"><span class="flag">Fun project</span><span class="status">Live</span></div>
+    <h1>MathsGarden</h1>
+    <p class="lede">A times-table and division practice app I built for my kid. Practise on any family device, earn stars, and unlock a small prize once the day's target is reached.</p>
+    <div class="cs-actions">
+      <a class="btn btn-primary" href="https://mathsgarden.up.railway.app/" target="_blank" rel="noopener noreferrer">Open MathsGarden</a>
+      <a class="btn btn-outline" href="#technical">Technical details</a>
+    </div>
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>Parent, product owner and director of the AI agents that built it</dd></div>
+      <div><dt>For</dt><dd>One Year 4 child (age 8–9) and their parents</dd></div>
+      <div><dt>Stack</dt><dd>Node, Express 5, Postgres, plain JavaScript, PWA</dd></div>
+      <div><dt>Built by</dt><dd>Data, API, UI and security agents working from one brief</dd></div>
+      <div><dt>Link</dt><dd><a href="https://mathsgarden.up.railway.app/" target="_blank" rel="noopener noreferrer">mathsgarden.up.railway.app</a><br><span class="meta">Family passcode required</span></dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="Case study sections">
+  <div class="wrap">
+    <a href="#intro" aria-current="true">Intro</a>
+    <a href="#technical" aria-current="false">Technical details</a>
+    <span class="meta">Case study 06 of 06</span>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="part" id="intro" aria-labelledby="intro-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="intro-title">Intro</h2>
+      <span class="meta">problem · product · decisions</span>
+    </div>
+
+    <div class="block">
+      <h3>The problem</h3>
+      <div class="block-body">
+        <p class="copy">Times tables stick with daily practice, and daily practice sticks with a reason to come back. The first version was a single HTML page with a prize reward, and it worked. But it kept everything in one browser, so progress on the tablet didn't show on the laptop, and clearing the browser would have wiped weeks of practice.</p>
+        <p class="copy">I wanted the same app, with the same look my kid already liked, working on any family device with shared progress, even offline, and without losing the history already built up.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>What it does</h3>
+      <div class="block-body">
+        <div class="cards">
+          <div class="card"><h4>Times tables and division</h4><p>Tables 2 to 13, in rounds of 12 questions in random order, or mixed rounds of 20 facts.</p></div>
+          <div class="card"><h4>Hints, not answers</h4><p>After a wrong answer, a hint: for division, "t × ? = n"; for times tables, count up from the previous fact.</p></div>
+          <div class="card"><h4>Stars and a daily goal</h4><p>A star for every correct answer and a home-screen bar showing progress towards today's target.</p></div>
+          <div class="card"><h4>Prize corner</h4><p>Prizes unlock once the daily target is met, and one prize can be chosen per day. Parents set the prizes, each up to £5.</p></div>
+          <div class="card"><h4>Parent view</h4><p>Today's stats, daily progress, a breakdown by table and a CSV export, behind a parent PIN.</p></div>
+          <div class="card"><h4>Any device, even offline</h4><p>Installs to a tablet or phone home screen. Practice never waits for the network.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Key decisions</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>Keep what already works</dt>
+          <dd>The app was already loved, so the brief kept the UI and behaviour as they were and only replaced the storage underneath.</dd>
+          <dt>Migrate, never lose</dt>
+          <dd>Existing progress lived in one browser. A one-off import moves it to the database behind the parent PIN, and the local copy is kept rather than deleted.</dd>
+          <dt>Rules on the server, not the screen</dt>
+          <dd>The daily target and the one-prize-a-day rule are checked by the server and the database, so they can't be bypassed from the browser.</dd>
+          <dt>Collect only what's needed</dt>
+          <dd>It holds a child's data, so it stores a first name and practice answers and nothing else. No accounts, emails or analytics.</dd>
+          <dt>A tight brief, agreed up front</dt>
+          <dd>The scope, data model, endpoints and "done when" checks were written down before any code, with a clear out-of-scope list, so the agents built exactly that.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>By the numbers</h3>
+      <div class="block-body">
+        <div class="results">
+          <div><b>82</b><span>automated tests passing at security review</span></div>
+          <div><b>0</b><span>critical or high security findings</span></div>
+          <div><b>1</b><span>prize a day, enforced by the database</span></div>
+          <div><b>12</b><span>times tables covered, 2 to 13</span></div>
+        </div>
+        <p class="formula-note">From the project's test run and security report.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>What's next</h3>
+      <div class="block-body">
+        <ul>
+          <li><strong>More subjects.</strong> English spelling is planned, under a more general name.</li>
+          <li><strong>Other families, carefully.</strong> Invite-only sign-up with separate data per family, but only once a privacy note and a deletion path exist, because it would mean holding other people's children's data.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL DETAILS -->
+<section class="part band" id="technical" aria-labelledby="tech-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="tech-title">Technical details</h2>
+      <span class="meta">architecture · offline sync · rules</span>
+      <p class="lede">A small stack on purpose: one service, one database, no framework on the front end and no ORM.</p>
+    </div>
+
+    <div class="block">
+      <h3>System layers</h3>
+      <div class="block-body">
+        <div class="layers" role="group" aria-label="MathsGarden system layers">
+          <div class="layer"><span>Device</span>
+            <ul class="nodes">
+              <li>Installable web app<small>PWA manifest, icons and a minimal service worker</small></li>
+              <li>Offline queue<small>Answers saved to IndexedDB first, sent in the background</small></li>
+              <li>Original UI<small>Plain JavaScript; only the storage layer replaced</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>API</span>
+            <ul class="nodes">
+              <li>Express 5<small>One Railway service serves the app and the API</small></li>
+              <li>Family passcode<small>Once per device; long-lived, httpOnly, Secure cookie</small></li>
+              <li>Parent PIN<small>Checked on the server; 30-minute parent session</small></li>
+              <li>Hardening<small>Helmet headers, strict CSP with no inline scripts, rate limits</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Data</span>
+            <ul class="nodes">
+              <li>Postgres<small>Children, answers, prizes, prize claims, settings</small></li>
+              <li>Parameterised SQL<small>No ORM; a small migration runner</small></li>
+            </ul>
+          </div>
+          <div class="layer"><span>Build</span>
+            <ul class="nodes">
+              <li class="llm">Data modeller<small>Schema and migrations</small></li>
+              <li class="llm">API developer<small>Contract first, then the server, test-first</small></li>
+              <li class="llm">UI developer<small>API client, offline queue, PWA, login screens</small></li>
+              <li class="llm">Security reviewer<small>Auth, validation, headers, secrets</small></li>
+              <li class="llm">Verifier<small>Checks everything against the brief</small></li>
+            </ul>
+          </div>
+        </div>
+        <p class="key"><i aria-hidden="true"></i>AI agent role</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>How an answer is saved</h3>
+      <div class="block-body">
+        <ol class="steps">
+          <li>My kid types an answer and presses Check. The app marks it right or wrong straight away; nothing waits for the network.</li>
+          <li>The answer gets an ID created on the device and is written to a local IndexedDB queue.</li>
+          <li>In the background (on load, every few seconds while online, and when the device reconnects) the queue is sent to the server in batches.</li>
+          <li>The server stores each answer once. Sending the same batch twice is harmless because the device-made ID is used to skip duplicates.</li>
+          <li>Stars, completed tables and today's count are calculated from the answers, so every device shows the same totals.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>The data model</h3>
+      <div class="block-body">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Table</th><th>Holds</th><th>Rule</th></tr></thead>
+            <tbody>
+              <tr><td>children</td><td>First name only</td><td>Ready for more than one child</td></tr>
+              <tr><td>answers</td><td>Operation, table, factor, answer given, right or wrong, local date</td><td>ID made on the device, so retries never double-count</td></tr>
+              <tr><td>prizes</td><td>Name, emoji, toy or treat, shop, price, link</td><td>Price checked to be £5 or less</td></tr>
+              <tr><td>prize_claims</td><td>The chosen prize for a day, and whether it was given</td><td>Unique per child per day: one prize a day, enforced by the database</td></tr>
+              <tr><td>settings</td><td>Daily target</td><td>Defaults to 100 correct answers</td></tr>
+            </tbody>
+          </table>
+        </div>
+<pre>stars        = count(correct answers)
+today        = count(correct answers where local_date = today in Europe/London)
+prize unlock = today ≥ daily_target      (checked by the server)
+one per day  = unique (child_id, claim_date)  (enforced by Postgres)</pre>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Safeguards</h3>
+      <div class="block-body">
+        <dl class="decisions">
+          <dt>Two levels of access</dt>
+          <dd>A family passcode lets a device practise. A separate parent PIN, checked on the server for every prize, claim, settings and import request, protects the parent area.</dd>
+          <dt>Secrets stay out of the code</dt>
+          <dd>The passcode, PIN and session secret live only in Railway environment variables. Secrets are compared in constant time and login attempts are rate-limited.</dd>
+          <dt>Locked-down browser rules</dt>
+          <dd>Security headers and a content security policy with no inline scripts limit what the page can load or run.</dd>
+          <dt>Reviewed before release</dt>
+          <dd>A security agent reviewed auth, validation, headers and dependencies. It found no critical or high issues, and the dependency audit was clean.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next" aria-label="More case studies">
+  <div class="wrap">
+    <a class="next-link" href="/case-studies/agent-factory">
+      <span class="eyebrow">Back to the start · 01</span>
+      <span class="t">Agent factory →</span>
+    </a>
+    <a class="btn btn-outline" href="/#applied-ai">All Applied AI work</a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-band">
+      <div class="copy-col">
+        <span class="eyebrow">Contact</span>
+        <h2>Working on agentic systems in an enterprise? Let's talk.</h2>
+        <p>I'm happy to compare notes on multi-agent architecture, evaluation or AI governance.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-light" href="mailto:samar@betterfound.ai">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn btn-ghost" href="/assets/cv/samar-mustafa-cv.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>Last updated November 2026</span>
+  </div>
+</footer>
+
+<script type="module" src="/portfolio/case-studies/case-study.js"></script>
+</body>
+</html>

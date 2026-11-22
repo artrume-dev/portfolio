@@ -116,7 +116,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   <div class="wrap">
     <span class="eyebrow">Curriculum vitae</span>
     <h1 id="cv-name">Samar Mustafa</h1>
-    <p class="role">Applied AI Architect | Multi-Agent Systems | Enterprise Design Systems</p>
+    <p class="role">Applied AI Architect &amp; Consultant | Multi-Agent Systems | AI Governance | Enterprise Design Systems</p>
     <ul class="contact">
       <li><a href="mailto:samar@betterfound.ai">samar@betterfound.ai</a></li>
       <li><a href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">linkedin.com/in/samarmustafa</a></li>
@@ -135,8 +135,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   <div class="wrap">
     <h2 id="summary">Professional summary</h2>
     <div class="body">
-      <p>Applied AI Architect who designs teams of AI agents that build real software, with people in charge of the decisions that matter. I plan, direct and govern multi-agent systems from first prompt to shipped app, with a focus on architecture, evaluation and safe delivery in the enterprise.</p>
-      <p>Built an agent factory that has shipped 6 apps (about 9 hours and $38 per build), and founded two live AI products: Betterfound (12 merchants and pilots) and Heumyn AI (450 active users). Backed by 13 years leading Canon EMEA's design system across 57 localised websites in 27 languages, so I know how to take AI from prototype into governed, accessible, production-grade delivery.</p>
+      <p>Applied AI architect and consultant who helps organisations put AI to work safely, from use case to working agents, with governance built in. I find where AI adds real value, design the architecture and deliver it, often with multi-agent systems and always with people approving what matters.</p>
+      <p>Built an agent factory in which specialised agents plan, build and review software behind human approval gates, and founded two live AI products, Betterfound and Heumyn AI. Backed by 13 years leading Canon EMEA's design system across 57 localised websites in 27 languages, so I know how to take AI from prototype into governed, accessible, production-grade delivery.</p>
     </div>
   </div>
 </section>
@@ -147,9 +147,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <div class="body">
       <ul>
         <li><strong>Multi-Agent Architecture:</strong> Design specialised planning, building and review agents with human approval gates on spec and release</li>
-        <li><strong>LLM Engineering:</strong> Per-task model routing (Haiku/Sonnet), context and prompt engineering, ~70% prompt-token reduction, streaming at sub-second time to first token</li>
+        <li><strong>LLM Engineering:</strong> Per-task model routing (Haiku/Sonnet), context and prompt engineering, structured output, ~70% prompt-token reduction through prompt design, streaming responses</li>
         <li><strong>MCP &amp; Integration:</strong> MCP-first products, Claude Code sub-agents, Figma MCP, enterprise PIM and CMS integration patterns</li>
-        <li><strong>Evaluation &amp; Quality:</strong> Eval metrics (F1 score), human-agreement testing, defect-catch and false-alarm rates, tests against real databases</li>
+        <li><strong>Evaluation &amp; Quality:</strong> Eval metrics (F1 score), prompt evals against human-labelled data, defect-catch and false-alarm rates, tests against real databases</li>
         <li><strong>AI Governance &amp; Safe Delivery:</strong> Human-in-the-loop approvals, tenant isolation, EU AI Act risk classification (AIGP in progress)</li>
         <li><strong>Enterprise Design Systems:</strong> Design tokens, governance models, WCAG 2.2 AA accessibility, adoption at 27-language scale</li>
       </ul>
@@ -166,10 +166,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
           <h3>Founder – Betterfound &amp; Heumyn AI</h3>
           <span class="meta">London, UK · 2025 – Present</span>
         </div>
-        <p>Design, build and ship AI products end to end, from architecture and model choice to pricing, deployment and customer pilots.</p>
+        <p>Design, build and ship AI products end to end, from architecture and model choice to pricing and deployment.</p>
         <ul>
-          <li><strong>Betterfound</strong> – AI product finder that merchants embed on their storefronts, searching the live catalogue and reporting unmet shopper demand. 12 merchants and pilots, 0.8s time to first token, 34% search click-through. Haiku plans searches, Sonnet writes answers; tenant isolation via signed tokens.<br><span class="stack">Next.js 14, TypeScript, Claude, Postgres 16, Redis, Drizzle, Voyage embeddings, Stripe, Railway</span></li>
-          <li><strong>Heumyn AI</strong> – Job search and CV tailoring platform that searches job boards and career pages and scores fit against a CV (0–100). 450 active users, 18k jobs indexed, 87% filter agreement with human reviewers. Built MCP-first with Claude Code sub-agents, then exposed via web API; per-task model routing cut prompt tokens by ~70%.<br><span class="stack">React, Vite, Express, TypeScript, Postgres, Claude, OpenAI, MCP</span></li>
+          <li><strong>Betterfound</strong> – AI product finder that merchants embed on their storefronts, searching the live catalogue and reporting unmet shopper demand. Connects to Shopify, WooCommerce, Magento, BigCommerce, Salesforce Commerce Cloud and custom APIs. Haiku plans searches, Sonnet writes answers; tenant isolation via signed tokens.<br><span class="stack">Next.js 14, TypeScript, Claude, Postgres 16, Redis, Drizzle, Voyage embeddings, Stripe, Railway</span></li>
+          <li><strong>Heumyn AI</strong> – Job search and CV tailoring platform that searches job boards and career pages and scores fit against a CV (0–100) with explainable, layered matching. Pulls jobs from 10 sources including Greenhouse, Lever, Ashby and Workday; rule-based scoring handles clear cases and only uncertain jobs go to an LLM. Built MCP-first with Claude Code sub-agents, then exposed via web API; a fixed prompt with JSON job data cut prompt tokens by ~70%.<br><span class="stack">React, Vite, Express, TypeScript, Postgres, Claude, OpenAI, MCP</span></li>
         </ul>
       </article>
 
@@ -210,8 +210,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <h2 id="ai-projects">Selected AI projects</h2>
     <div class="body">
       <ul>
-        <li><strong>Agent Factory (flagship, in use)</strong> – Turns a plain-language prompt into a working app using specialised agents for planning, building and reviewing, with human approval gates on spec and release. 6 apps built, 9 hours from prompt to first release, $38 per build. Currently building a programme board app through it.<br><span class="stack">Claude Code, Anthropic SDK, MCP</span></li>
-        <li><strong>A11yCheck (built by the factory)</strong> – Accessibility testing web app: 92% of known defects caught, 4% false alarms, 38 WCAG criteria covered.</li>
+        <li><strong>Agent Factory (flagship, in use)</strong> – Turns a plain-language prompt into a working app using specialised agents for planning, building and reviewing, with human approval gates on spec and release. An 11-step flow with 2 human gates; recurring review feedback is turned into lint rules, tests or agent skills.<br><span class="stack">Claude Code, Anthropic SDK, MCP</span></li>
+        <li><strong>A11yCheck (built by the factory)</strong> – Accessibility testing web app, measured by detection rate and false alarms against pages with known defects, tracked across versions.</li>
+        <li><strong>MathsGarden (fun project for my kid)</strong> – Times-table practice app with a daily prize reward, shared progress across family devices and offline practice. Built by data, API, UI and security agents from one written brief; 82 automated tests, no critical or high security findings.<br><span class="stack">Node, Express 5, Postgres, PWA, Railway</span></li>
         <li><strong>Token Chain</strong> – Design token visualiser showing token specifications and dependencies, built with the Claude Agent SDK. Design System Dashboard in build.</li>
         <li><strong>Agent skills &amp; evaluation</strong> – Code review and optimisation skills, an F1 score evaluation metric, and a Figma MCP proof of concept (all live).</li>
       </ul>
@@ -225,7 +226,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     <h2 id="skills">Technical skills</h2>
     <div class="body">
       <ul>
-        <li><strong>Models:</strong> Claude (Haiku, Sonnet, Opus, Fabel), GPT, Gemini, Mistral, DeepSeek</li>
+        <li><strong>Models:</strong> Claude (Haiku, Sonnet, Opus, Fable), GPT, Gemini, Mistral, DeepSeek</li>
         <li><strong>AI Engineering:</strong> Claude Code, Claude Agent SDK, OpenAI SDK, Vercel AI SDK, MCP, Cursor, GitHub Copilot, context engineering, evals</li>
         <li><strong>Data &amp; Automation:</strong> Postgres, Redis, Supabase, pgvector, Hugging Face, n8n</li>
         <li><strong>Web &amp; Shipping:</strong> Next.js, React, TypeScript, Vite, Express, Tailwind, Railway, Vercel, Stripe, GitHub, Jenkins</li>

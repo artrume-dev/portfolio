@@ -84,6 +84,13 @@ export const KNOWLEDGE = [
     answer: "A provider manager sends each task to Anthropic, OpenAI or a local model, with cheaper models on bulk filtering. The job filter uses a fixed system prompt with job data as JSON, and builds the CV profile once per sync instead of once per job, which cut prompt tokens by about 70%. The list view uses a free rule-based match; paid model analysis runs only when someone opens a role.",
   },
   {
+    id: "mathsgarden",
+    title: "MathsGarden",
+    href: "/case-studies/mathsgarden",
+    keywords: ["mathsgarden", "maths", "math", "times", "tables", "kid", "child", "family", "fun", "offline", "pwa", "prize"],
+    answer: "MathsGarden is a fun project for my kid: times-table and division practice with stars and a daily prize that unlocks at a target. It works on any family device with shared progress, keeps working offline by queuing answers on the device, and enforces rules like one prize a day on the server and in Postgres. It was built by data, API, UI and security agents from one written brief.",
+  },
+  {
     id: "evaluation",
     title: "Evaluation",
     href: "#capabilities",
