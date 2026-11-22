@@ -41,7 +41,7 @@ a:hover{color:var(--muted-foreground)}
 
 /* type */
 h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;margin:0}
-h1{font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.03em}
+h1{font-size:clamp(32px,4.2vw,40px);line-height:1.08;letter-spacing:-.03em}
 h2{font-size:36px;line-height:1.15;letter-spacing:-.025em}
 h3{font-size:22px;line-height:1.25;letter-spacing:-.015em}
 p{margin:0}
@@ -111,6 +111,14 @@ code{font-family:var(--font-mono);font-size:.9em}
 .subnav a[aria-current="true"]{border-bottom-color:var(--foreground)}
 .subnav .meta{margin-left:auto;white-space:nowrap;padding-left:var(--space-4)}
 @media (max-width:520px){.subnav .meta{display:none}}
+
+/* section stacking + decorative ASCII marks (portfolio/ascii-bg.js) */
+main section,main > header{position:relative}
+main section > .wrap,main > header > .wrap{position:relative;z-index:1}
+.ascii-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;z-index:0;font-family:var(--font-mono);color:var(--border)}
+.ascii-bg span{position:absolute;line-height:1;white-space:pre}
+.ascii-bg span.faint{opacity:.55}
+@media print{.ascii-bg{display:none}}
 
 /* parts and blocks */
 .part{padding:var(--space-18) 0;border-bottom:1px solid var(--border)}

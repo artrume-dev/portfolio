@@ -1,3 +1,5 @@
+import { scatterAscii } from "/portfolio/ascii-bg.js";
+
 // Shared behaviour for case study pages: mobile menu and the Intro / Technical sub-nav.
 
 const toggle = document.querySelector(".nav-toggle");
@@ -24,3 +26,5 @@ if (parts.length && "IntersectionObserver" in window) {
   }, { rootMargin: "-40% 0px -55% 0px" });
   parts.forEach((p) => io.observe(p));
 }
+
+scatterAscii();
