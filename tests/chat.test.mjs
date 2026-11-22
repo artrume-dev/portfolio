@@ -4,9 +4,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { ask, KNOWLEDGE } from "../portfolio/chat.js";
 
-test("every knowledge entry links to a section on the page", () => {
+test("every knowledge entry links to a home section or a case study", () => {
   for (const entry of KNOWLEDGE) {
-    assert.match(entry.href, /^#[a-z0-9-]+$/, `${entry.id} needs an on-page anchor`);
+    assert.match(entry.href, /^(#[a-z0-9-]+|\/case-studies\/[a-z0-9-]+)$/, `${entry.id} needs an anchor or case study link`);
     assert.ok(entry.answer.length > 40, `${entry.id} needs a real answer`);
   }
 });
@@ -14,7 +14,7 @@ test("every knowledge entry links to a section on the page", () => {
 test("answers a Betterfound search question from the Betterfound write-up", () => {
   const r = ask("How does a search work in Betterfound?");
   assert.equal(r.matched, true);
-  assert.equal(r.sources[0].href, "#betterfound");
+  assert.equal(r.sources[0].href, "/case-studies/betterfound");
 });
 
 test("names the models Betterfound uses", () => {
@@ -26,12 +26,12 @@ test("names the models Betterfound uses", () => {
 test("answers MCP questions from the Heumyn write-up", () => {
   const r = ask("Why did you build MCP first?");
   assert.equal(r.matched, true);
-  assert.equal(r.sources[0].href, "#heumyn");
+  assert.equal(r.sources[0].href, "/case-studies/heumyn");
 });
 
 test("explains human approval gates in the agent factory", () => {
   const r = ask("Where do humans approve things in the agent factory?");
-  assert.equal(r.sources[0].href, "#agent-factory");
+  assert.equal(r.sources[0].href, "/case-studies/agent-factory");
 });
 
 test("ignores case and punctuation", () => {
@@ -64,10 +64,31 @@ test("returns a trace of the search it ran", () => {
   assert.match(r.trace[0].detail, /match/);
 });
 
-test("every source the chat links to exists on the portfolio page", async () => {
-  const { readFile } = await import("node:fs/promises");
+test("every source the chat links to exists", async () => {
+  const { readFile, access } = await import("node:fs/promises");
   const html = await readFile(new URL("../portfolio/index.html", import.meta.url), "utf8");
   for (const entry of KNOWLEDGE) {
-    assert.ok(html.includes(`id="${entry.href.slice(1)}"`), `${entry.href} is missing from index.html`);
+    if (entry.href.startsWith("#")) {
+      assert.ok(html.includes(`id="${entry.href.slice(1)}"`), `${entry.href} is missing from index.html`);
+    } else {
+      const slug = entry.href.split("/").pop();
+      await access(new URL(`../portfolio/case-studies/${slug}.html`, import.meta.url));
+    }
+  }
+});
+
+test("home page links to every case study and each page links back home", async () => {
+  const { readFile, readdir } = await import("node:fs/promises");
+  const home = await readFile(new URL("../portfolio/index.html", import.meta.url), "utf8");
+  const dir = new URL("../portfolio/case-studies/", import.meta.url);
+  const pages = (await readdir(dir)).filter((f) => f.endsWith(".html"));
+  assert.equal(pages.length, 5);
+  for (const file of pages) {
+    const slug = file.replace(/\.html$/, "");
+    assert.ok(home.includes(`href="/case-studies/${slug}"`), `home page is missing a link to ${slug}`);
+    const page = await readFile(new URL(file, dir), "utf8");
+    assert.match(page, /aria-label="Breadcrumb"/, `${slug} needs a breadcrumb`);
+    assert.ok(page.includes('href="/#applied-ai"'), `${slug} needs a link back to Applied AI`);
+    assert.ok(page.includes('id="intro"') && page.includes('id="technical"'), `${slug} needs Intro and Technical sections`);
   }
 });

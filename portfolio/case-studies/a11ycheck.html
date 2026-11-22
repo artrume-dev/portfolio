@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A11yCheck — Case study · Samar Mustafa</title>
+<meta name="description" content="An accessibility testing suite and the first full app the agent factory built end to end, with quality measured against pages with known defects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/portfolio/case-studies/case-study.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Samar Mustafa, portfolio home">
+      <span class="brand-tile" aria-hidden="true">sm</span>
+      <span class="brand-name">Samar Mustafa</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#applied-ai" aria-current="page">Applied AI work</a></li>
+        <li><a href="/#build">How I build</a></li>
+        <li><a href="/#capabilities">Capabilities</a></li>
+        <li><a href="/#learning">Learning plan</a></li>
+        <li><a class="nav-cta" href="/#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<nav class="breadcrumb wrap" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#applied-ai">Applied AI</a></li>
+    <li><span aria-current="page">A11yCheck</span></li>
+  </ol>
+</nav>
+
+<header class="cs-hero">
+  <div class="wrap">
+    <div class="flags"><span class="flag">Built by the factory</span><span class="status off">Internal</span></div>
+    <h1>A11yCheck</h1>
+    <p class="lede">A web app that tests interfaces for accessibility problems, and the first full app the agent factory built end to end.</p>
+    <div class="cs-actions">
+      <a class="btn btn-primary" href="#technical">Technical details</a>
+      <a class="btn btn-outline" href="/case-studies/agent-factory">How the factory works</a>
+    </div>
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>Planned, structured and directed the AI agents that built it</dd></div>
+      <div><dt>Status</dt><dd>Internal</dd></div>
+      <div><dt>Domain</dt><dd>Accessibility, WCAG</dd></div>
+      <div><dt>Context</dt><dd>Enterprise; details kept general</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="Case study sections">
+  <div class="wrap">
+    <a href="#intro" aria-current="true">Intro</a>
+    <a href="#technical" aria-current="false">Technical details</a>
+    <span class="meta">Case study 02 of 05</span>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="part" id="intro" aria-labelledby="intro-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="intro-title">Intro</h2>
+      <span class="meta">problem · why it matters</span>
+    </div>
+
+    <div class="block">
+      <h3>The problem</h3>
+      <div class="block-body">
+        <p class="copy">Accessibility problems are easy to introduce and slow to find by hand. Teams need a repeatable way to test interfaces against WCAG and see what to fix.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Why it matters</h3>
+      <div class="block-body">
+        <div class="cards">
+          <div class="card"><h4>Proof the factory ships</h4><p>It shows the agent factory delivers usable software, not just demos.</p></div>
+          <div class="card"><h4>Quality you can measure</h4><p>Accessibility has a clear right answer, so the app's quality, and the factory's, can be measured instead of judged by eye.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNICAL DETAILS -->
+<section class="part band" id="technical" aria-labelledby="tech-title">
+  <div class="wrap">
+    <div class="part-head">
+      <h2 id="tech-title">Technical details</h2>
+      <span class="meta">how it was built · how it's measured</span>
+      <p class="lede">This is internal enterprise work, so the implementation stays private. What I can share is how it was built and how its quality is measured.</p>
+    </div>
+
+    <div class="block">
+      <h3>How it was built</h3>
+      <div class="block-body">
+        <p class="copy">A11yCheck went through the full agent factory flow, from interview to shipped app.</p>
+        <ol class="steps">
+          <li>An agent interviewed me to pin down scope and hidden decisions.</li>
+          <li>Domain context and a spec were written in a shared language.</li>
+          <li class="gate">I approved the spec before any build started.</li>
+          <li>The work was cut into vertical slices, each built test-first in its own worktree and checked end to end.</li>
+          <li>A dual review checked standards and spec compliance; failures went back to the build loop.</li>
+          <li class="gate">Releases were risk-tiered, with risky changes approved by me.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>How I measure it</h3>
+      <div class="block-body">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Measure</th><th>What it shows</th></tr></thead>
+            <tbody>
+              <tr><td>Test set</td><td>Pages with known accessibility defects, used as ground truth</td></tr>
+              <tr><td>Detection rate</td><td>Share of known defects the app catches</td></tr>
+              <tr><td>False alarms</td><td>Problems reported that aren't real defects</td></tr>
+              <tr><td>Across versions</td><td>Both tracked per version, so regressions show up</td></tr>
+            </tbody>
+          </table>
+        </div>
+<pre>detection rate = known defects caught / known defects in the test set
+false alarm rate = incorrect reports / all reports</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next" aria-label="More case studies">
+  <div class="wrap">
+    <a class="next-link" href="/case-studies/pim-assistant">
+      <span class="eyebrow">Next case study · 03</span>
+      <span class="t">Product data quality assistant →</span>
+    </a>
+    <a class="btn btn-outline" href="/#applied-ai">All Applied AI work</a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-band">
+      <div class="copy-col">
+        <span class="eyebrow">Contact</span>
+        <h2>Working on agentic systems in an enterprise? Let's talk.</h2>
+        <p>I'm happy to compare notes on multi-agent architecture, evaluation or AI governance.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-light" href="mailto:samar@betterfound.ai">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/samarmustafa/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn btn-ghost" href="/assets/cv/samar-mustafa-cv.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Samar Mustafa, Applied AI Architect</span>
+    <span>Last updated November 2026</span>
+  </div>
+</footer>
+
+<script type="module" src="/portfolio/case-studies/case-study.js"></script>
+</body>
+</html>

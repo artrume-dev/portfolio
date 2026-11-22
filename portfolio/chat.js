@@ -1,4 +1,4 @@
-// "Ask my agent": answers questions from the write-ups on this page.
+// "Ask my agent": answers questions from the write-ups on this site (home page and case studies).
 // No model is called. A question is matched by keyword against the notes below,
 // and the best note is returned with its source section and a trace of the search.
 // To swap in a live model later, keep the return shape of ask() and change its body.
@@ -16,70 +16,70 @@ export const KNOWLEDGE = [
   {
     id: "agent-factory",
     title: "Agent factory",
-    href: "#agent-factory",
+    href: "/case-studies/agent-factory",
     keywords: ["agent", "factory", "multi", "team", "pipeline", "human", "approve", "approval", "gate", "spec", "release", "planning", "review"],
     answer: "The agent factory turns a plain-language idea into a working app in 11 steps. An agent first interviews me to surface hidden decisions, then writes a spec against a shared domain language. A person approves the spec, the work is cut into vertical slices, and each slice is built test-first in its own worktree. A dual review checks standards and spec compliance, and release is risk-tiered: low-risk slices auto-merge, the rest need a person. After shipping, production signals and factory evals feed back, and recurring feedback becomes a lint rule, test or skill.",
   },
   {
     id: "a11ycheck",
     title: "A11yCheck",
-    href: "#a11ycheck",
+    href: "/case-studies/a11ycheck",
     keywords: ["a11ycheck", "accessibility", "a11y", "wcag", "defect", "audit"],
     answer: "A11yCheck is a web app that tests interfaces for accessibility problems, and the first full app the agent factory built end to end. Accessibility has a clear right answer, so quality is measurable: I track detection rate and false alarms against a test set of pages with known defects, across versions.",
   },
   {
     id: "pim",
     title: "Product data quality assistant",
-    href: "#pim-assistant",
+    href: "/case-studies/pim-assistant",
     keywords: ["pim", "product", "data", "quality", "enterprise", "governance", "duplicate", "sku", "onboarding"],
     answer: "It's a chat assistant for a product information management system in a large enterprise, currently being scoped. It finds data quality problems people check by hand today: duplicates, broken relationships, naming, hierarchy, embargoes and products missing between systems. The assistant proposes fixes and people approve them before anything changes.",
   },
   {
     id: "betterfound-search",
     title: "Betterfound: how one search works",
-    href: "#betterfound",
+    href: "/case-studies/betterfound",
     keywords: ["betterfound", "search", "shopper", "widget", "storefront", "catalogue", "catalog", "merchant", "how", "work", "flow"],
     answer: "A shopper's message arrives with the merchant's signed token. A small model turns it into structured search parameters, the server queries every connected catalogue in parallel and maps results to one product model. If nothing matches it relaxes the search step by step and labels the results as close alternatives. A larger model then streams the reply alongside product cards, and flags a catalogue gap if nothing genuinely fits.",
   },
   {
     id: "betterfound-models",
     title: "Betterfound: two models, two jobs",
-    href: "#betterfound",
+    href: "/case-studies/betterfound",
     keywords: ["betterfound", "model", "haiku", "sonnet", "cost", "latency", "token", "cheap"],
     answer: "Betterfound uses Claude Haiku to plan the search with a forced tool call, and Claude Sonnet to write and stream the answer. Planning is a short structured task, so the cheaper model keeps cost and first-token time down without weakening the reply.",
   },
   {
     id: "betterfound-embeddings",
     title: "Betterfound: testing embeddings",
-    href: "#betterfound",
+    href: "/case-studies/betterfound",
     keywords: ["embedding", "vector", "voyage", "similarity", "cluster", "clustering", "semantic", "spike"],
     answer: "I tested embeddings on real queries before trusting them. They caught typos and near duplicates, but scored two paraphrases of the same intent at only 0.52 similarity. So search grouping moved to Haiku clustering, with a 10-minute cache and a safe fallback. The live catalogue is queried directly; vector search over products is a separate, later track.",
   },
   {
     id: "betterfound-security",
     title: "Betterfound: tenant isolation and limits",
-    href: "#betterfound",
+    href: "/case-studies/betterfound",
     keywords: ["security", "tenant", "isolation", "ssrf", "secure", "safe", "jwt", "token", "permission"],
     answer: "The merchant ID always comes from the signed-in session or the verified widget token, never from the request body, and every analytics query is scoped by it. The page-reading tool only fetches pages on the merchant's own domain, with signed requests and checks against server-side request forgery.",
   },
   {
     id: "heumyn",
     title: "Heumyn AI",
-    href: "#heumyn",
-    keywords: ["heumyn", "job", "jobs", "cv", "resume", "career", "match", "matching", "scraper"],
-    answer: "Heumyn lets people describe the job they want in their own words. It searches job boards and company career pages, scores each role against their CV with reasons, and helps them tailor the CV to the role. A model parses the query into fields that are schema-checked before use.",
+    href: "/case-studies/heumyn",
+    keywords: ["heumyn", "job", "jobs", "cv", "resume", "career", "match", "matching", "scraper", "scoring", "formula"],
+    answer: "Heumyn lets people describe the job they want in their own words. It searches job boards and company career pages, scores each role against their CV with a layered, explainable score (skills, title, domain and seniority, plus an F1-style confidence), and helps them tailor the CV to the role without inventing experience. An LLM is only called for uncertain jobs or when someone opens a role.",
   },
   {
     id: "heumyn-mcp",
     title: "Heumyn: MCP first, web second",
-    href: "#heumyn",
+    href: "/case-studies/heumyn",
     keywords: ["mcp", "server", "first", "claude", "code", "subagent", "sub", "tool"],
     answer: "Heumyn started as an MCP server with Claude Code sub-agents for my own job search. Building the tools as MCP first meant I could test them from Claude Code before any UI existed. The web API later reused the same services instead of reimplementing them.",
   },
   {
     id: "heumyn-cost",
     title: "Heumyn: choosing models and cutting cost",
-    href: "#heumyn",
+    href: "/case-studies/heumyn",
     keywords: ["provider", "openai", "anthropic", "local", "prompt", "cost", "cheaper", "routing", "cache", "70"],
     answer: "A provider manager sends each task to Anthropic, OpenAI or a local model, with cheaper models on bulk filtering. The job filter uses a fixed system prompt with job data as JSON, and builds the CV profile once per sync instead of once per job, which cut prompt tokens by about 70%. The list view uses a free rule-based match; paid model analysis runs only when someone opens a role.",
   },
@@ -121,7 +121,7 @@ export const KNOWLEDGE = [
   {
     id: "projects",
     title: "Projects",
-    href: "#projects",
+    href: "#applied-ai",
     keywords: ["project", "projects", "tokenchain", "figma", "dashboard", "hypergigs", "glossary", "build", "built", "app", "apps"],
     answer: "Beyond the case studies: Tokenchain (a design token visualiser), a Figma MCP proof of concept, Claude Code skills for code review, an F1 evaluation score, an AI glossary, a Design System Dashboard and Hypergigs (both in build). It's part of a goal to ship 15 AI apps.",
   },
@@ -192,7 +192,7 @@ export function ask(question) {
     trace.push({ tool: "answer.fallback", detail: "no note covers this" });
     return {
       matched: false,
-      answer: `I don't have notes on that here. I can answer questions about the case studies, architecture, projects and how I build. For anything else, email ${CONTACT_EMAIL}.`,
+      answer: `I don't have notes on that here. I can answer questions about the case studies, projects and how I build. For anything else, email ${CONTACT_EMAIL}.`,
       sources: [],
       trace,
     };
