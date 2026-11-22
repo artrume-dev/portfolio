@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Samar Mustafa — Applied AI Architect</title>
-<meta name="description" content="Samar Mustafa designs, directs and governs multi-agent AI systems that ship working software.">
+<meta name="description" content="Samar Mustafa helps organisations put AI to work safely, from use case to working agents, with governance built in.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -55,7 +57,7 @@ summary::-webkit-details-marker{display:none}
 
 /* type */
 h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;margin:0}
-h1{font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.03em}
+h1{font-size:clamp(32px,4.2vw,40px);line-height:1.08;letter-spacing:-.03em}
 h2{font-size:36px;line-height:1.15;letter-spacing:-.025em}
 h3{font-size:22px;line-height:1.25;letter-spacing:-.015em}
 p{margin:0}
@@ -93,25 +95,40 @@ code{font-family:var(--font-mono);font-size:.9em}
 }
 
 /* sections */
-section{padding:var(--space-18) 0;border-bottom:1px solid var(--border)}
+section{position:relative;padding:var(--space-18) 0;border-bottom:1px solid var(--border)}
+section > .wrap,section > .col{position:relative;z-index:1}
+
+/* decorative ASCII marks (portfolio/ascii-bg.js) */
+.ascii-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;z-index:0;font-family:var(--font-mono);color:var(--border)}
+.ascii-bg span{position:absolute;line-height:1;white-space:pre}
+.ascii-bg span.faint{opacity:.55}
+@media print{.ascii-bg{display:none}}
 section.band{background:var(--secondary)}
 .section-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-8)}
 .section-head .lede{flex-basis:100%;font-size:16px;margin-top:var(--space-2)}
 
 /* hero */
 .hero{padding:var(--space-22) 0 var(--space-18)}
-.hero .wrap{display:flex;flex-wrap:wrap;gap:var(--space-12);align-items:flex-end}
-.hero-copy{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:var(--space-6)}
+.hero .wrap{display:flex;flex-direction:column;gap:var(--space-12)}
+.hero-top{display:flex;flex-wrap:wrap;gap:var(--space-12);align-items:center}
+.hero-copy{flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:var(--space-6)}
+.hero{overflow:hidden}
+.hero-portrait{flex:1 1 360px;max-width:440px;margin:0 auto;position:relative;isolation:isolate}
+.hero-portrait img{position:relative;z-index:1;display:block;width:100%;height:auto;mix-blend-mode:multiply}
+/* ASCII spilling out of the portrait's corner (asciiBurst in portfolio/ascii-bg.js) */
+.ascii-burst{position:absolute;z-index:0;margin:0;overflow:hidden;pointer-events:none;user-select:none;font:400 12px/12px var(--font-mono);color:var(--panel-muted-foreground);white-space:pre;
+  -webkit-mask-image:radial-gradient(circle var(--burst-r,210px) at var(--burst-x,50%) var(--burst-y,50%),#000 0,rgba(0,0,0,.75) 35%,rgba(0,0,0,.3) 70%,transparent 100%);
+  mask-image:radial-gradient(circle var(--burst-r,210px) at var(--burst-x,50%) var(--burst-y,50%),#000 0,rgba(0,0,0,.75) 35%,rgba(0,0,0,.3) 70%,transparent 100%)}
+@media print{.ascii-burst{display:none}}
 .hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);padding-top:var(--space-2)}
-.now{font-size:14px;color:var(--body-foreground);padding-top:var(--space-4);border-top:1px solid var(--border);max-width:600px}
-.now strong{color:var(--foreground)}
 
 /* signal panel */
-.signal{flex:1 1 320px;background:var(--primary);color:var(--primary-foreground);border-radius:var(--radius-base);padding:28px;display:flex;flex-direction:column;gap:22px}
-.signal-head{display:flex;justify-content:space-between;gap:var(--space-3);font:400 11px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--panel-muted-foreground)}
-.signal-metric{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--panel-rule);padding-top:18px}
+.signal{color:var(--foreground);padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px var(--space-8)}
+.signal-head{grid-column:1/-1;display:flex;justify-content:space-between;gap:var(--space-3);font:400 11px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground)}
+.signal-metric{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--border);padding-top:18px}
+@media (max-width:720px){.signal{grid-template-columns:1fr}}
 .signal-metric b{font:600 44px/1 var(--font-display);letter-spacing:-.03em}
-.signal-metric span{font-size:14px;line-height:1.5;color:var(--panel-muted-foreground)}
+.signal-metric span{font-size:14px;line-height:1.5;color:var(--body-foreground)}
 
 /* chat */
 .chat{background:var(--muted)}
@@ -246,9 +263,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 .ask-fab{position:fixed;right:var(--space-6);bottom:calc(var(--space-6) + env(safe-area-inset-bottom,0px));z-index:30;box-shadow:0 0 0 1px var(--background);transition:opacity .2s,transform .2s}
 .ask-fab[hidden]{display:inline-flex;opacity:0;transform:translateY(8px);pointer-events:none;visibility:hidden}
 @media (prefers-reduced-motion:reduce){.ask-fab{transition:none}}
+/* "Ask my agent" switched off: remove class="ask-off" from <body> to bring back the hero button, chat section and floating button */
+body.ask-off [data-ask-focus],body.ask-off #ask{display:none !important}
 </style>
 </head>
-<body>
+<body class="ask-off">
 
 <header class="site-header">
   <div class="wrap">
@@ -274,10 +293,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
+    <div class="hero-top">
     <div class="hero-copy">
       <p class="eyebrow">Applied AI Architect</p>
-      <h1>I design teams of AI agents that build real software, with people in charge of the decisions that matter.</h1>
-      <p class="lede">I plan, direct and govern multi-agent systems, from the first prompt to a shipped app. My focus is architecture, evaluation and safe delivery inside an enterprise.</p>
+      <h1>I help organisations put AI to work safely, from use case to working agents, with governance built in.</h1>
+      <p class="lede">I work with teams to find where AI adds real value, design the architecture and deliver it, often with multi-agent systems and always with people approving what matters.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#ask" data-ask-focus>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -288,7 +308,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
           Download CV
         </a>
       </div>
-      <p class="now"><strong>Now:</strong> building a program board app through my agent factory, and preparing for Claude Certified Architect – Foundations.</p>
+    </div>
+
+    <figure class="hero-portrait">
+      <img src="/assets/images/samar-ascii.jpg" width="771" height="771" alt="Portrait of Samar Mustafa, with his face rendered in ASCII characters" fetchpriority="high">
+    </figure>
     </div>
 
     <aside class="signal" aria-label="Build signals">
@@ -464,10 +488,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
           <tr><td>Multi-agent architecture</td><td>Agent roles, handoffs, supervisor and parallel patterns, human approval gates, failure handling</td><td><a href="/case-studies/agent-factory">Agent factory</a>, <a href="/case-studies/heumyn">Heumyn AI</a></td><td><span class="depth"><i class="on"></i><i class="on"></i><i class="on"></i><span>High</span></span></td></tr>
           <tr><td>LLM engineering</td><td>Context management, prompt caching, tool and schema design, structured output, sampling</td><td><a href="/case-studies/betterfound">Betterfound</a>, <a href="/case-studies/heumyn">Heumyn AI</a>, agent factory</td><td><span class="depth"><i class="on"></i><i class="on"></i><i class="on"></i><span>High</span></span></td></tr>
           <tr><td>MCP and integration</td><td>MCP server design, connecting design and business systems to agents</td><td>Heumyn MCP server, Figma MCP proof of concept</td><td><span class="depth"><i class="on"></i><i class="on"></i><i></i><span>Medium</span></span></td></tr>
-          <tr><td>Evaluation</td><td>Test sets, scoring, regression tracking, LLM-as-judge</td><td>F1 Score, A11yCheck test set, Betterfound embeddings spike</td><td><span class="depth"><i class="on"></i><i class="on"></i><i></i><span>Medium</span></span></td></tr>
+          <tr><td>Evaluation</td><td>Test sets, scoring, regression tracking, LLM-as-judge</td><td>F1 Score, A11yCheck test set, Betterfound embeddings spike</td><td><span class="depth"><i class="on"></i><i></i><i></i><span>Developing</span></span></td></tr>
           <tr><td>Retrieval (RAG)</td><td>Chunking, embeddings, hybrid search, re-ranking, retrieval evals</td><td>Betterfound catalogue search; RAG project with measured evals, planned for early 2027</td><td><span class="depth"><i class="on"></i><i></i><i></i><span>Developing</span></span></td></tr>
-          <tr><td>AI governance</td><td>Risk classification, human oversight design, threat modelling, EU AI Act</td><td><a href="#build">How I build</a>; AIGP in progress</td><td><span class="depth"><i class="on"></i><i></i><i></i><span>Developing</span></span></td></tr>
-          <tr><td>ML foundations</td><td>Attention, backpropagation, embeddings, loss functions</td><td>Formula appendix, study notes</td><td><span class="depth"><i class="on"></i><i class="on"></i><i></i><span>Medium</span></span></td></tr>
+          <tr><td>AI governance</td><td>Risk classification, human oversight design, threat modelling, EU AI Act</td><td><a href="#build">How I build</a>; AIGP in progress</td><td><span class="depth"><i class="on"></i><i class="on"></i><i></i><span>Medium</span></span></td></tr>
+          <tr><td>ML foundations</td><td>Attention, backpropagation, embeddings, loss functions</td><td>Formula appendix, study notes</td><td><span class="depth"><i class="on"></i><i></i><i></i><span>Developing</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -575,6 +599,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <script type="module">
 import { ask } from "/portfolio/chat.js";
+import { scatterAscii, asciiBurst } from "/portfolio/ascii-bg.js";
+
+scatterAscii();
+asciiBurst(document.querySelector(".hero-portrait"), { originX: 0.85, originY: 0.25, radius: 185 });
 
 // Mobile menu
 const toggle = document.querySelector(".nav-toggle");
@@ -661,13 +689,14 @@ document.querySelectorAll("[data-ask-focus]").forEach((a) => a.addEventListener(
 }));
 
 // Floating button: shown when neither the hero nor the chat is on screen
+const askEnabled = !document.body.classList.contains("ask-off");
 const fab = document.querySelector(".ask-fab");
 const visible = new Map();
 const io = new IntersectionObserver((entries) => {
   for (const e of entries) visible.set(e.target, e.isIntersecting);
   fab.hidden = [...visible.values()].some(Boolean);
 }, { threshold: 0.1 });
-[document.querySelector(".hero"), document.getElementById("ask"), document.getElementById("contact")].forEach((s) => io.observe(s));
+if (askEnabled) [document.querySelector(".hero"), document.getElementById("ask"), document.getElementById("contact")].forEach((s) => io.observe(s));
 </script>
 </body>
 </html>
